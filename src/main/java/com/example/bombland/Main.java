@@ -24,7 +24,7 @@ import java.net.http.HttpClient;
 
 public class Main extends Application {
     static Stage mainStage = null;
-    static BOMBLAND_WebSocketClient socketClient = null;
+    static BomblandWebSocketClient socketClient = null;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -78,7 +78,7 @@ public class Main extends Application {
     }
 
     public void connectToWebSocketServer() throws URISyntaxException {
-        socketClient = new BOMBLAND_WebSocketClient();
+        socketClient = new BomblandWebSocketClient();
         socketClient.connectClient();
 //        socketClient.sendHighScore("highScore");
     }
