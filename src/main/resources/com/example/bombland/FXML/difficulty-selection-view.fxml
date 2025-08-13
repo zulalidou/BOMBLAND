@@ -12,8 +12,8 @@
     </stylesheets>
 
     <VBox fx:id="difficultySelectionPageContainer">
-        <HBox fx:id="difficultySelectionPageContainer_top">
-            <HBox fx:id="difficultySelectionPageContainer_top_leftChild" alignment="CENTER_LEFT">
+        <HBox fx:id="difficultySelectionPageContainerTop">
+            <HBox fx:id="difficultySelectionPageContainerTopLeftChild" alignment="CENTER_LEFT">
                 <Button fx:id="backBtn" onAction="#goToMainMenu">
                     <graphic>
                         <ImageView fitWidth="20" preserveRatio="true">
@@ -23,15 +23,15 @@
                 </Button>
             </HBox>
 
-            <HBox fx:id="difficultySelectionPageContainer_top_middleChild">
-                <Label fx:id="difficultySelectionPage_title" text="Select Difficulty"/>
+            <HBox fx:id="difficultySelectionPageContainerTopMiddleChild">
+                <Label fx:id="difficultySelectionPageTitle" text="Select Difficulty"/>
             </HBox>
 
-            <HBox fx:id="difficultySelectionPageContainer_top_rightChild" />
+            <HBox fx:id="difficultySelectionPageContainerTopRightChild" />
         </HBox>
 
-        <VBox fx:id="difficultySelectionPageContainer_bottom" alignment="CENTER">
-            <VBox fx:id="difficultySelectionPageContainer_bottom_inner" alignment="CENTER">
+        <VBox fx:id="difficultySelectionPageContainerBottom" alignment="CENTER">
+            <VBox fx:id="difficultySelectionPageContainerBottomInner" alignment="CENTER">
                 <Button fx:id="easyDifficultyBtn" text="Easy" onAction="#pickEasyDifficulty"/>
                 <Button fx:id="mediumDifficultyBtn" text="Medium" onAction="#pickMediumDifficulty"/>
                 <Button fx:id="hardDifficultyBtn" text="Hard" onAction="#pickHardDifficulty"/>

@@ -7,7 +7,7 @@
     -fx-background-color: red;
 }
 
-#difficultySelectionPageContainer_top_middleChild {
+#difficultySelectionPageContainerTopMiddleChild {
     -fx-alignment: center;
 }
 
@@ -21,18 +21,18 @@
 }
 
 
-#difficultySelectionPage_title {
+#difficultySelectionPageTitle {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
 
 
-#difficultySelectionPageContainer_bottom_inner .button {
+#difficultySelectionPageContainerBottomInner .button {
     -fx-background-color: black;
     -fx-text-fill: white;
 }
 
-#difficultySelectionPageContainer_bottom_inner .button:hover {
+#difficultySelectionPageContainerBottomInner .button:hover {
     -fx-cursor: hand;
     -fx-text-fill: red;
 }
