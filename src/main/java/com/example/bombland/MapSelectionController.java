@@ -112,11 +112,11 @@ public class MapSelectionController {
                 Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
         );
 
-        if (APP_CACHE.getInstance().getGameDifficulty().equals("Medium")) {
+        if (AppCache.getInstance().getGameDifficulty().equals("Medium")) {
             face_map_img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/bombland/Images/poker-face.png")));
             face_map_imgView.setImage(face_map_img);
         }
-        else if (APP_CACHE.getInstance().getGameDifficulty().equals("Hard")) {
+        else if (AppCache.getInstance().getGameDifficulty().equals("Hard")) {
             face_map_img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/bombland/images/sad-face.png")));
             face_map_imgView.setImage(face_map_img);
         }
@@ -158,25 +158,25 @@ public class MapSelectionController {
 
     @FXML
     private void pickRectangleMap() throws IOException {
-        APP_CACHE.getInstance().setGameMap("Rectangle");
+        AppCache.getInstance().setGameMap("Rectangle");
         startGame();
     }
 
     @FXML
     private void pickBombMap() throws IOException {
-        APP_CACHE.getInstance().setGameMap("Bomb");
+        AppCache.getInstance().setGameMap("Bomb");
         startGame();
     }
 
     @FXML
     private void pickFaceMap() throws IOException {
-        APP_CACHE.getInstance().setGameMap("Face");
+        AppCache.getInstance().setGameMap("Face");
         startGame();
     }
 
     @FXML
     private void pickFlowerMap() throws IOException {
-        APP_CACHE.getInstance().setGameMap("Flower");
+        AppCache.getInstance().setGameMap("Flower");
         startGame();
     }
 

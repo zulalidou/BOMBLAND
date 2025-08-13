@@ -104,19 +104,19 @@ public class DifficultySelectionController {
 
     @FXML
     private void pickEasyDifficulty() throws IOException {
-        APP_CACHE.getInstance().setGameDifficulty("Easy");
+        AppCache.getInstance().setGameDifficulty("Easy");
         openMapSelectionPage();
     }
 
     @FXML
     private void pickMediumDifficulty() throws IOException {
-        APP_CACHE.getInstance().setGameDifficulty("Medium");
+        AppCache.getInstance().setGameDifficulty("Medium");
         openMapSelectionPage();
     }
 
     @FXML
     private void pickHardDifficulty() throws IOException {
-        APP_CACHE.getInstance().setGameDifficulty("Hard");
+        AppCache.getInstance().setGameDifficulty("Hard");
         openMapSelectionPage();
     }
 

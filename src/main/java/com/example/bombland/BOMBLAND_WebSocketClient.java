@@ -56,7 +56,7 @@ public class BOMBLAND_WebSocketClient extends WebSocketClient {
     @Override
     public void onError(Exception ex) {
         System.out.println("\nonError()");
-        APP_CACHE.getInstance().setServerConnectionGood(false);
+        AppCache.getInstance().setServerConnectionGood(false);
     }
 
     // Helper method to send a high score (or any message) to the server

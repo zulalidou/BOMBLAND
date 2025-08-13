@@ -126,7 +126,7 @@ public class HighScoresController {
         VBox.setVgrow(hardHighScores_scoreContainer, Priority.ALWAYS);
 
 
-        if (APP_CACHE.getInstance().isGettingData()) {
+        if (AppCache.getInstance().isGettingData()) {
             displayLoadingIcon();
 
             Task<Void> waitTask = new Task<>() {
@@ -150,7 +150,7 @@ public class HighScoresController {
     }
 
     private void waitForDataRetrieval() {
-        while (APP_CACHE.getInstance().isGettingData()) {
+        while (AppCache.getInstance().isGettingData()) {
             // Forcing the thread to sleep for a bit in order to let it notice the
             // value of APP_CACHE.getInstance().isGettingData() change
             try {
@@ -181,7 +181,7 @@ public class HighScoresController {
 
     @FXML
     private void goToMainMenu() throws IOException {
-        APP_CACHE.getInstance().setMapOfHighScoresBeingShown("");
+        AppCache.getInstance().setMapOfHighScoresBeingShown("");
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bombland/FXML/main-view.fxml"));
@@ -197,11 +197,11 @@ public class HighScoresController {
 
     @FXML
     private void showRectangleMapHighScores() {
-        if (APP_CACHE.getInstance().getMapOfHighScoresBeingShown().equals("Rectangle")) {
+        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Rectangle")) {
             return;
         }
 
-        APP_CACHE.getInstance().setMapOfHighScoresBeingShown("Rectangle");
+        AppCache.getInstance().setMapOfHighScoresBeingShown("Rectangle");
         selectMapButton("Rectangle");
 
         displayScores("Easy", "Rectangle", easyHighScores_scoreContainer);
@@ -211,11 +211,11 @@ public class HighScoresController {
 
     @FXML
     private void showBombMapHighScores() {
-        if (APP_CACHE.getInstance().getMapOfHighScoresBeingShown().equals("Bomb")) {
+        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Bomb")) {
             return;
         }
 
-        APP_CACHE.getInstance().setMapOfHighScoresBeingShown("Bomb");
+        AppCache.getInstance().setMapOfHighScoresBeingShown("Bomb");
 
         selectMapButton("Bomb");
 
@@ -226,11 +226,11 @@ public class HighScoresController {
 
     @FXML
     private void showFaceMapHighScores() {
-        if (APP_CACHE.getInstance().getMapOfHighScoresBeingShown().equals("Face")) {
+        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Face")) {
             return;
         }
 
-        APP_CACHE.getInstance().setMapOfHighScoresBeingShown("Face");
+        AppCache.getInstance().setMapOfHighScoresBeingShown("Face");
 
         selectMapButton("Face");
 
@@ -241,11 +241,11 @@ public class HighScoresController {
 
     @FXML
     private void showFlowerMapHighScores() {
-        if (APP_CACHE.getInstance().getMapOfHighScoresBeingShown().equals("Flower")) {
+        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Flower")) {
             return;
         }
 
-        APP_CACHE.getInstance().setMapOfHighScoresBeingShown("Flower");
+        AppCache.getInstance().setMapOfHighScoresBeingShown("Flower");
 
         selectMapButton("Flower");
 
@@ -314,7 +314,7 @@ public class HighScoresController {
     }
 
     private ArrayList<JSONObject> getMapScores(String difficulty, String map) {
-        final ArrayList<JSONObject> allHighScores = APP_CACHE.getInstance().getHighScores(difficulty);
+        final ArrayList<JSONObject> allHighScores = AppCache.getInstance().getHighScores(difficulty);
         ArrayList<JSONObject> mapHighScores = new ArrayList<>();
 
         for (int i = 0; i < allHighScores.size(); i++) {

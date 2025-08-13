@@ -57,18 +57,18 @@ public class Main extends Application {
                 connectToWebSocketServer();
 
 
-                APP_CACHE.getInstance().setGettingData(true);
+                AppCache.getInstance().setGettingData(true);
 
                 getEnvironmentVariables();
 
-                if (APP_CACHE.getInstance().serverConnectionIsGood()) {
+                if (AppCache.getInstance().serverConnectionIsGood()) {
                     DynamoDBClientUtil.getHighScores();
                 }
                 else {
                     MainController.getInstance().displayServerErrorPopup();
                 }
 
-                APP_CACHE.getInstance().setGettingData(false);
+                AppCache.getInstance().setGettingData(false);
 
                 return null;
             }
@@ -95,10 +95,10 @@ public class Main extends Application {
             // Send the request and get the response
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             JSONObject environmentVarsObj = new JSONObject(response.body());
-            APP_CACHE.getInstance().setIdentityPoolID(environmentVarsObj.getString("identityPoolID"));
+            AppCache.getInstance().setIdentityPoolId(environmentVarsObj.getString("identityPoolID"));
         } catch (Exception e) {
             System.out.println("\ngetEnvironmentVariables() -- ERROR!");
-            APP_CACHE.getInstance().setServerConnectionGood(false);
+            AppCache.getInstance().setServerConnectionGood(false);
         }
     }
 
