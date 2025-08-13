@@ -348,7 +348,7 @@ public class PlayController {
                     newScoreInfo.put("map", AppCache.getInstance().getGameMap());
 
                     if (AppCache.getInstance().serverConnectionIsGood()) {
-                        DynamoDBClientUtil.saveNewHighScore(newScoreInfo, "BOMBLAND_" + GameMap.getInstance().getGameDifficulty() + "HighScores");
+                        DynamoDbClientUtil.saveNewHighScore(newScoreInfo, "BOMBLAND_" + GameMap.getInstance().getGameDifficulty() + "HighScores");
 
                         // Send new score to WebSocket server (to be distributed to other active users)
                         Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));

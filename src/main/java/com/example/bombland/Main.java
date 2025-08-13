@@ -62,7 +62,7 @@ public class Main extends Application {
                 getEnvironmentVariables();
 
                 if (AppCache.getInstance().serverConnectionIsGood()) {
-                    DynamoDBClientUtil.getHighScores();
+                    DynamoDbClientUtil.getHighScores();
                 }
                 else {
                     MainController.getInstance().displayServerErrorPopup();
