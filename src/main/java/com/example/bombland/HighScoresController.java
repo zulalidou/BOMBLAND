@@ -1,5 +1,8 @@
 package com.example.bombland;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -15,341 +18,422 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
 import org.json.JSONObject;
 
+/**
+ * This class sets up the UI for the High Scores page.
+ */
 public class HighScoresController {
-    private static HighScoresController instance;
+  private static HighScoresController instance;
 
-    @FXML
-    StackPane highScores_stackpane;
+  @FXML
+  StackPane highScoresStackpane;
 
-    @FXML
-    VBox highScoresPage, highScores_stackpane_child, easyHighScores_column, mediumHighScores_column, hardHighScores_column, easyHighScores_scoreContainer, mediumHighScores_scoreContainer, hardHighScores_scoreContainer;
+  @FXML
+  VBox highScoresPage;
 
-    @FXML
-    HBox mapSelectorContainer, highScoresContainer_bottom, highScoresContainer_leftChild, highScoresContainer_middleChild, highScoresContainer_rightChild;
+  @FXML
+  VBox highScoresStackpaneChild;
 
-    @FXML
-    Label highScoresPage_title, easyHighScore_title, mediumHighScore_title, hardHighScore_title;
+  @FXML
+  VBox easyHighScoresColumn;
 
-    @FXML
-    Button backBtn, mapBtn_1, mapBtn_2, mapBtn_3, mapBtn_4;
+  @FXML
+  VBox mediumHighScoresColumn;
 
-    @FXML
-    ProgressIndicator loadingIcon;
+  @FXML
+  VBox hardHighScoresColumn;
+
+  @FXML
+  VBox easyHighScoresScoreContainer;
+
+  @FXML
+  VBox mediumHighScoresScoreContainer;
+
+  @FXML
+  VBox hardHighScoresScoreContainer;
+
+  @FXML
+  HBox mapSelectorContainer;
+
+  @FXML
+  HBox highScoresContainerBottom;
+
+  @FXML
+  HBox highScoresContainerLeftChild;
+
+  @FXML
+  HBox highScoresContainerMiddleChild;
+
+  @FXML
+  HBox highScoresContainerRightChild;
+
+  @FXML
+  Label highScoresPageTitle;
+
+  @FXML
+  Label easyHighScoreTitle;
+
+  @FXML
+  Label mediumHighScoreTitle;
+
+  @FXML
+  Label hardHighScoreTitle;
+
+  @FXML
+  Button backBtn;
+
+  @FXML
+  Button mapBtn1;
+
+  @FXML
+  Button mapBtn2;
+
+  @FXML
+  Button mapBtn3;
+
+  @FXML
+  Button mapBtn4;
+
+  @FXML
+  ProgressIndicator loadingIcon;
 
 
-    private HighScoresController() {}
+  private HighScoresController() {}
 
-    public static HighScoresController getInstance() {
-        if (instance == null) {
-            instance = new HighScoresController();
-        }
-
-        return instance;
+  /**
+   * This function creates an instance of this class.
+   *
+   * @return An instance of this class.
+   */
+  public static HighScoresController getInstance() {
+    if (instance == null) {
+      instance = new HighScoresController();
     }
 
+    return instance;
+  }
 
-    @FXML
-    public void initialize() {
-        highScoresPage.styleProperty().bind(
-                Bindings.format("-fx-padding: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
-        );
+  /**
+   * Creates and populates the High Scores page.
+   */
+  @FXML
+  public void initialize() {
+    highScoresPage.styleProperty().bind(
+        Bindings.format("-fx-padding: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
+    );
 
-
-        backBtn.styleProperty().bind(
-                Bindings.format("-fx-background-radius: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
-        );
-
-
-        highScoresContainer_leftChild.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.39))
-        );
-
-        highScoresContainer_middleChild.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.39))
-        );
-
-        highScoresPage_title.styleProperty().bind(
-                Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.04))
-        );
-
-        highScoresContainer_rightChild.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.39))
-        );
+    backBtn.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+    );
 
 
-        mapSelectorContainer.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-padding: %.2fpx;", Main.mainStage.widthProperty().multiply(0.75), Main.mainStage.widthProperty().multiply(0.01))
-        );
+    highScoresContainerLeftChild.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.39))
+    );
 
-        mapBtn_1.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;", Main.mainStage.widthProperty().multiply(0.2425))
-        );
-        mapBtn_2.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;", Main.mainStage.widthProperty().multiply(0.2425))
-        );
-        mapBtn_3.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;", Main.mainStage.widthProperty().multiply(0.2425))
-        );
-        mapBtn_4.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;", Main.mainStage.widthProperty().multiply(0.2425))
-        );
+    highScoresContainerMiddleChild.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.39))
+    );
 
+    highScoresPageTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.04))
+    );
 
-        easyHighScore_title.styleProperty().bind(
-                Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.03),  Main.mainStage.widthProperty().multiply(0.3265))
-        );
-
-        mediumHighScore_title.styleProperty().bind(
-                Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.03),  Main.mainStage.widthProperty().multiply(0.327))
-        );
-
-        hardHighScore_title.styleProperty().bind(
-                Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.03),  Main.mainStage.widthProperty().multiply(0.3265))
-        );
+    highScoresContainerRightChild.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.39))
+    );
 
 
-        VBox.setVgrow(highScores_stackpane, Priority.ALWAYS);
+    mapSelectorContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.75),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
 
-        VBox.setVgrow(highScoresContainer_bottom, Priority.ALWAYS);
+    mapBtn1.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
+            Main.mainStage.widthProperty().multiply(0.2425))
+    );
+    mapBtn2.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
+            Main.mainStage.widthProperty().multiply(0.2425))
+    );
+    mapBtn3.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
+            Main.mainStage.widthProperty().multiply(0.2425))
+    );
+    mapBtn4.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
+            Main.mainStage.widthProperty().multiply(0.2425))
+    );
 
-        HBox.setHgrow(easyHighScores_column, Priority.ALWAYS);
-        HBox.setHgrow(mediumHighScores_column, Priority.ALWAYS);
-        HBox.setHgrow(hardHighScores_column, Priority.ALWAYS);
 
-        VBox.setVgrow(easyHighScores_scoreContainer, Priority.ALWAYS);
-        VBox.setVgrow(mediumHighScores_scoreContainer, Priority.ALWAYS);
-        VBox.setVgrow(hardHighScores_scoreContainer, Priority.ALWAYS);
+    easyHighScoreTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.03),
+            Main.mainStage.widthProperty().multiply(0.3265))
+    );
+
+    mediumHighScoreTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.03),
+            Main.mainStage.widthProperty().multiply(0.327))
+    );
+
+    hardHighScoreTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.03),
+            Main.mainStage.widthProperty().multiply(0.3265))
+    );
 
 
-        if (AppCache.getInstance().isGettingData()) {
-            displayLoadingIcon();
+    VBox.setVgrow(highScoresStackpane, Priority.ALWAYS);
 
-            Task<Void> waitTask = new Task<>() {
-                @Override
-                protected Void call() {
-                    waitForDataRetrieval();
-                    return null;
-                }
-            };
+    VBox.setVgrow(highScoresContainerBottom, Priority.ALWAYS);
 
-            waitTask.setOnSucceeded(event -> {
-                hideLoadingIcon();
-                showRectangleMapHighScores();
-            });
+    HBox.setHgrow(easyHighScoresColumn, Priority.ALWAYS);
+    HBox.setHgrow(mediumHighScoresColumn, Priority.ALWAYS);
+    HBox.setHgrow(hardHighScoresColumn, Priority.ALWAYS);
 
-            new Thread(waitTask).start();
+    VBox.setVgrow(easyHighScoresScoreContainer, Priority.ALWAYS);
+    VBox.setVgrow(mediumHighScoresScoreContainer, Priority.ALWAYS);
+    VBox.setVgrow(hardHighScoresScoreContainer, Priority.ALWAYS);
+
+
+    if (AppCache.getInstance().isGettingData()) {
+      displayLoadingIcon();
+
+      Task<Void> waitTask = new Task<>() {
+        @Override
+        protected Void call() {
+          waitForDataRetrieval();
+          return null;
         }
-        else {
-            showRectangleMapHighScores();
-        }
+      };
+
+      waitTask.setOnSucceeded(event -> {
+        hideLoadingIcon();
+        showRectangleMapHighScores();
+      });
+
+      new Thread(waitTask).start();
+    } else {
+      showRectangleMapHighScores();
+    }
+  }
+
+  private void waitForDataRetrieval() {
+    while (AppCache.getInstance().isGettingData()) {
+      // Forcing the thread to sleep for a bit in order to let it notice the
+      // value of APP_CACHE.getInstance().isGettingData() change
+      try {
+        Thread.sleep(100);  // Give some time for the state to change
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+    }
+  }
+
+
+  private void displayLoadingIcon() {
+    // blurs the gameplay page
+    highScoresStackpaneChild.setEffect(new GaussianBlur());
+
+    // makes items in the high scores page "unclickable"
+    highScoresStackpaneChild.setMouseTransparent(true);
+
+    loadingIcon.setManaged(true);
+    loadingIcon.setVisible(true);
+  }
+
+  private void hideLoadingIcon() {
+    highScoresStackpaneChild.setEffect(null);
+    highScoresStackpaneChild.setMouseTransparent(false); // makes items in gameplay page "clickable"
+
+    loadingIcon.setManaged(false);
+    loadingIcon.setVisible(false);
+  }
+
+
+  @FXML
+  private void goToMainMenu() throws IOException {
+    AppCache.getInstance().setMapOfHighScoresBeingShown("");
+
+    FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/com/example/bombland/FXML/main-view.fxml"));
+
+    MainController mainController = MainController.getInstance();
+    loader.setController(mainController);
+
+    Scene scene = new Scene(loader.load(), 1024, 768);
+    Main.mainStage.setScene(scene);
+    Main.mainStage.show();
+  }
+
+
+  @FXML
+  private void showRectangleMapHighScores() {
+    if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Rectangle")) {
+      return;
     }
 
-    private void waitForDataRetrieval() {
-        while (AppCache.getInstance().isGettingData()) {
-            // Forcing the thread to sleep for a bit in order to let it notice the
-            // value of APP_CACHE.getInstance().isGettingData() change
-            try {
-                Thread.sleep(100);  // Give some time for the state to change
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+    AppCache.getInstance().setMapOfHighScoresBeingShown("Rectangle");
+    selectMapButton("Rectangle");
+
+    displayScores("Easy", "Rectangle", easyHighScoresScoreContainer);
+    displayScores("Medium", "Rectangle", mediumHighScoresScoreContainer);
+    displayScores("Hard", "Rectangle", hardHighScoresScoreContainer);
+  }
+
+  @FXML
+  private void showBombMapHighScores() {
+    if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Bomb")) {
+      return;
     }
 
+    AppCache.getInstance().setMapOfHighScoresBeingShown("Bomb");
 
-    private void displayLoadingIcon() {
-        highScores_stackpane_child.setEffect(new GaussianBlur()); // blurs gameplay page
-        highScores_stackpane_child.setMouseTransparent(true); // makes items in highscores page "unclickable"
+    selectMapButton("Bomb");
 
-        loadingIcon.setManaged(true);
-        loadingIcon.setVisible(true);
+    displayScores("Easy", "Bomb", easyHighScoresScoreContainer);
+    displayScores("Medium", "Bomb", mediumHighScoresScoreContainer);
+    displayScores("Hard", "Bomb", hardHighScoresScoreContainer);
+  }
+
+  @FXML
+  private void showFaceMapHighScores() {
+    if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Face")) {
+      return;
     }
 
-    private void hideLoadingIcon() {
-        highScores_stackpane_child.setEffect(null);
-        highScores_stackpane_child.setMouseTransparent(false); // makes items in gameplay page "clickable"
+    AppCache.getInstance().setMapOfHighScoresBeingShown("Face");
 
-        loadingIcon.setManaged(false);
-        loadingIcon.setVisible(false);
+    selectMapButton("Face");
+
+    displayScores("Easy", "Face", easyHighScoresScoreContainer);
+    displayScores("Medium", "Face", mediumHighScoresScoreContainer);
+    displayScores("Hard", "Face", hardHighScoresScoreContainer);
+  }
+
+  @FXML
+  private void showFlowerMapHighScores() {
+    if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Flower")) {
+      return;
     }
 
+    AppCache.getInstance().setMapOfHighScoresBeingShown("Flower");
 
-    @FXML
-    private void goToMainMenu() throws IOException {
-        AppCache.getInstance().setMapOfHighScoresBeingShown("");
+    selectMapButton("Flower");
 
+    displayScores("Easy", "Flower", easyHighScoresScoreContainer);
+    displayScores("Medium", "Flower", mediumHighScoresScoreContainer);
+    displayScores("Hard", "Flower", hardHighScoresScoreContainer);
+  }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bombland/FXML/main-view.fxml"));
+  private void selectMapButton(String map) {
+    switch (map) {
+      case "Rectangle" -> {
+        if (mapBtn1.getStyleClass().contains("mapBtn_selected")) {
+          return;
+        }
 
-        MainController mainController = MainController.getInstance();
-        loader.setController(mainController);
+        mapBtn1.getStyleClass().remove("mapBtn_unselected");
+        mapBtn1.getStyleClass().add("mapBtn_selected");
 
-        Scene scene = new Scene(loader.load(), 1024, 768);
-        Main.mainStage.setScene(scene);
-        Main.mainStage.show();
+        deselectMapButton(mapBtn2);
+        deselectMapButton(mapBtn3);
+        deselectMapButton(mapBtn4);
+      }
+      case "Bomb" -> {
+        mapBtn2.getStyleClass().remove("mapBtn_unselected");
+        mapBtn2.getStyleClass().add("mapBtn_selected");
+
+        deselectMapButton(mapBtn1);
+        deselectMapButton(mapBtn3);
+        deselectMapButton(mapBtn4);
+      }
+      case "Face" -> {
+        mapBtn3.getStyleClass().remove("mapBtn_unselected");
+        mapBtn3.getStyleClass().add("mapBtn_selected");
+
+        deselectMapButton(mapBtn1);
+        deselectMapButton(mapBtn2);
+        deselectMapButton(mapBtn4);
+      }
+      default -> {
+        mapBtn4.getStyleClass().remove("mapBtn_unselected");
+        mapBtn4.getStyleClass().add("mapBtn_selected");
+
+        deselectMapButton(mapBtn1);
+        deselectMapButton(mapBtn2);
+        deselectMapButton(mapBtn3);
+      }
+    }
+  }
+
+  private void deselectMapButton(Button button) {
+    if (button.getStyleClass().contains("mapBtn_selected")) {
+      button.getStyleClass().remove("mapBtn_selected");
+      button.getStyleClass().add("mapBtn_unselected");
+    }
+  }
+
+  private void displayScores(String difficulty, String map, VBox container) {
+    container.getChildren().clear();
+
+    ArrayList<JSONObject> easyHighScores = getMapScores(difficulty, map);
+
+    if (!easyHighScores.isEmpty()) {
+      addScoresToScreen(easyHighScores, container);
+    } else {
+      displayPlaceholder(container);
+    }
+  }
+
+  private ArrayList<JSONObject> getMapScores(String difficulty, String map) {
+    final ArrayList<JSONObject> allHighScores = AppCache.getInstance().getHighScores(difficulty);
+    ArrayList<JSONObject> mapHighScores = new ArrayList<>();
+
+    for (JSONObject highScore : allHighScores) {
+      if (highScore.getString("map").equals(map)) {
+        mapHighScores.add(highScore);
+      }
     }
 
+    return mapHighScores;
+  }
 
-    @FXML
-    private void showRectangleMapHighScores() {
-        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Rectangle")) {
-            return;
-        }
+  private void addScoresToScreen(ArrayList<JSONObject> scores, VBox scoresContainer) {
+    for (JSONObject score : scores) {
+      Label scoreBox = new Label(score.getString("name") + ", " + score.getLong("score"));
+      scoreBox.getStyleClass().add("highScoreLabel");
 
-        AppCache.getInstance().setMapOfHighScoresBeingShown("Rectangle");
-        selectMapButton("Rectangle");
+      scoreBox.styleProperty().bind(
+          Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; "
+              + "-fx-spacing: %.2fpx; -fx-padding: %.2fpx;",
+              Main.mainStage.widthProperty().multiply(0.02),
+              Main.mainStage.widthProperty().multiply(0.01),
+              Main.mainStage.widthProperty().multiply(0.04),
+              Main.mainStage.widthProperty().multiply(0.0075))
+      );
 
-        displayScores("Easy", "Rectangle", easyHighScores_scoreContainer);
-        displayScores("Medium", "Rectangle", mediumHighScores_scoreContainer);
-        displayScores("Hard", "Rectangle", hardHighScores_scoreContainer);
+      scoresContainer.getChildren().add(scoreBox);
     }
+  }
 
-    @FXML
-    private void showBombMapHighScores() {
-        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Bomb")) {
-            return;
-        }
+  private void displayPlaceholder(VBox scoresContainer) {
+    Image img = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/smiley-face.png")));
+    ImageView imgView = new ImageView();
+    imgView.setImage(img);
+    imgView.setFitWidth(90);
+    imgView.setFitHeight(60);
+    imgView.setPreserveRatio(true);
+    scoresContainer.getChildren().add(imgView);
 
-        AppCache.getInstance().setMapOfHighScoresBeingShown("Bomb");
-
-        selectMapButton("Bomb");
-
-        displayScores("Easy", "Bomb", easyHighScores_scoreContainer);
-        displayScores("Medium", "Bomb", mediumHighScores_scoreContainer);
-        displayScores("Hard", "Bomb", hardHighScores_scoreContainer);
-    }
-
-    @FXML
-    private void showFaceMapHighScores() {
-        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Face")) {
-            return;
-        }
-
-        AppCache.getInstance().setMapOfHighScoresBeingShown("Face");
-
-        selectMapButton("Face");
-
-        displayScores("Easy", "Face", easyHighScores_scoreContainer);
-        displayScores("Medium", "Face", mediumHighScores_scoreContainer);
-        displayScores("Hard", "Face", hardHighScores_scoreContainer);
-    }
-
-    @FXML
-    private void showFlowerMapHighScores() {
-        if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Flower")) {
-            return;
-        }
-
-        AppCache.getInstance().setMapOfHighScoresBeingShown("Flower");
-
-        selectMapButton("Flower");
-
-        displayScores("Easy", "Flower", easyHighScores_scoreContainer);
-        displayScores("Medium", "Flower", mediumHighScores_scoreContainer);
-        displayScores("Hard", "Flower", hardHighScores_scoreContainer);
-    }
-
-    private void selectMapButton(String map) {
-        if (map.equals("Rectangle")) {
-            if (mapBtn_1.getStyleClass().contains("mapBtn_selected")) {
-                return;
-            }
-
-            mapBtn_1.getStyleClass().remove("mapBtn_unselected");
-            mapBtn_1.getStyleClass().add("mapBtn_selected");
-
-            deselectMapButton(mapBtn_2);
-            deselectMapButton(mapBtn_3);
-            deselectMapButton(mapBtn_4);
-        }
-        else if (map.equals("Bomb")) {
-            mapBtn_2.getStyleClass().remove("mapBtn_unselected");
-            mapBtn_2.getStyleClass().add("mapBtn_selected");
-
-            deselectMapButton(mapBtn_1);
-            deselectMapButton(mapBtn_3);
-            deselectMapButton(mapBtn_4);
-        }
-        else if (map.equals("Face")) {
-            mapBtn_3.getStyleClass().remove("mapBtn_unselected");
-            mapBtn_3.getStyleClass().add("mapBtn_selected");
-
-            deselectMapButton(mapBtn_1);
-            deselectMapButton(mapBtn_2);
-            deselectMapButton(mapBtn_4);
-        }
-        else {
-            mapBtn_4.getStyleClass().remove("mapBtn_unselected");
-            mapBtn_4.getStyleClass().add("mapBtn_selected");
-
-            deselectMapButton(mapBtn_1);
-            deselectMapButton(mapBtn_2);
-            deselectMapButton(mapBtn_3);
-        }
-    }
-
-    private void deselectMapButton(Button button) {
-        if (button.getStyleClass().contains("mapBtn_selected")) {
-            button.getStyleClass().remove("mapBtn_selected");
-            button.getStyleClass().add("mapBtn_unselected");
-        }
-    }
-
-    private void displayScores(String difficulty, String map, VBox container) {
-        container.getChildren().clear();
-
-        ArrayList<JSONObject> easyHighScores = getMapScores(difficulty, map);
-
-        if (!easyHighScores.isEmpty()) {
-            addScoresToScreen(easyHighScores, container);
-        }
-        else {
-            displayPlaceholder(container);
-        }
-    }
-
-    private ArrayList<JSONObject> getMapScores(String difficulty, String map) {
-        final ArrayList<JSONObject> allHighScores = AppCache.getInstance().getHighScores(difficulty);
-        ArrayList<JSONObject> mapHighScores = new ArrayList<>();
-
-        for (int i = 0; i < allHighScores.size(); i++) {
-            if (allHighScores.get(i).getString("map").equals(map)) {
-                mapHighScores.add(allHighScores.get(i));
-            }
-        }
-
-        return mapHighScores;
-    }
-
-    private void addScoresToScreen(ArrayList<JSONObject> scores, VBox scoresContainer) {
-        for (JSONObject score : scores) {
-            Label scoreBox = new Label(score.getString("name") + ", " + score.getLong("score"));
-            scoreBox.getStyleClass().add("highScoreLabel");
-
-            scoreBox.styleProperty().bind(
-                    Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-spacing: %.2fpx; -fx-padding: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02), Main.mainStage.widthProperty().multiply(0.01), Main.mainStage.widthProperty().multiply(0.04), Main.mainStage.widthProperty().multiply(0.0075))
-            );
-
-            scoresContainer.getChildren().add(scoreBox);
-        }
-    }
-
-    private void displayPlaceholder(VBox scoresContainer) {
-        Image img = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/bombland/Images/smiley-face.png")));
-        ImageView imgView = new ImageView();
-        imgView.setImage(img);
-        imgView.setFitWidth(90);
-        imgView.setFitHeight(60);
-        imgView.setPreserveRatio(true);
-        scoresContainer.getChildren().add(imgView);
-
-        Label noActivityLabel = new Label("No activity yet!");
-        noActivityLabel.getStyleClass().add("highScores_activityLabel");
-        scoresContainer.getChildren().add(noActivityLabel);
-    }
+    Label noActivityLabel = new Label("No activity yet!");
+    noActivityLabel.getStyleClass().add("highScores_activityLabel");
+    scoresContainer.getChildren().add(noActivityLabel);
+  }
 }

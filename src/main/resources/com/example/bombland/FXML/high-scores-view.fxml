@@ -15,10 +15,10 @@
         <URL value="@../CSS/high-scores.css"/>
     </stylesheets>
 
-    <StackPane fx:id="highScores_stackpane">
-        <VBox fx:id="highScores_stackpane_child">
-            <HBox fx:id="highScoresContainer_top">
-                <HBox fx:id="highScoresContainer_leftChild" alignment="CENTER_LEFT">
+    <StackPane fx:id="highScoresStackpane">
+        <VBox fx:id="highScoresStackpaneChild">
+            <HBox fx:id="highScoresContainerTop">
+                <HBox fx:id="highScoresContainerLeftChild" alignment="CENTER_LEFT">
                     <Button fx:id="backBtn" onAction="#goToMainMenu">
                         <graphic>
                             <ImageView fitWidth="20" preserveRatio="true">
@@ -28,54 +28,54 @@
                     </Button>
                 </HBox>
 
-                <HBox fx:id="highScoresContainer_middleChild">
-                    <Label fx:id="highScoresPage_title" text="High Scores"/>
+                <HBox fx:id="highScoresContainerMiddleChild">
+                    <Label fx:id="highScoresPageTitle" text="High Scores"/>
                 </HBox>
 
-                <HBox fx:id="highScoresContainer_rightChild" />
+                <HBox fx:id="highScoresContainerRightChild" />
             </HBox>
 
             <HBox fx:id="mapSelectorContainer">
-                <Button fx:id="mapBtn_1" styleClass="mapBtn_selected" onAction="#showRectangleMapHighScores">Rectangle Map</Button>
-                <Button fx:id="mapBtn_2" styleClass="mapBtn_unselected" onAction="#showBombMapHighScores">Bomb Map</Button>
-                <Button fx:id="mapBtn_3" styleClass="mapBtn_unselected" onAction="#showFaceMapHighScores">Face Map</Button>
-                <Button fx:id="mapBtn_4" styleClass="mapBtn_unselected" onAction="#showFlowerMapHighScores">Flower Map</Button>
+                <Button fx:id="mapBtn1" styleClass="mapBtn_selected" onAction="#showRectangleMapHighScores">Rectangle Map</Button>
+                <Button fx:id="mapBtn2" styleClass="mapBtn_unselected" onAction="#showBombMapHighScores">Bomb Map</Button>
+                <Button fx:id="mapBtn3" styleClass="mapBtn_unselected" onAction="#showFaceMapHighScores">Face Map</Button>
+                <Button fx:id="mapBtn4" styleClass="mapBtn_unselected" onAction="#showFlowerMapHighScores">Flower Map</Button>
             </HBox>
 
-            <HBox fx:id="highScoresContainer_bottom">
-                <VBox fx:id="easyHighScores_column">
-                    <Label fx:id="easyHighScore_title" text="Easy"/>
+            <HBox fx:id="highScoresContainerBottom">
+                <VBox fx:id="easyHighScoresColumn">
+                    <Label fx:id="easyHighScoreTitle" text="Easy"/>
 
-                    <VBox fx:id="easyHighScores_scoreContainer">
+                    <VBox fx:id="easyHighScoresScoreContainer">
                         <ImageView fitWidth="90" fitHeight="60" preserveRatio="true">
                             <Image url="/com/example/bombland/images/smiley-face.png"/>
                         </ImageView>
 
-                        <Label styleClass="highScores_activityLabel" text="No activity yet!"/>
+                        <Label styleClass="highScoresActivityLabel" text="No activity yet!"/>
                     </VBox>
                 </VBox>
 
-                <VBox fx:id="mediumHighScores_column">
-                    <Label fx:id="mediumHighScore_title" text="Medium"/>
+                <VBox fx:id="mediumHighScoresColumn">
+                    <Label fx:id="mediumHighScoreTitle" text="Medium"/>
 
-                    <VBox fx:id="mediumHighScores_scoreContainer">
+                    <VBox fx:id="mediumHighScoresScoreContainer">
                         <ImageView fitWidth="90" fitHeight="60" preserveRatio="true">
                             <Image url="/com/example/bombland/images/smiley-face.png"/>
                         </ImageView>
 
-                        <Label styleClass="highScores_activityLabel" text="No activity yet!"/>
+                        <Label styleClass="highScoresActivityLabel" text="No activity yet!"/>
                     </VBox>
                 </VBox>
 
-                <VBox fx:id="hardHighScores_column">
-                    <Label fx:id="hardHighScore_title" text="Hard"/>
+                <VBox fx:id="hardHighScoresColumn">
+                    <Label fx:id="hardHighScoreTitle" text="Hard"/>
 
-                    <VBox fx:id="hardHighScores_scoreContainer">
+                    <VBox fx:id="hardHighScoresScoreContainer">
                         <ImageView fitWidth="90" fitHeight="60" preserveRatio="true">
                             <Image url="/com/example/bombland/images/smiley-face.png"/>
                         </ImageView>
 
-                        <Label styleClass="highScores_activityLabel" text="No activity yet!"/>
+                        <Label styleClass="highScoresActivityLabel" text="No activity yet!"/>
                     </VBox>
                 </VBox>
             </HBox>

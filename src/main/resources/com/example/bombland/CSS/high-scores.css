@@ -7,11 +7,11 @@
 }
 
 
-#highScoresContainer_middleChild {
+#highScoresContainerMiddleChild {
     -fx-alignment: center;
 }
 
-#highScoresPage_title {
+#highScoresPageTitle {
     -fx-wrap-text: true;
     -fx-font-weight: bold;
     -fx-text-fill: red;
@@ -39,12 +39,12 @@
 }
 
 
-#easyHighScores_column, #mediumHighScores_column, #hardHighScores_column {
+#easyHighScoresColumn, #mediumHighScoresColumn, #hardHighScoresColumn {
     -fx-border-color: black;
 }
 
 
-#easyHighScore_title, #mediumHighScore_title, #hardHighScore_title {
+#easyHighScoreTitle, #mediumHighScoreTitle, #hardHighScoreTitle {
     -fx-background-color: black;
     -fx-text-fill: red;
     -fx-font-weight: bold;
@@ -56,13 +56,13 @@
     -fx-border-color: transparent transparent black transparent; /* Set only bottom border color */
 }
 
-#easyHighScores_scoreContainer, #mediumHighScores_scoreContainer, #hardHighScores_scoreContainer {
+#easyHighScoresScoreContainer, #mediumHighScoresScoreContainer, #hardHighScoresScoreContainer {
     -fx-alignment: center;
     -fx-spacing: 6px;
 }
 
 
-.highScores_activityLabel {
+.highScoresActivityLabel {
     -fx-text-fill: red;
     -fx-font-weight: bold;
     -fx-font-size: 150%;
