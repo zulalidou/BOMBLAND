@@ -7,7 +7,7 @@
     -fx-background-color: red;
 }
 
-#mapSelectionPageContainer_top_middleChild {
+#mapSelectionPageContainerTopMiddleChild {
     -fx-alignment: center;
 }
 
@@ -21,7 +21,7 @@
 }
 
 
-#mapSelectionPage_title {
+#mapSelectionPageTitle {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }

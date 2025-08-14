@@ -12,8 +12,8 @@
     </stylesheets>
 
     <VBox fx:id="mapSelectionPageContainer" alignment="CENTER">
-        <HBox fx:id="mapSelectionPageContainer_top">
-            <HBox fx:id="mapSelectionPageContainer_top_leftChild" alignment="CENTER_LEFT">
+        <HBox fx:id="mapSelectionPageContainerTop">
+            <HBox fx:id="mapSelectionPageContainerTopLeftChild" alignment="CENTER_LEFT">
                 <Button fx:id="backBtn" onAction="#goToDifficultySelection">
                     <graphic>
                         <ImageView fitWidth="20" preserveRatio="true">
@@ -23,14 +23,14 @@
                 </Button>
             </HBox>
 
-            <HBox fx:id="mapSelectionPageContainer_top_middleChild">
-                <Label fx:id="mapSelectionPage_title" text="Select Map"/>
+            <HBox fx:id="mapSelectionPageContainerTopMiddleChild">
+                <Label fx:id="mapSelectionPageTitle" text="Select Map"/>
             </HBox>
 
-            <HBox fx:id="mapSelectionPageContainer_top_rightChild" />
+            <HBox fx:id="mapSelectionPageContainerTopRightChild" />
         </HBox>
 
-        <VBox fx:id="mapSelectionPageContainer_bottom" alignment="CENTER">
+        <VBox fx:id="mapSelectionPageContainerBottom" alignment="CENTER">
             <HBox fx:id="upperMapsContainer" alignment="CENTER">
                 <VBox fx:id="rectangleMapSelectorContainer" alignment="CENTER" onMouseClicked="#pickRectangleMap">
                     <ImageView>
@@ -58,9 +58,9 @@
 
             <HBox fx:id="lowerMapsContainer" alignment="CENTER">
                 <VBox fx:id="faceMapSelectorContainer" alignment="CENTER" onMouseClicked="#pickFaceMap">
-                    <ImageView fx:id="face_map_imgView">
+                    <ImageView fx:id="faceMapImgView">
                         <image>
-                            <Image fx:id="face_map_img" url="/com/example/bombland/images/happy-face.png"/>
+                            <Image fx:id="faceMapImg" url="/com/example/bombland/images/happy-face.png"/>
                         </image>
                     </ImageView>
 
