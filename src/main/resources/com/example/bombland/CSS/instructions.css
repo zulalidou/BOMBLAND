@@ -6,11 +6,11 @@
     -fx-cursor: hand;
 }
 
-#instructionsContainer_middleChild {
+#instructionsContainerMiddleChild {
     -fx-alignment: center;
 }
 
-#instructionsPage_title {
+#instructionsPageTitle {
     -fx-wrap-text: true;
     -fx-font-weight: bold;
     -fx-text-fill: red;
@@ -28,7 +28,7 @@
 }
 
 
-#section1_titleLbl {
+#section1TitleLbl {
     -fx-font-weight: bold;
     -fx-text-fill: red;
 }

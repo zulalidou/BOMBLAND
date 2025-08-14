@@ -16,8 +16,8 @@
         <URL value="@../CSS/instructions.css"/>
     </stylesheets>
 
-    <HBox fx:id="instructionsContainer_top">
-        <HBox fx:id="instructionsContainer_leftChild" alignment="CENTER_LEFT">
+    <HBox fx:id="instructionsContainerTop">
+        <HBox fx:id="instructionsContainerLeftChild" alignment="CENTER_LEFT">
             <Button fx:id="backBtn" onAction="#goToMainMenu">
                 <graphic>
                     <ImageView fitWidth="20" preserveRatio="true">
@@ -27,14 +27,14 @@
             </Button>
         </HBox>
 
-        <HBox fx:id="instructionsContainer_middleChild">
-            <Label fx:id="instructionsPage_title" text="Instructions"/>
+        <HBox fx:id="instructionsContainerMiddleChild">
+            <Label fx:id="instructionsPageTitle" text="Instructions"/>
         </HBox>
 
-        <HBox fx:id="instructionsContainer_rightChild" />
+        <HBox fx:id="instructionsContainerRightChild" />
     </HBox>
 
-    <HBox fx:id="instructionsContainer_bottom">
+    <HBox fx:id="instructionsContainerBottom">
         <ScrollPane fx:id="instructionsScrollPane">
             <VBox spacing="20">
                 <Label styleClass="text" text="BombLand is a game where bombs are hidden in a grid of squares. Safe squares have numbers telling you how many bombs touch the square. You can use the number clues to solve the game by opening all of the safe squares. If you click on a bomb you lose the game!"/>
@@ -42,7 +42,7 @@
 
                 <VBox>
                     <HBox>
-                        <Label fx:id="section1_titleLbl" text="Basic Patterns"/>
+                        <Label fx:id="section1TitleLbl" text="Basic Patterns"/>
                     </HBox>
 
                     <Separator id="separator" />
@@ -51,8 +51,8 @@
                         <Label styleClass="text" text="When a number touches the same number of squares, those squares must be bombs. Look at these examples:"/>
 
                         <HBox>
-                            <VBox fx:id="imgContainer_1" alignment="CENTER">
-                                <ImageView fx:id="imgView_1">
+                            <VBox fx:id="imgContainer1" alignment="CENTER">
+                                <ImageView fx:id="imgView1">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img1.png"/>
                                     </image>
@@ -63,8 +63,8 @@
 
                             <Region fx:id="space1"/>
 
-                            <VBox fx:id="imgContainer_2" alignment="CENTER">
-                                <ImageView fx:id="imgView_2">
+                            <VBox fx:id="imgContainer2" alignment="CENTER">
+                                <ImageView fx:id="imgView2">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img2.png"/>
                                     </image>
@@ -75,8 +75,8 @@
                         </HBox>
 
                         <HBox>
-                            <VBox fx:id="imgContainer_3" alignment="CENTER">
-                                <ImageView fx:id="imgView_3">
+                            <VBox fx:id="imgContainer3" alignment="CENTER">
+                                <ImageView fx:id="imgView3">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img3.png"/>
                                     </image>
@@ -87,8 +87,8 @@
 
                             <Region fx:id="space2"/>
 
-                            <VBox fx:id="imgContainer_4" alignment="CENTER">
-                                <ImageView fx:id="imgView_4">
+                            <VBox fx:id="imgContainer4" alignment="CENTER">
+                                <ImageView fx:id="imgView4">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img4.png"/>
                                     </image>
@@ -99,8 +99,8 @@
                         </HBox>
 
                         <HBox>
-                            <VBox fx:id="imgContainer_5" alignment="CENTER">
-                                <ImageView fx:id="imgView_5">
+                            <VBox fx:id="imgContainer5" alignment="CENTER">
+                                <ImageView fx:id="imgView5">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img5.png"/>
                                     </image>
@@ -111,8 +111,8 @@
 
                             <Region fx:id="space3"/>
 
-                            <VBox fx:id="imgContainer_6" alignment="CENTER">
-                                <ImageView fx:id="imgView_6">
+                            <VBox fx:id="imgContainer6" alignment="CENTER">
+                                <ImageView fx:id="imgView6">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img6.png"/>
                                     </image>
@@ -123,8 +123,8 @@
                         </HBox>
 
                         <HBox>
-                            <VBox fx:id="imgContainer_7" alignment="CENTER">
-                                <ImageView fx:id="imgView_7">
+                            <VBox fx:id="imgContainer7" alignment="CENTER">
+                                <ImageView fx:id="imgView7">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img7.png"/>
                                     </image>
@@ -135,8 +135,8 @@
 
                             <Region fx:id="space4"/>
 
-                            <VBox fx:id="imgContainer_8" alignment="CENTER">
-                                <ImageView fx:id="imgView_8">
+                            <VBox fx:id="imgContainer8" alignment="CENTER">
+                                <ImageView fx:id="imgView8">
                                     <image>
                                         <Image url="/com/example/bombland/images/map-theme-1/img8.png"/>
                                     </image>
