@@ -24,7 +24,7 @@
 
 
 
-#mainMenuPage_stackpane {
+#mainMenuPageStackpane {
     -fx-background-color: green;
 }
 
@@ -34,7 +34,7 @@
     -fx-padding: 10px;
 }
 
-#serverCommunicationErrorPopup_title {
+#serverCommunicationErrorPopupTitle {
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;

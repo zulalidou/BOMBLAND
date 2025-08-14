@@ -15,14 +15,14 @@
         <URL value="@../CSS/main.css"/>
     </stylesheets>
 
-    <StackPane fx:id="mainMenuPage_stackpane">
+    <StackPane fx:id="mainMenuPageStackpane">
         <VBox fx:id="mainMenuOptionsContainer" spacing="20">
             <HBox id="logoContainer">
-                <Text fx:id="logoText_beforeO" styleClass="logoText">B</Text>
+                <Text fx:id="logoTextBeforeO" styleClass="logoText">B</Text>
                 <ImageView fitWidth="50" preserveRatio="true">
                     <Image url="/com/example/bombland/images/bomb.png"/>
                 </ImageView>
-                <Text fx:id="logoText_afterO" styleClass="logoText">MBLAND</Text>
+                <Text fx:id="logoTextAfterO" styleClass="logoText">MBLAND</Text>
             </HBox>
 
 
@@ -34,7 +34,7 @@
 
 
         <VBox fx:id="serverCommunicationErrorPopup" managed="false" visible="false">
-            <Label fx:id="serverCommunicationErrorPopup_title" text="AN ERROR HAS OCCURRED"/>
+            <Label fx:id="serverCommunicationErrorPopupTitle" text="AN ERROR HAS OCCURRED"/>
 
             <VBox alignment="CENTER">
                 <ImageView>
