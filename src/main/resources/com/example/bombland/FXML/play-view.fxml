@@ -15,9 +15,9 @@
         <URL value="@../CSS/play.css"/>
     </stylesheets>
 
-    <StackPane fx:id="playPageContainer_inner">
-        <VBox fx:id="stackpane_child1">
-            <HBox fx:id="playPageContainer_header">
+    <StackPane fx:id="playPageContainerInner">
+        <VBox fx:id="stackpaneChild1">
+            <HBox fx:id="playPageContainerHeader">
                 <HBox fx:id="backBtnContainer" alignment="CENTER">
                     <Button fx:id="backBtn" onAction="#verifyExitPage">
                         <graphic>
@@ -39,78 +39,78 @@
         </VBox>
 
         <VBox fx:id="exitPagePopup" managed="false" visible="false">
-            <Label fx:id="exitPagePopup_title" text="EXIT"/>
-            <VBox alignment="CENTER" fx:id="exitPagePopup_imgContainer">
-                <ImageView fx:id="exitPagePopup_img">
+            <Label fx:id="exitPagePopupTitle" text="EXIT"/>
+            <VBox alignment="CENTER" fx:id="exitPagePopupImgContainer">
+                <ImageView fx:id="exitPagePopupImg">
                     <Image url="/com/example/bombland/images/exit.png"/>
                 </ImageView>
             </VBox>
 
-            <Label fx:id="exitPagePopup_text" text="Are you sure you want to exit?"/>
+            <Label fx:id="exitPagePopupText" text="Are you sure you want to exit?"/>
 
-            <HBox fx:id="exitPagePopup_buttonsContainer" alignment="CENTER">
-                <Button fx:id="exitPagePopup_cancelBtn" styleClass="playAgainBtn" text="Cancel" onAction="#closeExitPagePopup"/>
-                <Button fx:id="exitPagePopup_mainMenuBtn" styleClass="mainMenuBtn" text="Confirm" onAction="#goToMainMenu"/>
+            <HBox fx:id="exitPagePopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="exitPagePopupCancelBtn" styleClass="playAgainBtn" text="Cancel" onAction="#closeExitPagePopup"/>
+                <Button fx:id="exitPagePopupMainMenuBtn" styleClass="mainMenuBtn" text="Confirm" onAction="#goToMainMenu"/>
             </HBox>
         </VBox>
 
         <VBox fx:id="gameLostPopup" managed="false" visible="false">
-            <Label fx:id="gameLostPopup_title" text="GAME OVER"/>
-            <VBox alignment="CENTER" fx:id="gameLostPopup_imgContainer">
-                <ImageView fx:id="gameLostPopup_img">
+            <Label fx:id="gameLostPopupTitle" text="GAME OVER"/>
+            <VBox alignment="CENTER" fx:id="gameLostPopupImgContainer">
+                <ImageView fx:id="gameLostPopupImg">
                     <Image url="/com/example/bombland/images/timer.png"/>
                 </ImageView>
             </VBox>
 
-            <Label fx:id="gameLostPopup_timeTaken" text="placeholder"/>
+            <Label fx:id="gameLostPopupTimeTaken" text="placeholder"/>
 
-            <HBox fx:id="gameLostPopup_buttonsContainer" alignment="CENTER">
-                <Button fx:id="gameLostPopup_playAgainBtn" styleClass="playAgainBtn" text="Play Again" onAction="#playAgain"/>
-                <Button fx:id="gameLostPopup_mainMenuBtn" styleClass="mainMenuBtn" text="Main Menu" onAction="#goToMainMenu"/>
+            <HBox fx:id="gameLostPopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="gameLostPopupPlayAgainBtn" styleClass="playAgainBtn" text="Play Again" onAction="#playAgain"/>
+                <Button fx:id="gameLostPopupMainMenuBtn" styleClass="mainMenuBtn" text="Main Menu" onAction="#goToMainMenu"/>
             </HBox>
         </VBox>
 
         <VBox fx:id="gameWonPopup" managed="false" visible="false">
-            <Label fx:id="gameWonPopup_title" text="CONGRATS"/>
-            <VBox alignment="CENTER" fx:id="gameWonPopup_imgContainer">
-                <ImageView fx:id="gameWonPopup_img">
+            <Label fx:id="gameWonPopupTitle" text="CONGRATS"/>
+            <VBox alignment="CENTER" fx:id="gameWonPopupImgContainer">
+                <ImageView fx:id="gameWonPopupImg">
                     <Image url="/com/example/bombland/images/timer.png"/>
                 </ImageView>
             </VBox>
 
-            <Label fx:id="gameWonPopup_timeTaken" text="placeholder"/>
+            <Label fx:id="gameWonPopupTimeTaken" text="placeholder"/>
 
-            <HBox fx:id="gameWonPopup_buttonsContainer" alignment="CENTER">
-                <Button fx:id="gameWonPopup_playAgainBtn" styleClass="playAgainBtn" text="Play Again" onAction="#playAgain"/>
-                <Button fx:id="gameWonPopup_mainMenuBtn" styleClass="mainMenuBtn" text="Main Menu" onAction="#goToMainMenu"/>
+            <HBox fx:id="gameWonPopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="gameWonPopupPlayAgainBtn" styleClass="playAgainBtn" text="Play Again" onAction="#playAgain"/>
+                <Button fx:id="gameWonPopupMainMenuBtn" styleClass="mainMenuBtn" text="Main Menu" onAction="#goToMainMenu"/>
             </HBox>
         </VBox>
 
         <VBox fx:id="newRecordPopup" managed="false" visible="false">
-            <Label fx:id="newRecordPopup_title" text="NEW RECORD"/>
-            <VBox alignment="CENTER" fx:id="newRecordPopup_imgContainer">
-                <ImageView fx:id="newRecordPopup_img">
+            <Label fx:id="newRecordPopupTitle" text="NEW RECORD"/>
+            <VBox alignment="CENTER" fx:id="newRecordPopupImgContainer">
+                <ImageView fx:id="newRecordPopupImg">
                     <Image url="/com/example/bombland/images/trophy.png"/>
                 </ImageView>
             </VBox>
 
-            <Label fx:id="newRecordPopup_timeTaken"/>
+            <Label fx:id="newRecordPopupTimeTaken"/>
 
-            <Label fx:id="newRecordPopup_text" text="Congrats! Please enter your name below:"/>
+            <Label fx:id="newRecordPopupText" text="Congrats! Please enter your name below:"/>
 
-            <HBox fx:id="playerInfo_hbox">
-                <TextField fx:id="playerName_textField"/>
+            <HBox fx:id="playerInfoHbox">
+                <TextField fx:id="playerNameTextField"/>
             </HBox>
 
-            <Label fx:id="playerName_error" text="Please enter your name" visible="false"/>
+            <Label fx:id="playerNameError" text="Please enter your name" visible="false"/>
 
-            <HBox fx:id="newRecordPopup_buttonsContainer" alignment="CENTER">
-                <Button fx:id="newRecordPopup_playAgainBtn" styleClass="playAgainBtn" text="SAVE" onAction="#saveNewRecord"/>
+            <HBox fx:id="newRecordPopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="newRecordPopupPlayAgainBtn" styleClass="playAgainBtn" text="SAVE" onAction="#saveNewRecord"/>
             </HBox>
         </VBox>
 
         <VBox fx:id="serverCommunicationErrorPopup" managed="false" visible="false">
-            <Label fx:id="serverCommunicationErrorPopup_title" text="AN ERROR HAS OCCURRED"/>
+            <Label fx:id="serverCommunicationErrorPopupTitle" text="AN ERROR HAS OCCURRED"/>
 
             <VBox alignment="CENTER">
                 <ImageView>

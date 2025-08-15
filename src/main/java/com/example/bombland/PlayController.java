@@ -1,5 +1,13 @@
 package com.example.bombland;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
@@ -11,456 +19,641 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.util.Pair;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.util.Pair;
 import org.json.JSONObject;
-import java.util.UUID;
 
+/**
+ * This class sets up the UI for the game page.
+ */
 public class PlayController {
-    private static PlayController instance;
-    private boolean gameStarted, gameLost;
-    private long gameDuration;
-    private ScheduledExecutorService  taskScheduler;
-    private boolean timerPaused;
+  private static PlayController instance;
+  private boolean gameStarted;
+  private boolean gameLost;
+  private long gameDuration;
+  private ScheduledExecutorService  taskScheduler;
+  private boolean timerPaused;
 
 
-    @FXML
-    StackPane playPageContainer_inner;
+  @FXML
+  StackPane playPageContainerInner;
 
-    @FXML
-    VBox playPageContainer, stackpane_child1, emptySpace, gridContainer, exitPagePopup, exitPagePopup_imgContainer, gameLostPopup, gameLostPopup_imgContainer, gameWonPopup, gameWonPopup_imgContainer, newRecordPopup, newRecordPopup_imgContainer, serverCommunicationErrorPopup;
+  @FXML
+  VBox playPageContainer;
 
-    @FXML
-    Label totalBombsLbl, timeElapsedLbl, flagsLeftLbl, exitPagePopup_title, exitPagePopup_text, gameLostPopup_title, gameLostPopup_timeTaken, gameWonPopup_title, gameWonPopup_timeTaken, newRecordPopup_title, newRecordPopup_timeTaken, newRecordPopup_text, playerName_error, serverCommunicationErrorPopup_title;
+  @FXML
+  VBox stackpaneChild1;
 
-    @FXML
-    Button backBtn, exitPagePopup_cancelBtn, exitPagePopup_mainMenuBtn, gameLostPopup_playAgainBtn, gameLostPopup_mainMenuBtn, gameWonPopup_playAgainBtn, gameWonPopup_mainMenuBtn, newRecordPopup_playAgainBtn;
+  @FXML
+  VBox emptySpace;
 
-    @FXML
-    HBox backBtnContainer, exitPagePopup_buttonsContainer, gameLostPopup_buttonsContainer, gameWonPopup_buttonsContainer, newRecordPopup_buttonsContainer, playerInfo_hbox, playPageContainer_header;
+  @FXML
+  VBox gridContainer;
 
-    @FXML
-    TextField playerName_textField;
+  @FXML
+  VBox exitPagePopup;
 
-    @FXML
-    ImageView exitPagePopup_img, gameLostPopup_img, gameWonPopup_img, newRecordPopup_img;
+  @FXML
+  VBox exitPagePopupImgContainer;
+
+  @FXML
+  VBox gameLostPopup;
+
+  @FXML
+  VBox gameLostPopupImgContainer;
+
+  @FXML
+  VBox gameWonPopup;
+
+  @FXML
+  VBox gameWonPopupImgContainer;
+
+  @FXML
+  VBox newRecordPopup;
+
+  @FXML
+  VBox newRecordPopupImgContainer;
+
+  @FXML
+  VBox serverCommunicationErrorPopup;
+
+  @FXML
+  Label totalBombsLbl;
+
+  @FXML
+  Label timeElapsedLbl;
+
+  @FXML
+  Label flagsLeftLbl;
+
+  @FXML
+  Label exitPagePopupTitle;
+
+  @FXML
+  Label exitPagePopupText;
+
+  @FXML
+  Label gameLostPopupTitle;
+
+  @FXML
+  Label gameLostPopupTimeTaken;
+
+  @FXML
+  Label gameWonPopupTitle;
+
+  @FXML
+  Label gameWonPopupTimeTaken;
+
+  @FXML
+  Label newRecordPopupTitle;
+
+  @FXML
+  Label newRecordPopupTimeTaken;
+
+  @FXML
+  Label newRecordPopupText;
+
+  @FXML
+  Label playerNameError;
+
+  @FXML
+  Label serverCommunicationErrorPopupTitle;
+
+  @FXML
+  Button backBtn;
+
+  @FXML
+  Button exitPagePopupCancelBtn;
+
+  @FXML
+  Button exitPagePopupMainMenuBtn;
+
+  @FXML
+  Button gameLostPopupPlayAgainBtn;
+
+  @FXML
+  Button gameLostPopupMainMenuBtn;
+
+  @FXML
+  Button gameWonPopupPlayAgainBtn;
+
+  @FXML
+  Button gameWonPopupMainMenuBtn;
+
+  @FXML
+  Button newRecordPopupPlayAgainBtn;
+
+  @FXML
+  HBox backBtnContainer;
+
+  @FXML
+  HBox exitPagePopupButtonsContainer;
+
+  @FXML
+  HBox gameLostPopupButtonsContainer;
+
+  @FXML
+  HBox gameWonPopupButtonsContainer;
+
+  @FXML
+  HBox newRecordPopupButtonsContainer;
+
+  @FXML
+  HBox playerInfoHbox;
+
+  @FXML
+  HBox playPageContainerHeader;
+
+  @FXML
+  TextField playerNameTextField;
+
+  @FXML
+  ImageView exitPagePopupImg;
+
+  @FXML
+  ImageView gameLostPopupImg;
+
+  @FXML
+  ImageView gameWonPopupImg;
+
+  @FXML
+  ImageView newRecordPopupImg;
 
 
-    private PlayController() {}
+  private PlayController() {}
 
-    public static PlayController getInstance() {
-        if (instance == null) {
-            instance = new PlayController();
+  /**
+   * This function creates an instance of this class.
+   *
+   * @return An instance of this class.
+   */
+  public static PlayController getInstance() {
+    if (instance == null) {
+      instance = new PlayController();
+    }
+
+    return instance;
+  }
+
+
+  public boolean getGameStarted() {
+    return gameStarted;
+  }
+
+  public void setGameStarted(boolean gameStarted) {
+    this.gameStarted = gameStarted;
+  }
+
+
+  public boolean getGameLost() {
+    return gameLost;
+  }
+
+  public void setGameLost(boolean gameLost) {
+    this.gameLost = gameLost;
+  }
+
+  /**
+   * Updates the label that shows the number of flags left.
+   *
+   * @param flagsLeftText A string that mentions the number of flags left.
+   */
+  public void setFlagsLeftLbl(String flagsLeftText) {
+    flagsLeftLbl.setText(flagsLeftText);
+  }
+
+  /**
+   * Creates the grid that contains the map.
+   *
+   * @param grid A variable that'll contain the map.
+   */
+  public void setGridContainer(GridPane grid) {
+    gridContainer.getChildren().add(grid);
+  }
+
+
+  @FXML
+  private void closeExitPagePopup() {
+    exitPagePopup.setManaged(false);
+    exitPagePopup.setVisible(false);
+
+    stackpaneChild1.setEffect(null);
+    stackpaneChild1.setMouseTransparent(false); // makes items in gameplay page "clickable"
+
+    timerPaused = false;
+  }
+
+
+  @FXML
+  private void goToMainMenu() throws IOException {
+    endTimer();
+
+    FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/com/example/bombland/FXML/main-view.fxml")
+    );
+
+    MainController mainController = MainController.getInstance();
+    loader.setController(mainController);
+
+    Scene scene = new Scene(loader.load(), 1024, 768);
+    Main.mainStage.setScene(scene);
+    Main.mainStage.show();
+  }
+
+
+  @FXML
+  private void verifyExitPage() throws IOException {
+    if (!gameStarted) {
+      goToMainMenu();
+      return;
+    }
+
+    timerPaused = true;
+
+    stackpaneChild1.setEffect(new GaussianBlur()); // blurs gameplay page
+    stackpaneChild1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
+
+    exitPagePopup.setManaged(true);
+    exitPagePopup.setVisible(true);
+
+    exitPagePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
+    exitPagePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    exitPagePopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    exitPagePopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    exitPagePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
+        + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.03) + " 0 0 0;");
+    exitPagePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    exitPagePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+    exitPagePopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
+
+    VBox.setVgrow(exitPagePopupButtonsContainer, Priority.ALWAYS);
+
+    exitPagePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+    exitPagePopupCancelBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
+        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
+        + (Main.mainStage.getWidth() * 0.15) + "px;");
+    exitPagePopupMainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
+        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
+        + (Main.mainStage.getWidth() * 0.15) + "px;");
+  }
+
+  /**
+   * Creates and populates the game page.
+   */
+  @FXML
+  public void initialize() {
+    VBox.setVgrow(playPageContainerInner, Priority.ALWAYS);
+
+    playPageContainerHeader.styleProperty().bind(
+        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.125))
+    );
+
+    backBtnContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+    );
+
+    backBtn.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.05))
+    );
+
+
+    totalBombsLbl.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.3),
+            Main.mainStage.widthProperty().multiply(0.035))
+    );
+
+    timeElapsedLbl.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.3),
+            Main.mainStage.widthProperty().multiply(0.035))
+    );
+
+    flagsLeftLbl.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.3),
+            Main.mainStage.widthProperty().multiply(0.035))
+    );
+
+    emptySpace.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+    );
+
+
+    playPageContainerHeader.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.875))
+    );
+
+
+    buildGrid();
+  }
+
+  /**
+   * This function builds the layout of the game map.
+   */
+  public void buildGrid() {
+    gameStarted = gameLost = false;
+    gameDuration = -1;
+    taskScheduler = Executors.newScheduledThreadPool(1);
+    timerPaused = false;
+    timeElapsedLbl.setText("0 seconds");
+
+    GameMap.getInstance().buildGrid();
+
+    final int bombs = GameMap.getInstance().getBombs();
+    totalBombsLbl.setText(bombs + " bombs");
+    flagsLeftLbl.setText(bombs + " flags left");
+  }
+
+
+  void startTimer() {
+    Runnable timerTask = () -> {
+      if (!timerPaused) {
+        gameDuration += 1;
+
+        // Update the UI on the JavaFX Application Thread
+        Platform.runLater(() -> {
+          timeElapsedLbl.setText(gameDuration + " seconds");
+        });
+      }
+    };
+
+    // The timer task gets added to a new thread, and gets executed every second
+    taskScheduler.scheduleAtFixedRate(timerTask, 0, 1, TimeUnit.SECONDS);
+  }
+
+
+  void endTimer() {
+    if (taskScheduler != null) {
+      taskScheduler.shutdownNow();
+    }
+  }
+
+
+  void gameLost() {
+    AudioClip clip = new AudioClip(Objects.requireNonNull(
+        PlayController.class.getResource("/com/example/bombland/Sounds/game_lost.wav")).toExternalForm()
+    );
+    clip.play();
+
+    ArrayList<Pair<Integer, Integer>> bombCoordinates = GameMap.getInstance().getBombCoordinates();
+
+    // Uncover all bomb tiles
+    for (Pair<Integer, Integer> coords : bombCoordinates) {
+      Tile tile = GameMap.getInstance()
+          .getGridObjects().get(new Pair<>(coords.getKey(), coords.getValue()));
+      GameMap.getInstance().uncoverTile(tile);
+      GameMap.getInstance().incrementTilesUncovered();
+    }
+
+    stackpaneChild1.setEffect(new GaussianBlur()); // blurs gameplay page
+    stackpaneChild1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
+
+    displayGameLostPopup();
+  }
+
+
+  void displayGameLostPopup() {
+    gameLostPopup.setManaged(true);
+    gameLostPopup.setVisible(true);
+
+    gameLostPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
+    gameLostPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
+    gameLostPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    gameLostPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    gameLostPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
+        + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.04) + " 0 0 0;");
+    gameLostPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.15);
+    gameLostPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.15);
+
+    gameLostPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
+    gameLostPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
+
+    VBox.setVgrow(gameLostPopupButtonsContainer, Priority.ALWAYS);
+
+    gameLostPopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+
+    gameLostPopupPlayAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
+        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
+        + (Main.mainStage.getWidth() * 0.15) + "px;");
+    gameLostPopupMainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
+        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
+        + (Main.mainStage.getWidth() * 0.15) + "px;");
+  }
+
+
+  void gameWon() {
+    AudioClip clip = new AudioClip(Objects.requireNonNull(
+        getClass().getResource("/com/example/bombland/Sounds/game_won.wav")).toExternalForm()
+    );
+    clip.play();
+
+    stackpaneChild1.setEffect(new GaussianBlur()); // blurs gameplay page
+    stackpaneChild1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
+
+    ArrayList<JSONObject> highScores = AppCache.getInstance()
+        .getHighScores(GameMap.getInstance().getGameDifficulty());
+
+    if (highScores.size() < 10 || gameDuration < highScores.get(highScores.size() - 1).getLong("score")) {
+      displayRecordSetPopup();
+    } else {
+      displayGameWonPopup();
+    }
+  }
+
+
+  void displayRecordSetPopup() {
+    newRecordPopup.setManaged(true);
+    newRecordPopup.setVisible(true);
+
+    newRecordPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
+    newRecordPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
+    newRecordPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    newRecordPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    newRecordPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
+        + "px;");
+    newRecordPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.15);
+    newRecordPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.15);
+
+    newRecordPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
+    newRecordPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025)
+        + "px;");
+
+    newRecordPopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+
+    playerNameTextField.setStyle("-fx-pref-width: " + (Main.mainStage.getWidth() * 0.3)
+        + "px; -fx-pref-height: " + (Main.mainStage.getWidth() * 0.03) + "px; -fx-font-size: "
+        + (Main.mainStage.getWidth() * 0.015) + "px;");
+
+    VBox.setVgrow(newRecordPopupButtonsContainer, Priority.ALWAYS);
+
+    newRecordPopupPlayAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
+        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
+        + (Main.mainStage.getWidth() * 0.15) + "px;");
+  }
+
+
+  @FXML
+  void saveNewRecord() {
+    if (playerNameTextField.getText().isBlank()) {
+      playerNameError.setVisible(true); // display error
+      playerNameTextField.setText("");
+    } else {
+      playerNameError.setVisible(false);
+      newRecordPopup.setManaged(false);
+      newRecordPopup.setVisible(false);
+      displayGameWonPopup();
+
+      Task<Void> saveHighScoreTask = new Task<>() {
+        @Override
+        protected Void call() {
+          JSONObject newScoreInfo = new JSONObject();
+          newScoreInfo.put("time", System.currentTimeMillis());
+          newScoreInfo.put("id", UUID.randomUUID().toString());
+          newScoreInfo.put("score", gameDuration);
+          newScoreInfo.put("name", playerNameTextField.getText().strip());
+          newScoreInfo.put("difficulty", GameMap.getInstance().getGameDifficulty());
+          newScoreInfo.put("map", AppCache.getInstance().getGameMap());
+
+          if (AppCache.getInstance().serverConnectionIsGood()) {
+            DynamoDbClientUtil.saveNewHighScore(newScoreInfo,
+                "BOMBLAND_" + GameMap.getInstance().getGameDifficulty() + "HighScores");
+
+            // Send new score to WebSocket server (to be distributed to other active users)
+            Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));
+          } else {
+            displayServerErrorPopup();
+          }
+
+          playerNameTextField.setText("");
+
+          updateAppCache(newScoreInfo);
+
+          return null;
         }
+      };
 
-        return instance;
+      new Thread(saveHighScoreTask).start();
+    }
+  }
+
+  /**
+   * This function displays a server error popup.
+   */
+  public void displayServerErrorPopup() {
+    newRecordPopup.setEffect(new GaussianBlur());
+    newRecordPopup.setMouseTransparent(true);
+
+    serverCommunicationErrorPopup.setManaged(true);
+    serverCommunicationErrorPopup.setVisible(true);
+
+    serverCommunicationErrorPopup.setMaxWidth(500);
+    serverCommunicationErrorPopup.setMaxHeight(400);
+    serverCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
+
+    serverCommunicationErrorPopupTitle.setStyle("-fx-font-size: 25px;");
+  }
+
+  /**
+   * This server closes a server error popup.
+   */
+  public void closeServerErrorPopup() {
+    serverCommunicationErrorPopup.setManaged(false);
+    serverCommunicationErrorPopup.setVisible(false);
+
+    newRecordPopup.setEffect(null);
+    newRecordPopup.setMouseTransparent(false);
+  }
+
+
+  static void updateAppCache(JSONObject newScoreInfo) {
+    // 1. Add newScoreInfo to highScores list
+    ArrayList<JSONObject> highScores = AppCache.getInstance()
+        .getHighScores(newScoreInfo.getString("difficulty"));
+    highScores.add(newScoreInfo);
+
+    // 2. Sort highScores list
+    highScores.sort(Comparator.comparingLong(a -> a.getLong("time")));
+    highScores.sort(Comparator.comparingLong(a -> a.getLong("score")));
+
+    // 3. If highScores.size() > 10, delete last item in highScores
+    if (highScores.size() > 10) {
+      highScores.remove(highScores.size() - 1);
+    }
+  }
+
+
+  void displayGameWonPopup() {
+    gameWonPopup.setManaged(true);
+    gameWonPopup.setVisible(true);
+
+    gameWonPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
+    gameWonPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
+    gameWonPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    gameWonPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    gameWonPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
+        + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.04) + " 0 0 0;");
+    gameWonPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.15);
+    gameWonPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.15);
+
+    gameWonPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
+    gameWonPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
+
+    VBox.setVgrow(gameWonPopupButtonsContainer, Priority.ALWAYS);
+
+    gameWonPopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+
+    gameWonPopupPlayAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
+        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
+        + (Main.mainStage.getWidth() * 0.15) + "px;");
+    gameWonPopupMainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
+        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
+        + (Main.mainStage.getWidth() * 0.15) + "px;");
+  }
+
+
+  @FXML
+  void playAgain() {
+    if (gameLost) {
+      gameLostPopup.setManaged(false);
+      gameLostPopup.setVisible(false);
+    } else {
+      gameWonPopup.setManaged(false);
+      gameWonPopup.setVisible(false);
     }
 
+    stackpaneChild1.setEffect(null);
+    stackpaneChild1.setMouseTransparent(false); // makes items in gameplay page "clickable"
 
-    public boolean getGameStarted() {
-        return gameStarted;
+    try {
+      clearGrid();
+      buildGrid();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
-
-    public void setGameStarted(boolean gameStarted) {
-        this.gameStarted = gameStarted;
-    }
-
-
-    public boolean getGameLost() {
-        return gameLost;
-    }
-
-    public void setGameLost(boolean gameLost) {
-        this.gameLost = gameLost;
-    }
-
-    public void setFlagsLeftLbl(String flagsLeftText) {
-        flagsLeftLbl.setText(flagsLeftText);
-    }
-
-    public void setGridContainer(GridPane grid) {
-        gridContainer.getChildren().add(grid);
-    }
-
-
-    @FXML
-    private void closeExitPagePopup() {
-        exitPagePopup.setManaged(false);
-        exitPagePopup.setVisible(false);
-
-        stackpane_child1.setEffect(null);
-        stackpane_child1.setMouseTransparent(false); // makes items in gameplay page "clickable"
-
-        timerPaused = false;
-    }
-
-
-    @FXML
-    private void goToMainMenu() throws IOException {
-        endTimer();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bombland/FXML/main-view.fxml"));
-
-        MainController mainController = MainController.getInstance();
-        loader.setController(mainController);
-
-        Scene scene = new Scene(loader.load(), 1024, 768);
-        Main.mainStage.setScene(scene);
-        Main.mainStage.show();
-    }
-
-
-    @FXML
-    private void verifyExitPage() throws IOException {
-        if (!gameStarted) {
-            goToMainMenu();
-            return;
-        }
-
-        timerPaused = true;
-
-        stackpane_child1.setEffect(new GaussianBlur()); // blurs gameplay page
-        stackpane_child1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
-
-        exitPagePopup.setManaged(true);
-        exitPagePopup.setVisible(true);
-
-        exitPagePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
-        exitPagePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
-        exitPagePopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        exitPagePopup_title.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        exitPagePopup_imgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.03) + " 0 0 0;");
-        exitPagePopup_img.setFitWidth(Main.mainStage.getWidth() * 0.1);
-        exitPagePopup_img.setFitHeight(Main.mainStage.getWidth() * 0.1);
-
-        exitPagePopup_text.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
-
-        VBox.setVgrow(exitPagePopup_buttonsContainer, Priority.ALWAYS);
-
-        exitPagePopup_buttonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
-        exitPagePopup_cancelBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015 + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: " + (Main.mainStage.getWidth() * 0.15) + "px;");
-        exitPagePopup_mainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015 + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: " + (Main.mainStage.getWidth() * 0.15) + "px;");
-    }
-
-
-    @FXML
-    public void initialize() {
-        VBox.setVgrow(playPageContainer_inner, Priority.ALWAYS);
-
-        playPageContainer_header.styleProperty().bind(
-                Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.125))
-        );
-
-        backBtnContainer.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
-        );
-
-        backBtn.styleProperty().bind(
-                Bindings.format("-fx-background-radius: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
-        );
-
-
-        totalBombsLbl.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.3), Main.mainStage.widthProperty().multiply(0.035))
-        );
-
-        timeElapsedLbl.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.3), Main.mainStage.widthProperty().multiply(0.035))
-        );
-
-        flagsLeftLbl.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.3), Main.mainStage.widthProperty().multiply(0.035))
-        );
-
-        emptySpace.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
-        );
-
-
-        playPageContainer_header.styleProperty().bind(
-                Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.875))
-        );
-
-
-        buildGrid();
-    }
-
-
-    public void buildGrid() {
-        gameStarted = gameLost = false;
-        gameDuration = -1;
-        taskScheduler = Executors.newScheduledThreadPool(1);
-        timerPaused = false;
-        timeElapsedLbl.setText("0 seconds");
-
-        GameMap.getInstance().buildGrid();
-
-        final int bombs = GameMap.getInstance().getBombs();
-        totalBombsLbl.setText(bombs + " bombs");
-        flagsLeftLbl.setText(bombs + " flags left");
-    }
-
-
-    void startTimer() {
-        Runnable timerTask = () -> {
-            if (!timerPaused) {
-                gameDuration += 1;
-
-                // Update the UI on the JavaFX Application Thread
-                Platform.runLater(() -> {
-                    timeElapsedLbl.setText(gameDuration + " seconds");
-                });
-            }
-        };
-
-        // The timer task gets added to a new thread, and gets executed every second
-        taskScheduler.scheduleAtFixedRate(timerTask, 0, 1, TimeUnit.SECONDS);
-    }
-
-
-    void endTimer() {
-        if (taskScheduler != null) {
-            taskScheduler.shutdownNow();
-        }
-    }
-
-
-    void gameLost() {
-        AudioClip clip = new AudioClip(Objects.requireNonNull(PlayController.class.getResource("/com/example/bombland/Sounds/game_lost.wav")).toExternalForm());
-        clip.play();
-
-        ArrayList<Pair<Integer, Integer>> bombCoordinates = GameMap.getInstance().getBombCoordinates();
-
-        // Uncover all bomb tiles
-        for (int i = 0; i < bombCoordinates.size(); i++) {
-            Pair<Integer, Integer> coords = bombCoordinates.get(i);
-            Tile tile = GameMap.getInstance().getGridObjects().get(new Pair<>(coords.getKey(), coords.getValue()));
-            GameMap.getInstance().uncoverTile(tile);
-            GameMap.getInstance().incrementTilesUncovered();
-        }
-
-        stackpane_child1.setEffect(new GaussianBlur()); // blurs gameplay page
-        stackpane_child1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
-
-        displayGameLostPopup();
-    }
-
-
-    void displayGameLostPopup() {
-        gameLostPopup.setManaged(true);
-        gameLostPopup.setVisible(true);
-
-        gameLostPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
-        gameLostPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
-        gameLostPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        gameLostPopup_title.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        gameLostPopup_imgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.04) + " 0 0 0;");
-        gameLostPopup_img.setFitWidth(Main.mainStage.getWidth() * 0.15);
-        gameLostPopup_img.setFitHeight(Main.mainStage.getWidth() * 0.15);
-
-        gameLostPopup_timeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
-        gameLostPopup_timeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
-
-        VBox.setVgrow(gameLostPopup_buttonsContainer, Priority.ALWAYS);
-
-        gameLostPopup_buttonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
-
-        gameLostPopup_playAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015 + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: " + (Main.mainStage.getWidth() * 0.15) + "px;");
-        gameLostPopup_mainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015 + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: " + (Main.mainStage.getWidth() * 0.15) + "px;");
-    }
-
-
-    void gameWon() {
-        AudioClip clip = new AudioClip(Objects.requireNonNull(getClass().getResource("/com/example/bombland/Sounds/game_won.wav")).toExternalForm());
-        clip.play();
-
-        stackpane_child1.setEffect(new GaussianBlur()); // blurs gameplay page
-        stackpane_child1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
-
-        ArrayList<JSONObject> highScores = AppCache.getInstance().getHighScores(GameMap.getInstance().getGameDifficulty());
-
-        if (highScores.size() < 10 || gameDuration < highScores.get(highScores.size() - 1).getLong("score"))
-            displayRecordSetPopup();
-         else
-             displayGameWonPopup();
-    }
-
-
-    void displayRecordSetPopup() {
-        newRecordPopup.setManaged(true);
-        newRecordPopup.setVisible(true);
-
-        newRecordPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
-        newRecordPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
-        newRecordPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        newRecordPopup_title.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        newRecordPopup_imgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
-        newRecordPopup_img.setFitWidth(Main.mainStage.getWidth() * 0.15);
-        newRecordPopup_img.setFitHeight(Main.mainStage.getWidth() * 0.15);
-
-        newRecordPopup_timeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
-        newRecordPopup_timeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
-
-        newRecordPopup_text.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
-
-        playerName_textField.setStyle("-fx-pref-width: " + (Main.mainStage.getWidth() * 0.3) + "px; -fx-pref-height: " + (Main.mainStage.getWidth() * 0.03) + "px; -fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
-
-        VBox.setVgrow(newRecordPopup_buttonsContainer, Priority.ALWAYS);
-
-        newRecordPopup_playAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015 + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: " + (Main.mainStage.getWidth() * 0.15) + "px;");
-    }
-
-
-    @FXML
-    void saveNewRecord() {
-        if (playerName_textField.getText().isBlank()) {
-            playerName_error.setVisible(true); // display error
-            playerName_textField.setText("");
-        }
-        else {
-            playerName_error.setVisible(false);
-            newRecordPopup.setManaged(false);
-            newRecordPopup.setVisible(false);
-            displayGameWonPopup();
-
-            Task<Void> saveHighScoreTask = new Task<>() {
-                @Override
-                protected Void call() {
-                    JSONObject newScoreInfo = new JSONObject();
-                    newScoreInfo.put("time", System.currentTimeMillis());
-                    newScoreInfo.put("id", UUID.randomUUID().toString());
-                    newScoreInfo.put("score", gameDuration);
-                    newScoreInfo.put("name", playerName_textField.getText().strip());
-                    newScoreInfo.put("difficulty", GameMap.getInstance().getGameDifficulty());
-                    newScoreInfo.put("map", AppCache.getInstance().getGameMap());
-
-                    if (AppCache.getInstance().serverConnectionIsGood()) {
-                        DynamoDbClientUtil.saveNewHighScore(newScoreInfo, "BOMBLAND_" + GameMap.getInstance().getGameDifficulty() + "HighScores");
-
-                        // Send new score to WebSocket server (to be distributed to other active users)
-                        Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));
-                    }
-                    else {
-                        displayServerErrorPopup();
-                    }
-
-                    playerName_textField.setText("");
-
-                    updateAppCache(newScoreInfo);
-
-                    return null;
-                }
-            };
-
-            new Thread(saveHighScoreTask).start();
-        }
-    }
-
-
-    public void displayServerErrorPopup() {
-        newRecordPopup.setEffect(new GaussianBlur());
-        newRecordPopup.setMouseTransparent(true);
-
-        serverCommunicationErrorPopup.setManaged(true);
-        serverCommunicationErrorPopup.setVisible(true);
-
-        serverCommunicationErrorPopup.setMaxWidth(500);
-        serverCommunicationErrorPopup.setMaxHeight(400);
-        serverCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
-
-        serverCommunicationErrorPopup_title.setStyle("-fx-font-size: 25px;");
-    }
-
-
-    public void closeServerErrorPopup() {
-        serverCommunicationErrorPopup.setManaged(false);
-        serverCommunicationErrorPopup.setVisible(false);
-
-        newRecordPopup.setEffect(null);
-        newRecordPopup.setMouseTransparent(false);
-    }
-
-
-    static void updateAppCache(JSONObject newScoreInfo) {
-        // 1. Add newScoreInfo to highScores list
-        ArrayList<JSONObject> highScores = AppCache.getInstance().getHighScores(newScoreInfo.getString("difficulty"));
-        highScores.add(newScoreInfo);
-
-        // 2. Sort highScores list
-        highScores.sort(Comparator.comparingLong(a -> a.getLong("time")));
-        highScores.sort(Comparator.comparingLong(a -> a.getLong("score")));
-
-        // 3. If highScores.size() > 10, delete last item in highScores
-        if (highScores.size() > 10) {
-            highScores.remove(highScores.size() - 1);
-        }
-    }
-
-
-    void displayGameWonPopup() {
-        gameWonPopup.setManaged(true);
-        gameWonPopup.setVisible(true);
-
-        gameWonPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
-        gameWonPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
-        gameWonPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        gameWonPopup_title.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-        gameWonPopup_imgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.04) + " 0 0 0;");
-        gameWonPopup_img.setFitWidth(Main.mainStage.getWidth() * 0.15);
-        gameWonPopup_img.setFitHeight(Main.mainStage.getWidth() * 0.15);
-
-        gameWonPopup_timeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
-        gameWonPopup_timeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
-
-        VBox.setVgrow(gameWonPopup_buttonsContainer, Priority.ALWAYS);
-
-        gameWonPopup_buttonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
-
-        gameWonPopup_playAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015 + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: " + (Main.mainStage.getWidth() * 0.15) + "px;");
-        gameWonPopup_mainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015 + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: " + (Main.mainStage.getWidth() * 0.15) + "px;");
-    }
-
-
-    @FXML
-    void playAgain() {
-        if (gameLost) {
-            gameLostPopup.setManaged(false);
-            gameLostPopup.setVisible(false);
-        }
-        else {
-            gameWonPopup.setManaged(false);
-            gameWonPopup.setVisible(false);
-        }
-
-        stackpane_child1.setEffect(null);
-        stackpane_child1.setMouseTransparent(false); // makes items in gameplay page "clickable"
-
-        try {
-            clearGrid();
-            buildGrid();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void clearGrid() throws FileNotFoundException {
-        GameMap.getInstance().clearGrid();
-        gridContainer.getChildren().remove(0);
-    }
+  }
+
+
+  /**
+   * This function clears the grid.
+   */
+  public void clearGrid() {
+    GameMap.getInstance().clearGrid();
+    gridContainer.getChildren().remove(0);
+  }
 }

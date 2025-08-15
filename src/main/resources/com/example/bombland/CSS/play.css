@@ -1,4 +1,4 @@
-#playPageContainer_header {
+#playPageContainerHeader {
     /*-fx-background-color: #92FFB7;*/
     -fx-background-color: #FF0000;
 }
@@ -36,19 +36,19 @@
     -fx-alignment: center;
 }
 
-#exitPagePopup_title, #gameLostPopup_title, #gameWonPopup_title, #newRecordPopup_title {
+#exitPagePopupTitle, #gameLostPopupTitle, #gameWonPopupTitle, #newRecordPopupTitle {
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;
 }
 
-#gameLostPopup_timeTaken, #gameWonPopup_timeTaken, #newRecordPopup_timeTaken {
+#gameLostPopupTimeTaken, #gameWonPopupTimeTaken, #newRecordPopupTimeTaken {
     -fx-font-weight: bold;
     -fx-text-fill: gold;
 }
 
 
-#exitPagePopup_text, #newRecordPopup_text {
+#exitPagePopupText, #newRecordPopupText {
     -fx-wrap-text: true;
     -fx-font-weight: bold;
     -fx-text-alignment: center;
@@ -57,23 +57,23 @@
 
 
 
-#playerInfo_hbox {
+#playerInfoHbox {
     -fx-alignment: center;
 }
 
-#playerName_textField {
+#playerNameTextField {
     -fx-border-color: black;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
-#playerName_textField:focused {
-    /* Normally, when you click on the newRecordPopup_text, it's border color turns blue (to show that the element is in focus).
+#playerNameTextField:focused {
+    /* Normally, when you click on the newRecordPopupText, it's border color turns blue (to show that the element is in focus).
        This prevents the border color from turning blue */
     -fx-background-color: white;
 }
 
-#playerName_error {
+#playerNameError {
     -fx-text-fill: red;
     -fx-text-alignment: center;
     -fx-font-weight: bold;
@@ -110,7 +110,7 @@
     -fx-padding: 10px;
 }
 
-#serverCommunicationErrorPopup_title {
+#serverCommunicationErrorPopupTitle {
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;
