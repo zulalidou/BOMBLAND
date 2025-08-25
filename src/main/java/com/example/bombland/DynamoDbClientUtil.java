@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import org.json.JSONObject;
 import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.regions.Region;
@@ -35,10 +36,25 @@ public class DynamoDbClientUtil {
   public static void getHighScores() {
     // The AWS credentials have expired
     if (awsCredentials == null || awsCredentials.expiration().isBefore(Instant.now())) {
-      getTemporaryAwsCredentials();
+      try {
+        getTemporaryAwsCredentials();
+      } catch (Exception e) {
+        System.out.println("\n====================================================================");
+        System.out.println("ERROR - getHighScores(): Could not get temporary AWS credentials.");
+        System.out.println("====================================================================\n");
+        return;
+      }
     }
 
-    pullHighScoresFromDb();
+    try {
+      pullHighScoresFromDb();
+    } catch (CompletionException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - getHighScores(): Could not pull high scores from DynamoDB.");
+      System.out.println("====================================================================\n");
+      return;
+    }
+
     sortHighScores();
     categorizeHighScores();
   }
@@ -63,11 +79,8 @@ public class DynamoDbClientUtil {
           .build();
 
       awsCredentials = cognitoClient.getCredentialsForIdentity(credentialsRequest).credentials();
-    } catch (Exception err) {
-      System.out.println("===========================");
-      System.out.println("\nUH OH, SOMETHING WENT WRONG");
-      System.out.println(err);
-      System.out.println("===========================");
+    } catch (Exception e) {
+      throw e;
     }
   }
 
@@ -90,8 +103,12 @@ public class DynamoDbClientUtil {
         scanTable("BOMBLAND_HardHighScores", "Hard")
     );
 
-    // waits for all scans to complete
-    allScans.join();
+    try {
+      // Waits for all scans to complete
+      allScans.join();
+    } catch (CompletionException e) {
+      throw e;
+    }
 
     dynamodbAsyncClient.close();
   }
@@ -121,10 +138,6 @@ public class DynamoDbClientUtil {
       }
 
       AppCache.getInstance().setHighScore(highScoresList, gameDifficulty);
-    }).exceptionally(ex -> {
-      System.err.println("Scan failed for table: " + tableName);
-      ex.printStackTrace();
-      return null;
     });
   }
 

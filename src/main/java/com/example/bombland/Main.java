@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
-import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -71,40 +70,17 @@ public class Main extends Application {
   /**
    * This function establishes a connection to the server app, and then retrieves high scores.
    */
-  public void performBackgroundProcessing() {
-    Task<Void> backgroundProcessingTask = new Task<>() {
-      @Override
-      protected Void call() {
-        connectToWebSocketServer();
-
-
-        AppCache.getInstance().setGettingData(true);
-
-        getEnvironmentVariables();
-
-        if (AppCache.getInstance().serverConnectionIsGood()) {
-          DynamoDbClientUtil.getHighScores();
-        } else {
-          MainController.getInstance().displayServerErrorPopup();
-        }
-
-        AppCache.getInstance().setGettingData(false);
-
-        return null;
-      }
-    };
-
-    new Thread(backgroundProcessingTask).start();
+  private void performBackgroundProcessing() {
+    connectToWebSocketServer();
+    connectToDb();
   }
 
   /**
    * This function creates a task that runs every 30 mins. The purpose of that task is
    * to establish a websocket connection to the server app (assuming one doesn't already exist).
    */
-  public void connectToWebSocketServer() {
+  private void connectToWebSocketServer() {
     Runnable serverConnectionTask = () -> {
-      System.out.println("connectToWebSocketServer()");
-
       if (socketClient == null) {
         try {
           socketClient = new BomblandWebSocketClient();
@@ -121,11 +97,33 @@ public class Main extends Application {
   }
 
   /**
+   * This function creates a task that runs every 45 mins. The purpose of that task is
+   * to connect to the DB and retrieve high scores.
+   */
+  private void connectToDb() {
+    Runnable dbConnectionTask = () -> {
+      AppCache.getInstance().setGettingData(true);
+
+      if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
+        getEnvironmentVariables();
+      }
+
+      if (AppCache.getInstance().serverConnectionIsGood()) {
+        getHighScores();
+      } else {
+        // DO NOTHING; wait for the task to run again
+      }
+
+      AppCache.getInstance().setGettingData(false);
+    };
+
+    taskScheduler.scheduleAtFixedRate(dbConnectionTask, 0, 45, TimeUnit.MINUTES);
+  }
+
+  /**
    * This function retrieves the environment variables.
    */
-  public void getEnvironmentVariables() {
-    System.out.println("getEnvironmentVariables()");
-
+  private void getEnvironmentVariables() {
     HttpClient httpClient = HttpClient.newHttpClient();
 
     HttpRequest request = HttpRequest.newBuilder()
@@ -137,12 +135,21 @@ public class Main extends Application {
       // Send the request and get the response
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
       JSONObject environmentVarsObj = new JSONObject(response.body());
-      System.out.println(environmentVarsObj + "\n\n");
       AppCache.getInstance().setIdentityPoolId(environmentVarsObj.getString("identityPoolID"));
     } catch (Exception e) {
-      System.out.println("\ngetEnvironmentVariables() -- ERROR!");
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - getEnvironmentVariables(): Could not get environment variables.");
+      System.out.println("====================================================================\n");
+
       AppCache.getInstance().setServerConnectionGood(false);
     }
+  }
+
+  /**
+   * This function pulls the high scores stored in DynamoDB.
+   */
+  private void getHighScores() {
+    DynamoDbClientUtil.getHighScores();
   }
 
   /**
