@@ -7,6 +7,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -28,10 +31,12 @@ import org.json.JSONObject;
 public class Main extends Application {
   static Stage mainStage = null;
   static BomblandWebSocketClient socketClient = null;
+  private ScheduledExecutorService taskScheduler = null;
 
   @Override
   public void start(Stage stage) {
     mainStage = stage;
+    taskScheduler = Executors.newScheduledThreadPool(2);
 
     performBackgroundProcessing();
 
@@ -69,7 +74,7 @@ public class Main extends Application {
   public void performBackgroundProcessing() {
     Task<Void> backgroundProcessingTask = new Task<>() {
       @Override
-      protected Void call() throws URISyntaxException {
+      protected Void call() {
         connectToWebSocketServer();
 
 
@@ -93,20 +98,34 @@ public class Main extends Application {
   }
 
   /**
-   * This function establishes a connection to the server app.
-   *
-   * @throws URISyntaxException If the URI of the server app provided is invalid.
+   * This function creates a task that runs every 30 mins. The purpose of that task is
+   * to establish a websocket connection to the server app (assuming one doesn't already exist).
    */
-  public void connectToWebSocketServer() throws URISyntaxException {
-    socketClient = new BomblandWebSocketClient();
-    socketClient.connectClient();
-//    socketClient.sendHighScore("highScore");
+  public void connectToWebSocketServer() {
+    Runnable serverConnectionTask = () -> {
+      System.out.println("connectToWebSocketServer()");
+
+      if (socketClient == null) {
+        try {
+          socketClient = new BomblandWebSocketClient();
+          socketClient.connectClient();
+        } catch (URISyntaxException e) {
+          System.out.println("\n==================================================");
+          System.out.println("The URI provided in BomblandWebSocketClient() is not valid");
+          System.out.println("==================================================\n");
+        }
+      }
+    };
+
+    taskScheduler.scheduleAtFixedRate(serverConnectionTask, 0, 30, TimeUnit.MINUTES);
   }
 
   /**
    * This function retrieves the environment variables.
    */
   public void getEnvironmentVariables() {
+    System.out.println("getEnvironmentVariables()");
+
     HttpClient httpClient = HttpClient.newHttpClient();
 
     HttpRequest request = HttpRequest.newBuilder()
@@ -118,6 +137,7 @@ public class Main extends Application {
       // Send the request and get the response
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
       JSONObject environmentVarsObj = new JSONObject(response.body());
+      System.out.println(environmentVarsObj + "\n\n");
       AppCache.getInstance().setIdentityPoolId(environmentVarsObj.getString("identityPoolID"));
     } catch (Exception e) {
       System.out.println("\ngetEnvironmentVariables() -- ERROR!");

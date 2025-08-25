@@ -22,6 +22,7 @@ public class BomblandWebSocketClient extends WebSocketClient {
    */
   public BomblandWebSocketClient() throws URISyntaxException {
     super(new URI("wss://bombland-server.onrender.com/websocket/distribute-new-highscore"));
+//    super(new URI("wss://bombland-server.onrender.com/establish-server-connection"));
   }
 
   @Override
@@ -56,10 +57,18 @@ public class BomblandWebSocketClient extends WebSocketClient {
   public void onClose(int code, String reason, boolean remote) {
     System.out.println("\nonClose()");
 
-    if (isConnected) {
-      isConnected = false;
-      System.out.println("Disconnected from the server.");
-    }
+    isConnected = false;
+    System.out.println("\n====================================================================");
+    System.out.println("Disconnected from the server.");
+    System.out.println("code: " + code);
+    System.out.println("reason: " + reason + "\n");
+    System.out.println("Possible reasons:");
+    System.out.println("- The WebSocket URL used to connect to the server is incorrect");
+    System.out.println("- The server-side WebSocket endpoint might not be correctly configured");
+    System.out.println("- A firewall or proxy might be blocking or misrouting the WebSocket request");
+    System.out.println("====================================================================\n");
+
+    Main.socketClient = null;
   }
 
   @Override
