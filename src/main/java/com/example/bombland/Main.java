@@ -157,7 +157,7 @@ public class Main extends Application {
    *
    * @param stage The window that displays the GUI for the app.
    */
-  public void showSplashScreen(Stage stage) {
+  private void showSplashScreen(Stage stage) {
     Text textBeforeO = new Text("B");
     textBeforeO.styleProperty().bind(
         // Sets the font size to be 9% of the app window's width
@@ -188,22 +188,21 @@ public class Main extends Application {
     stage.setScene(splashScene);
     stage.show();
 
+
+    // The timer below helps in changing the background color of the splash screen from black to red.
+    // When timer.start() is called, the handle() function will be called repeatedly. It will only
+    // stop when the stop() function is called.
     AnimationTimer timer = new AnimationTimer() {
-      int i = 0;
+      int redValue = 0;
 
       @Override
       public void handle(long now) {
-        splashScreen.setStyle("-fx-background-color: rgb(" + i + ", 0, 0);");
-        i++;
+        splashScreen.setStyle("-fx-background-color: rgb(" + redValue + ", 0, 0);");
+        redValue++;
 
-        if (i >= 255) {
+        if (redValue >= 255) {
           stop(); // Stop the AnimationTimer
-
-          try {
-              showMainMenu(stage);
-          } catch (IOException e) {
-              throw new RuntimeException(e);
-          }
+          showMainMenu(stage);
         }
       }
     };
@@ -215,17 +214,22 @@ public class Main extends Application {
    * This function sets up and displays the main menu.
    *
    * @param stage The window that displays the GUI for the app.
-   * @throws IOException If the main-view.fxml file is unreachable.
    */
-  public void showMainMenu(Stage stage) throws IOException {
+  private void showMainMenu(Stage stage) {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/main-view.fxml"));
 
     MainController mainController = MainController.getInstance();
     loader.setController(mainController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    stage.setScene(scene);
-    stage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      stage.setScene(scene);
+      stage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - showMainMenu(): Could not show the main menu screen.");
+      System.out.println("====================================================================\n");
+    }
 
     /*
     System.out.println("\n- width = " + Main.mainStage.widthProperty());
