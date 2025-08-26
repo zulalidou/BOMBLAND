@@ -232,7 +232,7 @@ public class InstructionsController {
   }
 
   @FXML
-  private void goToMainMenu(ActionEvent event) throws IOException {
+  private void goToMainMenu(ActionEvent event) {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/main-view.fxml")
     );
@@ -240,8 +240,14 @@ public class InstructionsController {
     MainController mainController = MainController.getInstance();
     loader.setController(mainController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - InstructionsController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("====================================================================\n");
+    }
   }
 }
