@@ -139,7 +139,7 @@ public class MainController {
   }
 
   @FXML
-  private void openDifficultySelectionPage(ActionEvent event) throws IOException {
+  private void openDifficultySelectionPage(ActionEvent event) {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/difficulty-selection-view.fxml")
     );
@@ -147,13 +147,19 @@ public class MainController {
     DifficultySelectionController difficultyController = DifficultySelectionController.getInstance();
     loader.setController(difficultyController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - openDifficultySelectionPage(): Could not open the difficulty selection page.");
+      System.out.println("====================================================================\n");
+    }
   }
 
   @FXML
-  private void openInstructionsPage(ActionEvent event) throws IOException {
+  private void openInstructionsPage(ActionEvent event) {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/instructions-view.fxml")
     );
@@ -161,13 +167,19 @@ public class MainController {
     InstructionsController instructionsController = InstructionsController.getInstance();
     loader.setController(instructionsController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - openInstructionsPage(): Could not open the instructions page.");
+      System.out.println("====================================================================\n");
+    }
   }
 
   @FXML
-  private void openHighScoresPage(ActionEvent event) throws IOException {
+  private void openHighScoresPage(ActionEvent event) {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/high-scores-view.fxml")
     );
@@ -175,9 +187,15 @@ public class MainController {
     HighScoresController highScoresController = HighScoresController.getInstance();
     loader.setController(highScoresController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - openHighScoresPage(): Could not open the high scores page.");
+      System.out.println("====================================================================\n");
+    }
   }
 
   @FXML
