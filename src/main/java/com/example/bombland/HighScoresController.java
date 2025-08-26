@@ -231,10 +231,13 @@ public class HighScoresController {
         Thread.sleep(100);  // Give some time for the state to change
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
+
+        System.out.println("\n====================================================================");
+        System.out.println("ERROR - waitForDataRetrieval(): An error occurred while the thread was sleeping.");
+        System.out.println("====================================================================\n");
       }
     }
   }
-
 
   private void displayLoadingIcon() {
     // blurs the gameplay page
@@ -255,9 +258,8 @@ public class HighScoresController {
     loadingIcon.setVisible(false);
   }
 
-
   @FXML
-  private void goToMainMenu() throws IOException {
+  private void goToMainMenu() {
     AppCache.getInstance().setMapOfHighScoresBeingShown("");
 
     FXMLLoader loader = new FXMLLoader(
@@ -266,11 +268,16 @@ public class HighScoresController {
     MainController mainController = MainController.getInstance();
     loader.setController(mainController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - HighScoresController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("====================================================================\n");
+    }
   }
-
 
   @FXML
   private void showRectangleMapHighScores() {
@@ -382,10 +389,10 @@ public class HighScoresController {
   private void displayScores(String difficulty, String map, VBox container) {
     container.getChildren().clear();
 
-    ArrayList<JSONObject> easyHighScores = getMapScores(difficulty, map);
+    ArrayList<JSONObject> highScores = getMapScores(difficulty, map);
 
-    if (!easyHighScores.isEmpty()) {
-      addScoresToScreen(easyHighScores, container);
+    if (!highScores.isEmpty()) {
+      addScoresToScreen(highScores, container);
     } else {
       displayPlaceholder(container);
     }
@@ -424,7 +431,8 @@ public class HighScoresController {
 
   private void displayPlaceholder(VBox scoresContainer) {
     Image img = new Image(Objects.requireNonNull(
-        getClass().getResourceAsStream("/com/example/bombland/Images/smiley-face.png")));
+        getClass().getResourceAsStream("/com/example/bombland/Images/smiley-face.png"))
+    );
     ImageView imgView = new ImageView();
     imgView.setImage(img);
     imgView.setFitWidth(90);
