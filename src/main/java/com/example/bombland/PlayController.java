@@ -200,7 +200,6 @@ public class PlayController {
     return instance;
   }
 
-
   public boolean getGameStarted() {
     return gameStarted;
   }
@@ -208,7 +207,6 @@ public class PlayController {
   public void setGameStarted(boolean gameStarted) {
     this.gameStarted = gameStarted;
   }
-
 
   public boolean getGameLost() {
     return gameLost;
@@ -236,7 +234,6 @@ public class PlayController {
     gridContainer.getChildren().add(grid);
   }
 
-
   @FXML
   private void closeExitPagePopup() {
     exitPagePopup.setManaged(false);
@@ -248,9 +245,8 @@ public class PlayController {
     timerPaused = false;
   }
 
-
   @FXML
-  private void goToMainMenu() throws IOException {
+  private void goToMainMenu() {
     endTimer();
 
     FXMLLoader loader = new FXMLLoader(
@@ -260,14 +256,19 @@ public class PlayController {
     MainController mainController = MainController.getInstance();
     loader.setController(mainController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - PlayController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("====================================================================\n");
+    }
   }
 
-
   @FXML
-  private void verifyExitPage() throws IOException {
+  private void verifyExitPage() {
     if (!gameStarted) {
       goToMainMenu();
       return;
@@ -374,7 +375,6 @@ public class PlayController {
     flagsLeftLbl.setText(bombs + " flags left");
   }
 
-
   void startTimer() {
     Runnable timerTask = () -> {
       if (!timerPaused) {
@@ -391,13 +391,11 @@ public class PlayController {
     taskScheduler.scheduleAtFixedRate(timerTask, 0, 1, TimeUnit.SECONDS);
   }
 
-
   void endTimer() {
     if (taskScheduler != null) {
       taskScheduler.shutdownNow();
     }
   }
-
 
   void gameLost() {
     AudioClip clip = new AudioClip(Objects.requireNonNull(
@@ -420,7 +418,6 @@ public class PlayController {
 
     displayGameLostPopup();
   }
-
 
   void displayGameLostPopup() {
     gameLostPopup.setManaged(true);
@@ -452,7 +449,6 @@ public class PlayController {
         + (Main.mainStage.getWidth() * 0.15) + "px;");
   }
 
-
   void gameWon() {
     AudioClip clip = new AudioClip(Objects.requireNonNull(
         getClass().getResource("/com/example/bombland/Sounds/game_won.wav")).toExternalForm()
@@ -471,7 +467,6 @@ public class PlayController {
       displayGameWonPopup();
     }
   }
-
 
   void displayRecordSetPopup() {
     newRecordPopup.setManaged(true);
@@ -504,7 +499,6 @@ public class PlayController {
         + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
         + (Main.mainStage.getWidth() * 0.15) + "px;");
   }
-
 
   @FXML
   void saveNewRecord() {
@@ -578,7 +572,6 @@ public class PlayController {
     newRecordPopup.setMouseTransparent(false);
   }
 
-
   static void updateAppCache(JSONObject newScoreInfo) {
     // 1. Add newScoreInfo to highScores list
     ArrayList<JSONObject> highScores = AppCache.getInstance()
@@ -594,7 +587,6 @@ public class PlayController {
       highScores.remove(highScores.size() - 1);
     }
   }
-
 
   void displayGameWonPopup() {
     gameWonPopup.setManaged(true);
@@ -626,7 +618,6 @@ public class PlayController {
         + (Main.mainStage.getWidth() * 0.15) + "px;");
   }
 
-
   @FXML
   void playAgain() {
     if (gameLost) {
@@ -644,10 +635,11 @@ public class PlayController {
       clearGrid();
       buildGrid();
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - playAgain(): Could not rebuild the game map.");
+      System.out.println("====================================================================\n");
     }
   }
-
 
   /**
    * This function clears the grid.
