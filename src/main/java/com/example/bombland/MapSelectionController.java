@@ -225,7 +225,7 @@ public class MapSelectionController {
 
 
   @FXML
-  private void goToDifficultySelection() throws IOException {
+  private void goToDifficultySelection() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/difficulty-selection-view.fxml")
     );
@@ -233,37 +233,43 @@ public class MapSelectionController {
     DifficultySelectionController difficultyController = DifficultySelectionController.getInstance();
     loader.setController(difficultyController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - goToDifficultySelection(): Could not open the difficulty selection page.");
+      System.out.println("====================================================================\n");
+    }
   }
 
   @FXML
-  private void pickRectangleMap() throws IOException {
+  private void pickRectangleMap() {
     AppCache.getInstance().setGameMap("Rectangle");
     startGame();
   }
 
   @FXML
-  private void pickBombMap() throws IOException {
+  private void pickBombMap() {
     AppCache.getInstance().setGameMap("Bomb");
     startGame();
   }
 
   @FXML
-  private void pickFaceMap() throws IOException {
+  private void pickFaceMap() {
     AppCache.getInstance().setGameMap("Face");
     startGame();
   }
 
   @FXML
-  private void pickFlowerMap() throws IOException {
+  private void pickFlowerMap() {
     AppCache.getInstance().setGameMap("Flower");
     startGame();
   }
 
   @FXML
-  private void startGame() throws IOException {
+  private void startGame() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/play-view.fxml")
     );
@@ -271,8 +277,14 @@ public class MapSelectionController {
     PlayController playController = PlayController.getInstance();
     loader.setController(playController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - startGame(): Could not open the game map.");
+      System.out.println("====================================================================\n");
+    }
   }
 }
