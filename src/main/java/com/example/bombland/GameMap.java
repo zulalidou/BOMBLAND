@@ -180,7 +180,9 @@ public class GameMap {
             try {
               handleTileClick(tileObj);
             } catch (IOException e) {
-              throw new RuntimeException(e);
+              System.out.println("\n====================================================================");
+              System.out.println("ERROR - buildRectangleGrid(): Could not build the rectangle grid.");
+              System.out.println("====================================================================\n");
             }
           }
         });
@@ -268,7 +270,9 @@ public class GameMap {
             try {
               handleTileClick(tileObj);
             } catch (IOException e) {
-              throw new RuntimeException(e);
+              System.out.println("\n====================================================================");
+              System.out.println("ERROR - buildGrids(): Could not build the other grids.");
+              System.out.println("====================================================================\n");
             }
           }
         });
