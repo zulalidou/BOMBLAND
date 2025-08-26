@@ -147,7 +147,7 @@ public class DifficultySelectionController {
   }
 
   @FXML
-  private void goToMainMenu() throws IOException {
+  private void goToMainMenu() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/main-view.fxml")
     );
@@ -155,31 +155,37 @@ public class DifficultySelectionController {
     MainController mainController = MainController.getInstance();
     loader.setController(mainController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - DifficultySelectionController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("====================================================================\n");
+    }
   }
 
   @FXML
-  private void pickEasyDifficulty() throws IOException {
+  private void pickEasyDifficulty() {
     AppCache.getInstance().setGameDifficulty("Easy");
     openMapSelectionPage();
   }
 
   @FXML
-  private void pickMediumDifficulty() throws IOException {
+  private void pickMediumDifficulty() {
     AppCache.getInstance().setGameDifficulty("Medium");
     openMapSelectionPage();
   }
 
   @FXML
-  private void pickHardDifficulty() throws IOException {
+  private void pickHardDifficulty() {
     AppCache.getInstance().setGameDifficulty("Hard");
     openMapSelectionPage();
   }
 
   @FXML
-  private void openMapSelectionPage() throws IOException {
+  private void openMapSelectionPage() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/map-selection-view.fxml")
     );
@@ -187,8 +193,14 @@ public class DifficultySelectionController {
     MapSelectionController mapController = MapSelectionController.getInstance();
     loader.setController(mapController);
 
-    Scene scene = new Scene(loader.load(), 1024, 768);
-    Main.mainStage.setScene(scene);
-    Main.mainStage.show();
+    try {
+      Scene scene = new Scene(loader.load(), 1024, 768);
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - goToMainMenu(): Could not open the map selection page.");
+      System.out.println("====================================================================\n");
+    }
   }
 }
