@@ -158,7 +158,6 @@ public class DynamoDbClientUtil {
     getTopHighScoresForEachMap("Hard");
   }
 
-
   // Places the top 10 high scores of each map in the APP_CACHE (based on the difficulty provided)
   private static void getTopHighScoresForEachMap(String mode) {
     ArrayList<JSONObject> rectangleMapHighScores = new ArrayList<>();
@@ -257,8 +256,9 @@ public class DynamoDbClientUtil {
 
       dynamoDbClient.putItem(insertNewHighScoreRequest);
     } catch (Exception e) {
-      System.out.println("\n\n__ERROR OCCURRED__:");
-      e.printStackTrace();
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - putScoreInDb(): Could not save the new high score to the DB.");
+      System.out.println("====================================================================\n");
     }
   }
 }
