@@ -28,7 +28,7 @@ public class AppCache {
     gameDifficulty = "";
     gameMap = "";
     mapOfHighScoresBeingShown = "";
-    isServerConnectionGood = true;
+    isServerConnectionGood = false;
   }
 
   /**

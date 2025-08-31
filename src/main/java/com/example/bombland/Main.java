@@ -53,6 +53,11 @@ public class Main extends Application {
   public void stop() {
     // Closing the entire app doesn't kill all threads,
     // so I'm explicitly having the executor service kill all tasks I queued in the background
+
+    if (taskScheduler != null) {
+      taskScheduler.shutdown();
+    }
+
     PlayController.getInstance().endTimer();
   }
 
@@ -72,7 +77,8 @@ public class Main extends Application {
    */
   private void performBackgroundProcessing() {
     connectToWebSocketServer();
-    connectToDb();
+    connectToSqlDb();
+    getHighScoresFromDynamoDb();
   }
 
   /**
@@ -97,27 +103,47 @@ public class Main extends Application {
   }
 
   /**
+   * This function creates a task that runs every 40 mins. The purpose of that task is
+   * to see if there are any high scores stored locally that weren't stored in DynamoDB.
+   * If that's the case, those high scores are now sent to DynamoDB.
+   */
+  private void connectToSqlDb() {
+    Runnable sqlDbConnectionTask = () -> {
+      try {
+        if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
+          getEnvironmentVariables();
+        }
+
+        SqliteDbHelper.createTable();
+        SqliteDbHelper.sendDataFromSqliteToDynamoDb();
+      } catch (Exception e) {
+        System.out.println("\n==================================================");
+        System.out.println("ERROR - connectToSqlDb(): Could not connect to the SQL database.");
+        System.out.println("==================================================\n");
+      }
+    };
+
+    taskScheduler.scheduleAtFixedRate(sqlDbConnectionTask, 0, 40, TimeUnit.MINUTES);
+  }
+
+  /**
    * This function creates a task that runs every 45 mins. The purpose of that task is
    * to connect to the DB and retrieve high scores.
    */
-  private void connectToDb() {
-    Runnable dbConnectionTask = () -> {
+  private void getHighScoresFromDynamoDb() {
+    Runnable dynamoDbConnectionTask = () -> {
       AppCache.getInstance().setGettingData(true);
 
       if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
         getEnvironmentVariables();
       }
 
-      if (AppCache.getInstance().serverConnectionIsGood()) {
-        getHighScores();
-      } else {
-        // DO NOTHING; wait for the task to run again
-      }
+      DynamoDbClientUtil.getHighScores();
 
       AppCache.getInstance().setGettingData(false);
     };
 
-    taskScheduler.scheduleAtFixedRate(dbConnectionTask, 0, 45, TimeUnit.MINUTES);
+    taskScheduler.scheduleAtFixedRate(dynamoDbConnectionTask, 0, 45, TimeUnit.MINUTES);
   }
 
   /**
@@ -140,16 +166,7 @@ public class Main extends Application {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - getEnvironmentVariables(): Could not get environment variables.");
       System.out.println("====================================================================\n");
-
-      AppCache.getInstance().setServerConnectionGood(false);
     }
-  }
-
-  /**
-   * This function pulls the high scores stored in DynamoDB.
-   */
-  private void getHighScores() {
-    DynamoDbClientUtil.getHighScores();
   }
 
   /**

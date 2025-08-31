@@ -117,7 +117,7 @@
     -fx-pref-width: 500px;
 }
 
-.serverErrortext {
+.serverErrorText {
     -fx-wrap-text: true;
     -fx-font-size: 16px;
     -fx-text-fill: red;
@@ -139,4 +139,6 @@
 
 #serverErrorLastSentence {
     -fx-padding: 12px 0 20px 0;
+    -fx-text-fill: red;
+    -fx-font-size: 16px;
 }

@@ -209,10 +209,24 @@ public class DynamoDbClientUtil {
 
     // The AWS credentials have expired
     if (awsCredentials == null || awsCredentials.expiration().isBefore(Instant.now())) {
-      getTemporaryAwsCredentials();
+      try {
+        getTemporaryAwsCredentials();
+      } catch (Exception e) {
+        System.out.println("\n====================================================================");
+        System.out.println("ERROR - saveNewHighScore(): Could not get temporary AWS credentials.");
+        System.out.println("====================================================================\n");
+        throw e;
+      }
     }
 
-    putScoreInDb(newHighScoreInfo, tableName);
+    try {
+      putScoreInDb(newHighScoreInfo, tableName);
+    } catch (Exception e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - saveNewHighScore(): Could not store new high score in database.");
+      System.out.println("====================================================================\n");
+      throw e;
+    }
   }
 
   /**
@@ -259,6 +273,7 @@ public class DynamoDbClientUtil {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - putScoreInDb(): Could not save the new high score to the DB.");
       System.out.println("====================================================================\n");
+      throw e;
     }
   }
 }

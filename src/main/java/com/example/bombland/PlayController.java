@@ -1,6 +1,9 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Objects;
@@ -522,18 +525,24 @@ public class PlayController {
           newScoreInfo.put("difficulty", GameMap.getInstance().getGameDifficulty());
           newScoreInfo.put("map", AppCache.getInstance().getGameMap());
 
-          if (AppCache.getInstance().serverConnectionIsGood()) {
+          // Store new high score in DB
+          try {
             DynamoDbClientUtil.saveNewHighScore(newScoreInfo,
                 "BOMBLAND_" + GameMap.getInstance().getGameDifficulty() + "HighScores");
 
-            // Send new score to WebSocket server (to be distributed to other active users)
-            Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));
-          } else {
-            displayServerErrorPopup();
+            // If the condition below doesn't execute, things will still be fine because the
+            // dynamoDbConnectionTask regularly pulls the high scores from DynamoDB, so
+            // sooner or later all players will have access to the latest scores.
+            if (AppCache.getInstance().serverConnectionIsGood()) {
+              // Send new score to WebSocket server (to be distributed to other active users)
+              Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));
+            }
+          } catch (Exception e) {
+            displayServerErrorPopup(); // This should be "DB" not "Server"
+            saveHighScoreToSqlite(newScoreInfo);
           }
 
           playerNameTextField.setText("");
-
           updateAppCache(newScoreInfo);
 
           return null;
@@ -570,6 +579,31 @@ public class PlayController {
 
     newRecordPopup.setEffect(null);
     newRecordPopup.setMouseTransparent(false);
+  }
+
+  /**
+   * This function saves the new high score to SQLite. (Once connection to DynamoDB is
+   * reestablished, the high score will be moved from SQLite to DynamoDB.)
+   *
+   * @param info The JSONObject that stores the info about the new high score.
+   */
+  private void saveHighScoreToSqlite(JSONObject info) {
+    String sql = "INSERT INTO high_scores(time, id, score, name, difficulty, map) VALUES(?,?,?,?,?,?)";
+
+    try (Connection connection = SqliteDbHelper.getConnection();
+         PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setLong(1, Long.parseLong(info.get("time").toString()));
+      pstmt.setString(2, info.get("id").toString());
+      pstmt.setInt(3, Integer.parseInt(info.get("score").toString()));
+      pstmt.setString(4, info.get("name").toString());
+      pstmt.setString(5, info.get("difficulty").toString());
+      pstmt.setString(6, info.get("map").toString());
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - saveHighScoreToSqlite(): Could not save the new high score to the SQLite database.");
+      System.out.println("====================================================================\n");
+    }
   }
 
   static void updateAppCache(JSONObject newScoreInfo) {

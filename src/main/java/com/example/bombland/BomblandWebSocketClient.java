@@ -31,6 +31,8 @@ public class BomblandWebSocketClient extends WebSocketClient {
     isConnected = true;
 
     System.out.println("Connected to the WebSocket server.");
+    AppCache.getInstance().setServerConnectionGood(true);
+
     // Send a message (e.g., a high score) when the connection is established
     // sendHighScore("1500");
   }
@@ -69,12 +71,12 @@ public class BomblandWebSocketClient extends WebSocketClient {
     System.out.println("====================================================================\n");
 
     Main.socketClient = null;
+    AppCache.getInstance().setServerConnectionGood(false);
   }
 
   @Override
   public void onError(Exception ex) {
     System.out.println("\nonError()");
-    AppCache.getInstance().setServerConnectionGood(false);
   }
 
   /**
