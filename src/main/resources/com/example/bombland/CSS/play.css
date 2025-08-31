@@ -105,25 +105,25 @@
 }
 
 
-#serverCommunicationErrorPopup {
+#databaseCommunicationErrorPopup {
     -fx-background-color: black;
     -fx-padding: 10px;
 }
 
-#serverCommunicationErrorPopupTitle {
+#databaseCommunicationErrorPopupTitle {
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;
     -fx-pref-width: 500px;
 }
 
-.serverErrorText {
+.databaseErrorText {
     -fx-wrap-text: true;
     -fx-font-size: 16px;
     -fx-text-fill: red;
 }
 
-#closeServerErrorPopupBtn {
+#closeDatabaseErrorPopupBtn {
     -fx-pref-width: 480px;
     -fx-pref-height: 40px;
     -fx-background-radius: 20px;
@@ -132,12 +132,12 @@
     -fx-text-fill: white;
 }
 
-#closeServerErrorPopupBtn:hover {
+#closeDatabaseErrorPopupBtn:hover {
     -fx-text-fill: black;
     -fx-cursor: hand;
 }
 
-#serverErrorLastSentence {
+#databaseErrorLastSentence {
     -fx-padding: 12px 0 20px 0;
     -fx-text-fill: red;
     -fx-font-size: 16px;

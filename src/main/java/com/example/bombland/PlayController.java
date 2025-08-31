@@ -83,7 +83,7 @@ public class PlayController {
   VBox newRecordPopupImgContainer;
 
   @FXML
-  VBox serverCommunicationErrorPopup;
+  VBox databaseCommunicationErrorPopup;
 
   @FXML
   Label totalBombsLbl;
@@ -125,7 +125,7 @@ public class PlayController {
   Label playerNameError;
 
   @FXML
-  Label serverCommunicationErrorPopupTitle;
+  Label databaseCommunicationErrorPopupTitle;
 
   @FXML
   Button backBtn;
@@ -540,7 +540,7 @@ public class PlayController {
               Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));
             }
           } catch (Exception e) {
-            displayServerErrorPopup(); // This should be "DB" not "Server"
+            displayDbErrorPopup();
             saveHighScoreToSqlite(newScoreInfo);
           }
 
@@ -556,28 +556,28 @@ public class PlayController {
   }
 
   /**
-   * This function displays a server error popup.
+   * This function displays an error popup.
    */
-  public void displayServerErrorPopup() {
+  public void displayDbErrorPopup() {
     newRecordPopup.setEffect(new GaussianBlur());
     newRecordPopup.setMouseTransparent(true);
 
-    serverCommunicationErrorPopup.setManaged(true);
-    serverCommunicationErrorPopup.setVisible(true);
+    databaseCommunicationErrorPopup.setManaged(true);
+    databaseCommunicationErrorPopup.setVisible(true);
 
-    serverCommunicationErrorPopup.setMaxWidth(500);
-    serverCommunicationErrorPopup.setMaxHeight(400);
-    serverCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
+    databaseCommunicationErrorPopup.setMaxWidth(500);
+    databaseCommunicationErrorPopup.setMaxHeight(400);
+    databaseCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
 
-    serverCommunicationErrorPopupTitle.setStyle("-fx-font-size: 25px;");
+    databaseCommunicationErrorPopupTitle.setStyle("-fx-font-size: 25px;");
   }
 
   /**
-   * This server closes a server error popup.
+   * This function closes an error popup.
    */
-  public void closeServerErrorPopup() {
-    serverCommunicationErrorPopup.setManaged(false);
-    serverCommunicationErrorPopup.setVisible(false);
+  public void closeDatabaseErrorPopup() {
+    databaseCommunicationErrorPopup.setManaged(false);
+    databaseCommunicationErrorPopup.setVisible(false);
 
     newRecordPopup.setEffect(null);
     newRecordPopup.setMouseTransparent(false);
