@@ -153,7 +153,7 @@ public class Main extends Application {
   /**
    * This function retrieves the environment variables.
    */
-  private void getEnvironmentVariables() {
+  public static void getEnvironmentVariables() {
     System.out.println("getEnvironmentVariables()");
 
     HttpClient httpClient = HttpClient.newHttpClient();

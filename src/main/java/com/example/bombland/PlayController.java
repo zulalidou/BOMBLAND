@@ -529,6 +529,10 @@ public class PlayController {
 
           // Store new high score in DB
           try {
+            if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
+              Main.getEnvironmentVariables();
+            }
+
             DynamoDbClientUtil.saveNewHighScore(newScoreInfo,
                 "BOMBLAND_" + GameMap.getInstance().getGameDifficulty() + "HighScores");
 
