@@ -240,6 +240,8 @@ public class MapSelectionController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - goToDifficultySelection(): Could not open the difficulty selection page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
@@ -284,6 +286,8 @@ public class MapSelectionController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - startGame(): Could not open the game map.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }

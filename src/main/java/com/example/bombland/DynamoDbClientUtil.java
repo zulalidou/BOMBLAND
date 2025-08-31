@@ -41,6 +41,8 @@ public class DynamoDbClientUtil {
       } catch (Exception e) {
         System.out.println("\n====================================================================");
         System.out.println("ERROR - getHighScores(): Could not get temporary AWS credentials.");
+        System.out.println("---");
+        System.out.println(e.getCause());
         System.out.println("====================================================================\n");
         return;
       }
@@ -51,6 +53,8 @@ public class DynamoDbClientUtil {
     } catch (CompletionException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - getHighScores(): Could not pull high scores from DynamoDB.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
       return;
     }
@@ -65,23 +69,19 @@ public class DynamoDbClientUtil {
         .region(Region.US_WEST_2)
         .build();
 
-    try {
-      GetIdRequest getIdRequest = GetIdRequest.builder()
-          .identityPoolId(AppCache.getInstance().getIdentityPoolId())
-          .build();
+    GetIdRequest getIdRequest = GetIdRequest.builder()
+        .identityPoolId(AppCache.getInstance().getIdentityPoolId())
+        .build();
 
-      GetIdResponse getIdResponse = cognitoClient.getId(getIdRequest);
-      String identityId = getIdResponse.identityId();
+    GetIdResponse getIdResponse = cognitoClient.getId(getIdRequest);
+    String identityId = getIdResponse.identityId();
 
-      GetCredentialsForIdentityRequest credentialsRequest = GetCredentialsForIdentityRequest
-          .builder()
-          .identityId(identityId)  // Pass the identityId retrieved from GetId
-          .build();
+    GetCredentialsForIdentityRequest credentialsRequest = GetCredentialsForIdentityRequest
+        .builder()
+        .identityId(identityId)  // Pass the identityId retrieved from GetId
+        .build();
 
-      awsCredentials = cognitoClient.getCredentialsForIdentity(credentialsRequest).credentials();
-    } catch (Exception e) {
-      throw e;
-    }
+    awsCredentials = cognitoClient.getCredentialsForIdentity(credentialsRequest).credentials();
   }
 
   /**
@@ -103,12 +103,8 @@ public class DynamoDbClientUtil {
         scanTable("BOMBLAND_HardHighScores", "Hard")
     );
 
-    try {
-      // Waits for all scans to complete
-      allScans.join();
-    } catch (CompletionException e) {
-      throw e;
-    }
+    // Waits for all scans to complete
+    allScans.join();
 
     dynamodbAsyncClient.close();
   }
@@ -214,6 +210,8 @@ public class DynamoDbClientUtil {
       } catch (Exception e) {
         System.out.println("\n====================================================================");
         System.out.println("ERROR - saveNewHighScore(): Could not get temporary AWS credentials.");
+        System.out.println("---");
+        System.out.println(e.getCause());
         System.out.println("====================================================================\n");
         throw e;
       }
@@ -224,6 +222,8 @@ public class DynamoDbClientUtil {
     } catch (Exception e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - saveNewHighScore(): Could not store new high score in database.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
       throw e;
     }
@@ -272,6 +272,8 @@ public class DynamoDbClientUtil {
     } catch (Exception e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - putScoreInDb(): Could not save the new high score to the DB.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
       throw e;
     }

@@ -247,6 +247,8 @@ public class InstructionsController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - InstructionsController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }

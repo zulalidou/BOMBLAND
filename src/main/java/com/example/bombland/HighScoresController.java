@@ -234,6 +234,8 @@ public class HighScoresController {
 
         System.out.println("\n====================================================================");
         System.out.println("ERROR - waitForDataRetrieval(): An error occurred while the thread was sleeping.");
+        System.out.println("---");
+        System.out.println(e.getCause());
         System.out.println("====================================================================\n");
       }
     }
@@ -275,6 +277,8 @@ public class HighScoresController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - HighScoresController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }

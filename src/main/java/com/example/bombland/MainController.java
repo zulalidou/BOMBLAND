@@ -154,6 +154,8 @@ public class MainController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - openDifficultySelectionPage(): Could not open the difficulty selection page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
@@ -174,6 +176,8 @@ public class MainController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - openInstructionsPage(): Could not open the instructions page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
@@ -194,6 +198,8 @@ public class MainController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - openHighScoresPage(): Could not open the high scores page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }

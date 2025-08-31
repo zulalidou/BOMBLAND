@@ -266,6 +266,8 @@ public class PlayController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - PlayController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
@@ -602,6 +604,8 @@ public class PlayController {
     } catch (SQLException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - saveHighScoreToSqlite(): Could not save the new high score to the SQLite database.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
@@ -671,6 +675,8 @@ public class PlayController {
     } catch (Exception e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - playAgain(): Could not rebuild the game map.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }

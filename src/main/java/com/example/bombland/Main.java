@@ -94,6 +94,8 @@ public class Main extends Application {
         } catch (URISyntaxException e) {
           System.out.println("\n==================================================");
           System.out.println("The URI provided in BomblandWebSocketClient() is not valid");
+          System.out.println("---");
+          System.out.println(e.getCause());
           System.out.println("==================================================\n");
         }
       }
@@ -119,6 +121,8 @@ public class Main extends Application {
       } catch (Exception e) {
         System.out.println("\n==================================================");
         System.out.println("ERROR - connectToSqlDb(): Could not connect to the SQL database.");
+        System.out.println("---");
+        System.out.println(e.getCause());
         System.out.println("==================================================\n");
       }
     };
@@ -150,6 +154,8 @@ public class Main extends Application {
    * This function retrieves the environment variables.
    */
   private void getEnvironmentVariables() {
+    System.out.println("getEnvironmentVariables()");
+
     HttpClient httpClient = HttpClient.newHttpClient();
 
     HttpRequest request = HttpRequest.newBuilder()
@@ -165,6 +171,8 @@ public class Main extends Application {
     } catch (Exception e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - getEnvironmentVariables(): Could not get environment variables.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
@@ -245,6 +253,8 @@ public class Main extends Application {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - showMainMenu(): Could not show the main menu screen.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
 

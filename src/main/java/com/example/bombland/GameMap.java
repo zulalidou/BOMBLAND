@@ -182,6 +182,8 @@ public class GameMap {
             } catch (IOException e) {
               System.out.println("\n====================================================================");
               System.out.println("ERROR - buildRectangleGrid(): Could not build the rectangle grid.");
+              System.out.println("---");
+              System.out.println(e.getCause());
               System.out.println("====================================================================\n");
             }
           }
@@ -272,6 +274,8 @@ public class GameMap {
             } catch (IOException e) {
               System.out.println("\n====================================================================");
               System.out.println("ERROR - buildGrids(): Could not build the other grids.");
+              System.out.println("---");
+              System.out.println(e.getCause());
               System.out.println("====================================================================\n");
             }
           }

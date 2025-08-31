@@ -162,6 +162,8 @@ public class DifficultySelectionController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - DifficultySelectionController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
@@ -200,6 +202,8 @@ public class DifficultySelectionController {
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - goToMainMenu(): Could not open the map selection page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
   }
