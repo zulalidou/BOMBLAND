@@ -54,6 +54,9 @@ public class HighScoresController {
   VBox hardHighScoresScoreContainer;
 
   @FXML
+  VBox databaseCommunicationErrorPopup;
+
+  @FXML
   HBox mapSelectorContainer;
 
   @FXML
@@ -79,6 +82,9 @@ public class HighScoresController {
 
   @FXML
   Label hardHighScoreTitle;
+
+  @FXML
+  Label databaseCommunicationErrorPopupTitle;
 
   @FXML
   Button backBtn;
@@ -119,6 +125,11 @@ public class HighScoresController {
    */
   @FXML
   public void initialize() {
+    createHighScoresPage();
+    populateHighScoresPage();
+  }
+
+  private void createHighScoresPage() {
     highScoresPage.styleProperty().bind(
         Bindings.format("-fx-padding: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
     );
@@ -199,8 +210,9 @@ public class HighScoresController {
     VBox.setVgrow(easyHighScoresScoreContainer, Priority.ALWAYS);
     VBox.setVgrow(mediumHighScoresScoreContainer, Priority.ALWAYS);
     VBox.setVgrow(hardHighScoresScoreContainer, Priority.ALWAYS);
+  }
 
-
+  private void populateHighScoresPage() {
     if (AppCache.getInstance().isGettingData()) {
       displayLoadingIcon();
 
@@ -219,8 +231,40 @@ public class HighScoresController {
 
       new Thread(waitTask).start();
     } else {
+      // This will run only once. getHighScoresFromDynamoDb() will run if the app hasn't been able
+      // to retrieve the high scores from DynamoDB.
+      if (!AppCache.getInstance().highScoresHaveBeenRetrieved()) {
+        getHighScoresFromDynamoDb();
+      }
+
       showRectangleMapHighScores();
     }
+  }
+
+  private void getHighScoresFromDynamoDb() {
+    Runnable dynamoDbConnectionTask = () -> {
+      if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
+        Main.getEnvironmentVariables();
+      }
+
+      try {
+        AppCache.getInstance().setGettingData(true);
+        DynamoDbClientUtil.getHighScores();
+        AppCache.getInstance().setHighScoresHaveBeenRetrieved();
+        showRectangleMapHighScores();
+      } catch (Exception e) {
+        System.out.println("\n====================================================================");
+        System.out.println("ERROR - HighScoresController.getHighScoresFromDynamoDb(): Could not save get the high scores from DynamoDB.");
+        System.out.println("---");
+        System.out.println(e.getCause());
+        System.out.println("====================================================================\n");
+        displayDatabaseErrorPopup();
+      } finally {
+        AppCache.getInstance().setGettingData(false);
+      }
+    };
+
+    new Thread(dynamoDbConnectionTask).start();
   }
 
   private void waitForDataRetrieval() {
@@ -447,5 +491,33 @@ public class HighScoresController {
     Label noActivityLabel = new Label("No activity yet!");
     noActivityLabel.getStyleClass().add("highScores_activityLabel");
     scoresContainer.getChildren().add(noActivityLabel);
+  }
+
+  /**
+   * This function displays an error popup.
+   */
+  public void displayDatabaseErrorPopup() {
+    highScoresStackpaneChild.setEffect(new GaussianBlur());
+    highScoresStackpaneChild.setMouseTransparent(true);
+
+    databaseCommunicationErrorPopup.setManaged(true);
+    databaseCommunicationErrorPopup.setVisible(true);
+
+    databaseCommunicationErrorPopup.setMaxWidth(500);
+    databaseCommunicationErrorPopup.setMaxHeight(400);
+    databaseCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
+
+    databaseCommunicationErrorPopupTitle.setStyle("-fx-font-size: 25px;");
+  }
+
+  /**
+   * This function closes an error popup.
+   */
+  public void closeDatabaseErrorPopup() {
+    databaseCommunicationErrorPopup.setManaged(false);
+    databaseCommunicationErrorPopup.setVisible(false);
+
+    highScoresStackpaneChild.setEffect(null);
+    highScoresStackpaneChild.setMouseTransparent(false);
   }
 }

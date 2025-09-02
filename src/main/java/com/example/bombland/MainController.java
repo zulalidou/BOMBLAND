@@ -8,9 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -25,12 +22,6 @@ public class MainController {
 
   @FXML
   VBox mainMenuOptionsContainer;
-
-  @FXML
-  VBox serverCommunicationErrorPopup;
-
-  @FXML
-  StackPane mainMenuPageStackpane;
 
   @FXML
   Text logoTextBeforeO;
@@ -49,10 +40,6 @@ public class MainController {
 
   @FXML
   Button exitBtn;
-
-  @FXML
-  Label serverCommunicationErrorPopupTitle;
-
 
   private MainController() {}
 
@@ -77,13 +64,6 @@ public class MainController {
     // Prevents the width of the mainMenuOptionsContainer VBox
     // from having the same width as its parent container (mainMenuPage)
     mainMenuPage.setFillWidth(false);
-
-    mainMenuPageStackpane.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.75),
-            Main.mainStage.heightProperty().multiply(0.6))
-    );
-
 
     mainMenuOptionsContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx;",
@@ -207,33 +187,5 @@ public class MainController {
   @FXML
   private void closeApp() {
     Platform.exit();
-  }
-
-  /**
-   * This function displays a server error popup.
-   */
-  public void displayServerErrorPopup() {
-    mainMenuOptionsContainer.setEffect(new GaussianBlur());
-    mainMenuOptionsContainer.setMouseTransparent(true);
-
-    serverCommunicationErrorPopup.setManaged(true);
-    serverCommunicationErrorPopup.setVisible(true);
-
-    serverCommunicationErrorPopup.setMaxWidth(500);
-    serverCommunicationErrorPopup.setMaxHeight(400);
-    serverCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
-
-    serverCommunicationErrorPopupTitle.setStyle("-fx-font-size: 25px;");
-  }
-
-  /**
-   * This function closes a server error popup.
-   */
-  public void closeServerErrorPopup() {
-    serverCommunicationErrorPopup.setManaged(false);
-    serverCommunicationErrorPopup.setVisible(false);
-
-    mainMenuOptionsContainer.setEffect(null);
-    mainMenuOptionsContainer.setMouseTransparent(false);
   }
 }

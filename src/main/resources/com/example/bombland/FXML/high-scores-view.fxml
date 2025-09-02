@@ -81,6 +81,26 @@
             </HBox>
         </VBox>
 
+        <VBox fx:id="databaseCommunicationErrorPopup" managed="false" visible="false">
+            <Label fx:id="databaseCommunicationErrorPopupTitle" text="AN ERROR HAS OCCURRED"/>
+
+            <VBox alignment="CENTER">
+                <ImageView>
+                    <Image url="/com/example/bombland/images/error.png"/>
+                </ImageView>
+            </VBox>
+
+            <Label styleClass="databaseErrorText" text="Please try the following to resolve the issue:"/>
+            <Label styleClass="databaseErrorText" text="- Check your internet connection to ensure you are connected."/>
+            <Label styleClass="databaseErrorText" text="- Restart the application if the problem persists."/>
+            <Label styleClass="databaseErrorText" text="- Try again later, as the issue may be temporary."/>
+            <Label id="databaseErrorLastSentence" styleClass="text" text="If the issue continues, please contact support for further assistance."/>
+
+            <VBox>
+                <Button id="closeDatabaseErrorPopupBtn" text="Close" onAction="#closeDatabaseErrorPopup"/>
+            </VBox>
+        </VBox>
+
         <ProgressIndicator fx:id="loadingIcon" managed="false" visible="false"/>
     </StackPane>
 </VBox>

@@ -44,7 +44,7 @@ public class DynamoDbClientUtil {
         System.out.println("---");
         System.out.println(e.getCause());
         System.out.println("====================================================================\n");
-        return;
+        throw e;
       }
     }
 
@@ -56,7 +56,7 @@ public class DynamoDbClientUtil {
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
-      return;
+      throw e;
     }
 
     sortHighScores();

@@ -136,15 +136,23 @@ public class Main extends Application {
    */
   private void getHighScoresFromDynamoDb() {
     Runnable dynamoDbConnectionTask = () -> {
-      AppCache.getInstance().setGettingData(true);
-
       if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
         getEnvironmentVariables();
       }
 
-      DynamoDbClientUtil.getHighScores();
-
-      AppCache.getInstance().setGettingData(false);
+      try {
+        AppCache.getInstance().setGettingData(true);
+        DynamoDbClientUtil.getHighScores();
+        AppCache.getInstance().setHighScoresHaveBeenRetrieved();
+      } catch (Exception e) {
+        System.out.println("\n====================================================================");
+        System.out.println("ERROR - Main.getHighScoresFromDynamoDb(): Could not save get the high scores from DynamoDB.");
+        System.out.println("---");
+        System.out.println(e.getCause());
+        System.out.println("====================================================================\n");
+      } finally {
+        AppCache.getInstance().setGettingData(false);
+      }
     };
 
     taskScheduler.scheduleAtFixedRate(dynamoDbConnectionTask, 0, 45, TimeUnit.MINUTES);

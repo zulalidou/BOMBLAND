@@ -18,6 +18,7 @@ public class AppCache {
   private String gameMap;
   private String mapOfHighScoresBeingShown;
   private boolean isServerConnectionGood;
+  private boolean highScoresRetrievedAtLeastOnce;
 
   private AppCache() {
     gettingData = false;
@@ -29,6 +30,7 @@ public class AppCache {
     gameMap = "";
     mapOfHighScoresBeingShown = "";
     isServerConnectionGood = false;
+    highScoresRetrievedAtLeastOnce = false;
   }
 
   /**
@@ -108,5 +110,13 @@ public class AppCache {
 
   void setServerConnectionGood(boolean value) {
     isServerConnectionGood = value;
+  }
+
+  boolean highScoresHaveBeenRetrieved() {
+    return highScoresRetrievedAtLeastOnce;
+  }
+
+  void setHighScoresHaveBeenRetrieved() {
+    highScoresRetrievedAtLeastOnce = true;
   }
 }

@@ -544,7 +544,7 @@ public class PlayController {
               Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));
             }
           } catch (Exception e) {
-            displayDbErrorPopup();
+            displayDatabaseErrorPopup();
             saveHighScoreToSqlite(newScoreInfo);
           }
 
@@ -562,7 +562,7 @@ public class PlayController {
   /**
    * This function displays an error popup.
    */
-  public void displayDbErrorPopup() {
+  public void displayDatabaseErrorPopup() {
     newRecordPopup.setEffect(new GaussianBlur());
     newRecordPopup.setMouseTransparent(true);
 
