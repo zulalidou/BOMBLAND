@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -24,7 +26,14 @@ public class MainController {
   VBox mainMenuOptionsContainer;
 
   @FXML
+  HBox logoContainer;
+
+
+  @FXML
   Text logoTextBeforeO;
+
+  @FXML
+  ImageView bombImgView;
 
   @FXML
   Text logoTextAfterO;
@@ -68,7 +77,7 @@ public class MainController {
     mainMenuOptionsContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.75),
-            Main.mainStage.heightProperty().multiply(0.6))
+            Main.mainStage.heightProperty().multiply(0.75))
     );
 
 
@@ -77,6 +86,11 @@ public class MainController {
         Bindings.format("-fx-font-size: %.2fpx; -fx-font-weight: bold;",
             Main.mainStage.widthProperty().multiply(0.045))
     );
+
+    bombImgView.fitHeightProperty().bind(Bindings.min(
+        logoContainer.heightProperty().multiply(0.8),
+        logoContainer.widthProperty().multiply(1)
+    ));
 
     logoTextAfterO.styleProperty().bind(
         // Sets the font size to be 9% of the app window's width

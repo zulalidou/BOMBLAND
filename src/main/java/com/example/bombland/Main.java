@@ -14,12 +14,14 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.json.JSONObject;
 
@@ -31,6 +33,8 @@ public class Main extends Application {
   static Stage mainStage = null;
   static BomblandWebSocketClient socketClient = null;
   private ScheduledExecutorService taskScheduler = null;
+  static double screenWidth = 0;
+  static double screenHeight = 0;
 
   @Override
   public void start(Stage stage) {
@@ -42,9 +46,14 @@ public class Main extends Application {
     Image icon = new Image(Objects.requireNonNull(
         getClass().getResourceAsStream("/com/example/bombland/Images/bombsmall.png"))
     );
+
     stage.getIcons().add(icon);
     stage.setTitle("BOMBLAND");
     stage.setResizable(false);
+
+    getScreenDimensions();
+    stage.setWidth(screenWidth);
+    stage.setHeight(screenHeight);
 
     showSplashScreen(stage);
   }
@@ -186,6 +195,16 @@ public class Main extends Application {
   }
 
   /**
+   * This function retrieves the width and height of the screen.
+   */
+  private void getScreenDimensions() {
+    Screen screen = Screen.getPrimary();
+    Rectangle2D screenDimensions = screen.getVisualBounds();
+    screenWidth = screenDimensions.getWidth();
+    screenHeight = screenDimensions.getHeight();
+  }
+
+  /**
    * This function sets up and displays the splash screen.
    *
    * @param stage The window that displays the GUI for the app.
@@ -193,9 +212,9 @@ public class Main extends Application {
   private void showSplashScreen(Stage stage) {
     Text textBeforeO = new Text("B");
     textBeforeO.styleProperty().bind(
-        // Sets the font size to be 9% of the app window's width
+        // Sets the font size to be 12% of the app window's width
         Bindings.format("-fx-font-size: %.2fpx; -fx-font-weight: bold;",
-            stage.widthProperty().multiply(0.09))
+            screenWidth * 0.12)
     );
 
     Image image = new Image(Objects.requireNonNull(
@@ -205,26 +224,35 @@ public class Main extends Application {
 
     Text textAfterO = new Text("MBLAND");
     textAfterO.styleProperty().bind(
-        // Sets the font size to be 9% of the app window's width
+        // Sets the font size to be 12% of the app window's width
         Bindings.format("-fx-font-size: %.2fpx; -fx-font-weight: bold;",
-            stage.widthProperty().multiply(0.09))
+            screenWidth * 0.12)
     );
 
 
     HBox logoContainer = new HBox(textBeforeO, imageView, textAfterO);
     logoContainer.setAlignment(javafx.geometry.Pos.CENTER);
 
+
+    // Makes the bomb image responsive
+    imageView.setPreserveRatio(true);
+    imageView.fitHeightProperty().bind(Bindings.min(
+        logoContainer.heightProperty().multiply(0.8),
+        logoContainer.widthProperty().multiply(0.5)
+    ));
+
+
     VBox splashScreen = new VBox(logoContainer);
     splashScreen.setAlignment(javafx.geometry.Pos.CENTER);
 
-    Scene splashScene = new Scene(splashScreen, 1024, 768);
+    Scene splashScene = new Scene(splashScreen);
     stage.setScene(splashScene);
     stage.show();
 
 
-    // The timer below helps in changing the background color of the splash screen from black to red.
-    // When timer.start() is called, the handle() function will be called repeatedly. It will only
-    // stop when the stop() function is called.
+    // The timer below helps in changing the background color of the splash screen from black to
+    // red. When timer.start() is called, the handle() function will be called repeatedly. It will
+    // only stop when the stop() function is called.
     AnimationTimer timer = new AnimationTimer() {
       int redValue = 0;
 
@@ -255,7 +283,7 @@ public class Main extends Application {
     loader.setController(mainController);
 
     try {
-      Scene scene = new Scene(loader.load(), 1024, 768);
+      Scene scene = new Scene(loader.load());
       stage.setScene(scene);
       stage.show();
     } catch (IOException e) {

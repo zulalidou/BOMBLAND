@@ -8,24 +8,39 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
+<?import javafx.scene.layout.Region?>
 <VBox fx:id="mainMenuPage" xmlns:fx="http://javafx.com/fxml">
     <stylesheets>
         <URL value="@../CSS/main.css"/>
     </stylesheets>
 
-    <VBox fx:id="mainMenuOptionsContainer" spacing="20">
-        <HBox id="logoContainer">
+    <VBox fx:id="mainMenuOptionsContainer">
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <HBox fx:id="logoContainer">
             <Text fx:id="logoTextBeforeO" styleClass="logoText">B</Text>
-            <ImageView fitWidth="50" preserveRatio="true">
+            <ImageView fx:id="bombImgView" preserveRatio="true">
                 <Image url="/com/example/bombland/images/bomb.png"/>
             </ImageView>
             <Text fx:id="logoTextAfterO" styleClass="logoText">MBLAND</Text>
         </HBox>
 
+        <Region VBox.vgrow="ALWAYS"/>
 
         <Button fx:id="playBtn" text="Play" onAction="#openDifficultySelectionPage"/>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
         <Button fx:id="instructionsBtn" text="Instructions" onAction="#openInstructionsPage"/>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
         <Button fx:id="highScoresBtn" text="High Scores" onAction="#openHighScoresPage"/>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
         <Button fx:id="exitBtn" text="Exit" onAction="#closeApp"/>
+
+        <Region VBox.vgrow="ALWAYS"/>
     </VBox>
 </VBox>
