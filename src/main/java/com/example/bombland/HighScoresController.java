@@ -3,10 +3,12 @@ package com.example.bombland;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -100,6 +102,12 @@ public class HighScoresController {
 
   @FXML
   Button mapBtn4;
+
+  @FXML
+  Label databaseErrorLastSentence;
+
+  @FXML
+  Button closeDatabaseErrorPopupBtn;
 
   @FXML
   ProgressIndicator loadingIcon;
@@ -210,6 +218,10 @@ public class HighScoresController {
     VBox.setVgrow(easyHighScoresScoreContainer, Priority.ALWAYS);
     VBox.setVgrow(mediumHighScoresScoreContainer, Priority.ALWAYS);
     VBox.setVgrow(hardHighScoresScoreContainer, Priority.ALWAYS);
+
+    easyHighScoresScoreContainer.spacingProperty().bind(Main.mainStage.heightProperty().multiply(0.01));
+    mediumHighScoresScoreContainer.spacingProperty().bind(Main.mainStage.heightProperty().multiply(0.01));
+    hardHighScoresScoreContainer.spacingProperty().bind(Main.mainStage.heightProperty().multiply(0.01));
   }
 
   private void populateHighScoresPage() {
@@ -467,10 +479,10 @@ public class HighScoresController {
       scoreBox.styleProperty().bind(
           Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; "
               + "-fx-spacing: %.2fpx; -fx-padding: %.2fpx;",
-              Main.mainStage.widthProperty().multiply(0.02),
+              Main.mainStage.widthProperty().multiply(0.014),
               Main.mainStage.widthProperty().multiply(0.01),
-              Main.mainStage.widthProperty().multiply(0.04),
-              Main.mainStage.widthProperty().multiply(0.0075))
+              Main.mainStage.widthProperty().multiply(0.001),
+              Main.mainStage.widthProperty().multiply(0.005))
       );
 
       scoresContainer.getChildren().add(scoreBox);
@@ -500,14 +512,60 @@ public class HighScoresController {
     highScoresStackpaneChild.setEffect(new GaussianBlur());
     highScoresStackpaneChild.setMouseTransparent(true);
 
+
     databaseCommunicationErrorPopup.setManaged(true);
     databaseCommunicationErrorPopup.setVisible(true);
 
-    databaseCommunicationErrorPopup.setMaxWidth(500);
-    databaseCommunicationErrorPopup.setMaxHeight(400);
-    databaseCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
+    databaseCommunicationErrorPopup.setMaxWidth(Main.mainStage.getWidth() * 0.33);
+    databaseCommunicationErrorPopup.setMaxHeight(Main.mainStage.getHeight() * 0.40);
 
-    databaseCommunicationErrorPopupTitle.setStyle("-fx-font-size: 25px;");
+    databaseCommunicationErrorPopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    databaseCommunicationErrorPopupTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.33))
+    );
+
+
+    // Find all nodes with the "databaseErrorText" style class
+    Set<Node> foundNodes = databaseCommunicationErrorPopup.lookupAll(".databaseErrorText");
+
+    // Iterate over the set and cast each Node to a Label
+    for (Node node : foundNodes) {
+      // Use an instanceof check for safety
+      if (node instanceof Label) {
+        Label label = (Label) node;
+
+        label.styleProperty().bind(
+            Bindings.format("-fx-font-size: %.2fpx;",
+                Main.mainStage.widthProperty().multiply(0.01))
+        );
+      }
+    }
+
+
+    databaseErrorLastSentence.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-text-fill: red; -fx-padding: %.2fpx 0 %.2fpx 0",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+
+    closeDatabaseErrorPopupBtn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
+
+    closeDatabaseErrorPopupBtn.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.31),
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.011))
+    );
   }
 
   /**

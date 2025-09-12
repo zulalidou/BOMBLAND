@@ -33,8 +33,6 @@ public class Main extends Application {
   static Stage mainStage = null;
   static BomblandWebSocketClient socketClient = null;
   private ScheduledExecutorService taskScheduler = null;
-  static double screenWidth = 0;
-  static double screenHeight = 0;
 
   @Override
   public void start(Stage stage) {
@@ -50,10 +48,7 @@ public class Main extends Application {
     stage.getIcons().add(icon);
     stage.setTitle("BOMBLAND");
     stage.setResizable(false);
-
-    getScreenDimensions();
-    stage.setWidth(screenWidth);
-    stage.setHeight(screenHeight);
+    setScreenDimensions(stage);
 
     showSplashScreen(stage);
   }
@@ -197,11 +192,11 @@ public class Main extends Application {
   /**
    * This function retrieves the width and height of the screen.
    */
-  private void getScreenDimensions() {
+  private void setScreenDimensions(Stage stage) {
     Screen screen = Screen.getPrimary();
     Rectangle2D screenDimensions = screen.getVisualBounds();
-    screenWidth = screenDimensions.getWidth();
-    screenHeight = screenDimensions.getHeight();
+    stage.setWidth(screenDimensions.getWidth());
+    stage.setHeight(screenDimensions.getHeight());
   }
 
   /**
@@ -214,7 +209,7 @@ public class Main extends Application {
     textBeforeO.styleProperty().bind(
         // Sets the font size to be 12% of the app window's width
         Bindings.format("-fx-font-size: %.2fpx; -fx-font-weight: bold;",
-            screenWidth * 0.12)
+            stage.widthProperty().multiply(0.12))
     );
 
     Image image = new Image(Objects.requireNonNull(
@@ -226,7 +221,7 @@ public class Main extends Application {
     textAfterO.styleProperty().bind(
         // Sets the font size to be 12% of the app window's width
         Bindings.format("-fx-font-size: %.2fpx; -fx-font-weight: bold;",
-            screenWidth * 0.12)
+            stage.widthProperty().multiply(0.12))
     );
 
 
