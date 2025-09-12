@@ -142,7 +142,7 @@ public class MainController {
     loader.setController(difficultyController);
 
     try {
-      Scene scene = new Scene(loader.load(), 1024, 768);
+      Scene scene = new Scene(loader.load());
       Main.mainStage.setScene(scene);
       Main.mainStage.show();
     } catch (IOException e) {
@@ -164,7 +164,7 @@ public class MainController {
     loader.setController(instructionsController);
 
     try {
-      Scene scene = new Scene(loader.load(), 1024, 768);
+      Scene scene = new Scene(loader.load());
       Main.mainStage.setScene(scene);
       Main.mainStage.show();
     } catch (IOException e) {
@@ -186,7 +186,7 @@ public class MainController {
     loader.setController(highScoresController);
 
     try {
-      Scene scene = new Scene(loader.load(), 1024, 768);
+      Scene scene = new Scene(loader.load());
       Main.mainStage.setScene(scene);
       Main.mainStage.show();
     } catch (IOException e) {

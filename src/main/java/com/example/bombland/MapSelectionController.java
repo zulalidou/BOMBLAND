@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
@@ -74,12 +73,6 @@ public class MapSelectionController {
 
   @FXML
   Label flowerMapSelectorName;
-
-  @FXML
-  Region space1;
-
-  @FXML
-  Region space2;
 
   @FXML
   Image faceMapImg;
@@ -151,7 +144,7 @@ public class MapSelectionController {
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.25),
+            Main.mainStage.widthProperty().multiply(0.2),
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
@@ -164,7 +157,7 @@ public class MapSelectionController {
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.25),
+            Main.mainStage.widthProperty().multiply(0.2),
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
@@ -177,7 +170,7 @@ public class MapSelectionController {
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.25),
+            Main.mainStage.widthProperty().multiply(0.2),
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
@@ -202,7 +195,7 @@ public class MapSelectionController {
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.25),
+            Main.mainStage.widthProperty().multiply(0.2),
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
@@ -215,12 +208,20 @@ public class MapSelectionController {
     upperMapsContainer.setFillHeight(false);
     lowerMapsContainer.setFillHeight(false);
 
+    upperMapsContainer.styleProperty().bind(
+        Bindings.format("-fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0075))
+    );
+
+    lowerMapsContainer.styleProperty().bind(
+        Bindings.format("-fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0075))
+    );
+
+
     VBox.setVgrow(mapSelectionPageContainerBottom, Priority.ALWAYS);
     VBox.setVgrow(upperMapsContainer, Priority.ALWAYS);
     VBox.setVgrow(lowerMapsContainer, Priority.ALWAYS);
-
-    HBox.setHgrow(space1, Priority.ALWAYS);
-    HBox.setHgrow(space2, Priority.ALWAYS);
   }
 
 
@@ -234,7 +235,7 @@ public class MapSelectionController {
     loader.setController(difficultyController);
 
     try {
-      Scene scene = new Scene(loader.load(), 1024, 768);
+      Scene scene = new Scene(loader.load());
       Main.mainStage.setScene(scene);
       Main.mainStage.show();
     } catch (IOException e) {
@@ -280,7 +281,7 @@ public class MapSelectionController {
     loader.setController(playController);
 
     try {
-      Scene scene = new Scene(loader.load(), 1024, 768);
+      Scene scene = new Scene(loader.load());
       Main.mainStage.setScene(scene);
       Main.mainStage.show();
     } catch (IOException e) {
