@@ -8,7 +8,12 @@ import java.util.Objects;
 import java.util.Random;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.util.Pair;
 
@@ -132,7 +137,25 @@ public class GameMap {
     setMap();
 
     tilesUncovered = flagsSet = activeTiles = 0;
+
+
     grid = new GridPane();
+    VBox.setVgrow(grid, Priority.ALWAYS);
+    HBox.setHgrow(grid, Priority.ALWAYS);
+
+    // Create column and row constraints for the grid
+    for (int i = 0; i < cols; i++) {
+      ColumnConstraints colConstraints = new ColumnConstraints();
+      colConstraints.setPercentWidth(100.0 / cols);
+      grid.getColumnConstraints().add(colConstraints);
+    }
+    for (int i = 0; i < rows; i++) {
+      RowConstraints rowConstraints = new RowConstraints();
+      rowConstraints.setPercentHeight(100.0 / rows);
+      grid.getRowConstraints().add(rowConstraints);
+    }
+
+
     gridObjects = new HashMap<>();
     tilesEliminated = new HashMap<>();
     bombCoordinates = new ArrayList<>();
@@ -151,11 +174,8 @@ public class GameMap {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         Button tileBtn = new Button();
-        tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/"
-                          + (evenTile ? "lightorange.png" : "orange.png") + "\");");
-        tileBtn.getStyleClass().add("tile-btn");
-        tileBtn.setPrefHeight(Main.mainStage.getScene().getHeight() / rows);
-        tileBtn.setPrefWidth(Main.mainStage.getScene().getWidth() / cols);
+        tileBtn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        tileBtn.setStyle("-fx-background-color: " + (evenTile ? Color.lightOrange() : Color.orange()) + ";");
 
         int tileRow = row;
         int tileCol = col;
@@ -202,15 +222,14 @@ public class GameMap {
 
               if (tileObj.isFlagged) {
                 tileObj.isFlagged = false;
-                tileObj.tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/"
-                                          + tileObj.backgroundFile + "\");");
+                tileObj.tileBtn.setStyle("-fx-background-color: " + tileObj.backgroundColor + ";");
                 flagsSet -= 1;
               } else {
                 tileObj.isFlagged = true;
-                tileObj.tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/"
-                    + tileObj.backgroundFile
-                    + "\"), url(\"/com/example/bombland/images/red-flag.png\"); "
-                    + "-fx-background-size: 200%, 50%;");
+                tileObj.tileBtn.setStyle("-fx-background-color: " + tileObj.backgroundColor + "; "
+                    + "-fx-background-image: url(\"/com/example/bombland/images/red-flag.png\"); "
+                    + "-fx-background-size: 40%; -fx-background-position: center; "
+                    + "-fx-background-repeat: no-repeat;");
                 flagsSet += 1;
               }
 
@@ -222,7 +241,7 @@ public class GameMap {
         Tile tileObj = new Tile(tileBtn);
         tileObj.row = row;
         tileObj.col = col;
-        tileObj.backgroundFile = (evenTile ? "lightorange.png" : "orange.png");
+        tileObj.backgroundColor = (evenTile ? Color.lightOrange() : Color.orange());
 
         grid.add(tileBtn, col, row);
         gridObjects.put(new Pair<>(row, col), tileObj);
@@ -243,11 +262,8 @@ public class GameMap {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         Button tileBtn = new Button();
-        tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/orange.png\"); "
-            + "-fx-background-size: auto;");
-        tileBtn.getStyleClass().add("tile-btn");
-        tileBtn.setPrefHeight(Main.mainStage.getScene().getHeight() / rows);
-        tileBtn.setPrefWidth(Main.mainStage.getScene().getWidth() / cols);
+        tileBtn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        tileBtn.setStyle("-fx-background-color: " + Color.orange() + ";");
 
         int tileRow = row;
         int tileCol = col;
@@ -294,15 +310,14 @@ public class GameMap {
 
               if (tileObj.isFlagged) {
                 tileObj.isFlagged = false;
-                tileObj.tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/"
-                    + tileObj.backgroundFile + "\"); -fx-background-size: auto;");
+                tileObj.tileBtn.setStyle("-fx-background-color: " + tileObj.backgroundColor + ";");
                 flagsSet -= 1;
               } else {
                 tileObj.isFlagged = true;
-                tileObj.tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/"
-                    + tileObj.backgroundFile
-                    + "\"), url(\"/com/example/bombland/images/red-flag.png\"); "
-                    + "-fx-background-size: auto, 60% 60%;");
+                tileObj.tileBtn.setStyle("-fx-background-color: " + tileObj.backgroundColor + "; "
+                    + "-fx-background-image: url(\"/com/example/bombland/images/red-flag.png\"); "
+                    + "-fx-background-size: 40%; -fx-background-position: center; "
+                    + "-fx-background-repeat: no-repeat;");
                 flagsSet += 1;
               }
 
@@ -315,11 +330,11 @@ public class GameMap {
         Tile tileObj = new Tile(tileBtn);
         tileObj.row = row;
         tileObj.col = col;
-        tileObj.backgroundFile = "orange.png";
+        tileObj.backgroundColor = Color.orange();
 
         if (disableTile(row, col)) {
           tileBtn.setDisable(true);
-          tileBtn.setStyle("-fx-background-image: url(\"\")");
+          tileBtn.setStyle("-fx-background-color: " + Color.white());
           tileObj.value = Tile.TileValue.DISABLED;
 
           HashSet<Integer> values;
@@ -722,17 +737,16 @@ public class GameMap {
     }
 
     if (tile.value == Tile.TileValue.EMPTY) {
-      tile.backgroundFile = ((tile.backgroundFile.equals("orange.png")) ? "black.png" : "gray.png");
-      tile.tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/"
-          + tile.backgroundFile + "\"); -fx-background-size: 150% 150%;");
+      tile.backgroundColor = (tile.backgroundColor.equals(Color.orange())) ? Color.black() : Color.gray();
+      tile.tileBtn.setStyle("-fx-background-color: " + tile.backgroundColor + ";");
     } else if (tile.value == Tile.TileValue.NUMBER) {
-      tile.backgroundFile = ((tile.backgroundFile.equals("orange.png")) ? "black.png" : "gray.png");
+      tile.backgroundColor = (tile.backgroundColor.equals(Color.orange())) ? Color.black() : Color.gray();
       displayNumberIcon(tile);
     } else { // bomb tile
-      tile.backgroundFile = "red.png";
-      tile.tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/red.png\")"
-          + ", url(\"/com/example/bombland/images/bomb.png\");"
-          + "-fx-background-size: 150% 150%, 70% 70%;");
+      tile.backgroundColor = Color.red();
+      tile.tileBtn.setStyle("-fx-background-color: " + tile.backgroundColor + "; "
+          + "-fx-background-image: url(\"/com/example/bombland/images/bomb.png\"); "
+          + "-fx-background-size: 50%; -fx-background-position: center; -fx-background-repeat: no-repeat;");
     }
 
     tile.isCovered = false;
@@ -754,9 +768,9 @@ public class GameMap {
       default -> numberFile;
     };
 
-    tile.tileBtn.setStyle("-fx-background-image: url(\"/com/example/bombland/images/"
-        + tile.backgroundFile + "\"), url(\"/com/example/bombland/images/" + numberFile
-        + "\"); -fx-background-size: 150% 150%, 50% 50%;");
+    tile.tileBtn.setStyle("-fx-background-color: " + tile.backgroundColor + "; "
+        + "-fx-background-image: url(\"/com/example/bombland/images/" + numberFile
+        + "\"); -fx-background-size: 50%; -fx-background-position: center; -fx-background-repeat: no-repeat;");
   }
 
   /**

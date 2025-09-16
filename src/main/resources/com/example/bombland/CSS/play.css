@@ -13,13 +13,6 @@
 }
 
 
-.button {
-    -fx-background-size: 200%;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat, no-repeat;
-}
-
-
 #totalBombsLbl, #flagsLeftLbl, #timeElapsedLbl {
     -fx-alignment: center;
     -fx-font-weight: bold;

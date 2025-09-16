@@ -319,7 +319,7 @@ public class PlayController {
     VBox.setVgrow(playPageContainerInner, Priority.ALWAYS);
 
     playPageContainerHeader.styleProperty().bind(
-        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.125))
+        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.05))
     );
 
     backBtnContainer.styleProperty().bind(
@@ -355,8 +355,8 @@ public class PlayController {
     );
 
 
-    playPageContainerHeader.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.875))
+    gridContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.95))
     );
 
 

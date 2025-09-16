@@ -9,7 +9,7 @@ public class Tile {
   boolean isCovered;
   boolean isFlagged;
   TileValue value;
-  String backgroundFile;
+  String backgroundColor;
   int row;
   int col;
   int surroundingBombs;
@@ -27,7 +27,7 @@ public class Tile {
     isCovered = true;
     isFlagged = false;
     value = TileValue.UNKNOWN;
-    backgroundFile = "";
+    backgroundColor = "";
     row = -1;
     col = -1;
     surroundingBombs = 0;

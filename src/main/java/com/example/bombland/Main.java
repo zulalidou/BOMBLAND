@@ -48,7 +48,7 @@ public class Main extends Application {
     stage.getIcons().add(icon);
     stage.setTitle("BOMBLAND");
     stage.setResizable(false);
-    setScreenDimensions(stage);
+    setScreenDimensions(mainStage);
 
     showSplashScreen(stage);
   }
