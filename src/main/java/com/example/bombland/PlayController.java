@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,9 +47,6 @@ public class PlayController {
 
   @FXML
   StackPane playPageContainerInner;
-
-  @FXML
-  VBox playPageContainer;
 
   @FXML
   VBox stackpaneChild1;
@@ -441,30 +442,41 @@ public class PlayController {
     gameLostPopup.setManaged(true);
     gameLostPopup.setVisible(true);
 
-    gameLostPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
-    gameLostPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
-    gameLostPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+    gameLostPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
+    gameLostPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    gameLostPopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
 
     gameLostPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
 
-    gameLostPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
-        + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.04) + " 0 0 0;");
-    gameLostPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.15);
-    gameLostPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.15);
+    gameLostPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    gameLostPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    gameLostPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
     gameLostPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
-    gameLostPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
+    gameLostPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
     VBox.setVgrow(gameLostPopupButtonsContainer, Priority.ALWAYS);
 
     gameLostPopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
 
-    gameLostPopupPlayAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
-        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
-        + (Main.mainStage.getWidth() * 0.15) + "px;");
-    gameLostPopupMainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
-        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
-        + (Main.mainStage.getWidth() * 0.15) + "px;");
+    gameLostPopupPlayAgainBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+    gameLostPopupMainMenuBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
   }
 
   void gameWon() {

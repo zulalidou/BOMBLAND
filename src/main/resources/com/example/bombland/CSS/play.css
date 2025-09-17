@@ -34,14 +34,7 @@
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;
-    /*-fx-background-color: green;*/
 }
-
-#exitPagePopupImgContainer {
-    /*-fx-background-color: blue;*/
-}
-
-
 
 
 #gameLostPopupTimeTaken, #gameWonPopupTimeTaken, #newRecordPopupTimeTaken {
