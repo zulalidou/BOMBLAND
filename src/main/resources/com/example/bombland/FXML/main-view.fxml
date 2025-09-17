@@ -27,7 +27,7 @@
 
         <Region VBox.vgrow="ALWAYS"/>
 
-        <Button fx:id="playBtn" text="Play" onAction="#openDifficultySelectionPage"/>
+        <Button fx:id="playBtn" text="Play" onAction="#openModeSelectionPage"/>
 
         <Region VBox.vgrow="ALWAYS"/>
 

@@ -37,8 +37,8 @@
     <HBox fx:id="instructionsContainerBottom">
         <ScrollPane fx:id="instructionsScrollPane">
             <VBox spacing="20">
-                <Label styleClass="text" text="BombLand is a game where bombs are hidden in a grid of squares. Safe squares have numbers telling you how many bombs touch the square. You can use the number clues to solve the game by opening all of the safe squares. If you click on a bomb you lose the game!"/>
-                <Label styleClass="text" text="BombLand always makes the first click safe. You open squares with the left mouse button and put flags on bombs with the right mouse button. When you open a square that does not touch any bombs, it will be empty and the adjacent squares will automatically open in all directions until reaching squares that contain numbers."/>
+                <Label styleClass="text" text="BOMBLAND is a game where bombs are hidden in a grid of squares. Safe squares have numbers telling you how many bombs touch the square. You can use the number clues to solve the game by opening all of the safe squares. If you click on a bomb you lose the game!"/>
+                <Label styleClass="text" text="BOMBLAND always makes the first click safe. You open squares with the left mouse button and put flags on bombs with the right mouse button. When you open a square that does not touch any bombs, it will be empty and the adjacent squares will automatically open in all directions until reaching squares that contain numbers."/>
 
                 <VBox>
                     <HBox>

@@ -11,6 +11,7 @@ module com.example.bombland {
     requires org.java_websocket;
     requires java.sql;
   requires javafx.graphics;
+  requires javafx.base;
 
   opens com.example.bombland to javafx.fxml;
     exports com.example.bombland;

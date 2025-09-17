@@ -14,7 +14,7 @@
     <VBox fx:id="difficultySelectionPageContainer">
         <HBox fx:id="difficultySelectionPageContainerTop">
             <HBox fx:id="difficultySelectionPageContainerTopLeftChild" alignment="CENTER_LEFT">
-                <Button fx:id="backBtn" onAction="#goToMainMenu">
+                <Button fx:id="backBtn" onAction="#goToModeSelection">
                     <graphic>
                         <ImageView fitWidth="20" preserveRatio="true">
                             <Image url="/com/example/bombland/images/back-button.png"/>

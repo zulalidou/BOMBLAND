@@ -1,0 +1,38 @@
+#modeSelectionPage {
+    -fx-alignment: center;
+}
+
+
+#modeSelectionPageContainer {
+    -fx-background-color: red;
+}
+
+#modeSelectionPageContainerTopMiddleChild {
+    -fx-alignment: center;
+}
+
+
+#backBtn {
+    -fx-background-color: black;
+}
+
+#backBtn:hover {
+    -fx-cursor: hand;
+}
+
+
+#modeSelectionPageTitle {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#modeSelectionPageContainerBottomInner .button {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#modeSelectionPageContainerBottomInner .button:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}

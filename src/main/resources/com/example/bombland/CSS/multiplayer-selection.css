@@ -1,0 +1,38 @@
+#multiplayerSelectionPage {
+    -fx-alignment: center;
+}
+
+
+#multiplayerSelectionPageContainer {
+    -fx-background-color: red;
+}
+
+#multiplayerSelectionPageContainerTopMiddleChild {
+    -fx-alignment: center;
+}
+
+
+#backBtn {
+    -fx-background-color: black;
+}
+
+#backBtn:hover {
+    -fx-cursor: hand;
+}
+
+
+#multiplayerSelectionPageTitle {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#multiplayerSelectionPageContainerBottomInner .button {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#multiplayerSelectionPageContainerBottomInner .button:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}

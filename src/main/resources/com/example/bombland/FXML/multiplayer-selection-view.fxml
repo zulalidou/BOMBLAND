@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<VBox fx:id="multiplayerSelectionPage" xmlns:fx="http://javafx.com/fxml">
+    <stylesheets>
+        <URL value="@../CSS/multiplayer-selection.css"/>
+    </stylesheets>
+
+    <VBox fx:id="multiplayerSelectionPageContainer">
+        <HBox fx:id="multiplayerSelectionPageContainerTop">
+            <HBox fx:id="multiplayerSelectionPageContainerTopLeftChild" alignment="CENTER_LEFT">
+                <Button fx:id="backBtn" onAction="#goToModeSelection">
+                    <graphic>
+                        <ImageView fitWidth="20" preserveRatio="true">
+                            <Image url="/com/example/bombland/images/back-button.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <HBox fx:id="multiplayerSelectionPageContainerTopMiddleChild">
+                <Label fx:id="multiplayerSelectionPageTitle" text="Select Multiplayer option"/>
+            </HBox>
+
+            <HBox fx:id="multiplayerSelectionPageContainerTopRightChild" />
+        </HBox>
+
+        <VBox fx:id="multiplayerSelectionPageContainerBottom" alignment="CENTER">
+            <VBox fx:id="multiplayerSelectionPageContainerBottomInner" alignment="CENTER">
+                <Button fx:id="hostGameBtn" text="Host Game" onAction="#pickHostGame"/>
+                <Button fx:id="joinGameBtn" text="Join Game" onAction="#pickJoinGame"/>
+            </VBox>
+        </VBox>
+    </VBox>
+</VBox>

@@ -33,9 +33,6 @@ public class DifficultySelectionController {
   VBox difficultySelectionPageContainerBottomInner;
 
   @FXML
-  HBox difficultySelectionPageContainerTop;
-
-  @FXML
   HBox difficultySelectionPageContainerTopLeftChild;
 
   @FXML
@@ -147,13 +144,13 @@ public class DifficultySelectionController {
   }
 
   @FXML
-  private void goToMainMenu() {
+  private void goToModeSelection() {
     FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/com/example/bombland/FXML/main-view.fxml")
+        getClass().getResource("/com/example/bombland/FXML/mode-selection-view.fxml")
     );
 
-    MainController mainController = MainController.getInstance();
-    loader.setController(mainController);
+    ModeSelectionController modeController = ModeSelectionController.getInstance();
+    loader.setController(modeController);
 
     try {
       Scene scene = new Scene(loader.load());
@@ -161,7 +158,7 @@ public class DifficultySelectionController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - DifficultySelectionController.goToMainMenu(): Could not return to the main menu page.");
+      System.out.println("ERROR - DifficultySelectionController.goToModeSelection(): Could not return to the mode selection page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");

@@ -133,13 +133,13 @@ public class MainController {
   }
 
   @FXML
-  private void openDifficultySelectionPage(ActionEvent event) {
+  private void openModeSelectionPage(ActionEvent event) {
     FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/com/example/bombland/FXML/difficulty-selection-view.fxml")
+        getClass().getResource("/com/example/bombland/FXML/mode-selection-view.fxml")
     );
 
-    DifficultySelectionController difficultyController = DifficultySelectionController.getInstance();
-    loader.setController(difficultyController);
+    ModeSelectionController modeController = ModeSelectionController.getInstance();
+    loader.setController(modeController);
 
     try {
       Scene scene = new Scene(loader.load());
@@ -147,7 +147,7 @@ public class MainController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - openDifficultySelectionPage(): Could not open the difficulty selection page.");
+      System.out.println("ERROR - openModeSelectionPage(): Could not open the mode selection page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
