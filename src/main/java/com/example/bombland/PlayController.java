@@ -502,32 +502,42 @@ public class PlayController {
     newRecordPopup.setManaged(true);
     newRecordPopup.setVisible(true);
 
-    newRecordPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
-    newRecordPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
-    newRecordPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+    newRecordPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
+    newRecordPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    newRecordPopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
 
     newRecordPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
 
-    newRecordPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
-        + "px;");
-    newRecordPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.15);
-    newRecordPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.15);
+    newRecordPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    newRecordPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    newRecordPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
     newRecordPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
-    newRecordPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025)
-        + "px;");
+    newRecordPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
-    newRecordPopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+    newRecordPopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
 
-    playerNameTextField.setStyle("-fx-pref-width: " + (Main.mainStage.getWidth() * 0.3)
-        + "px; -fx-pref-height: " + (Main.mainStage.getWidth() * 0.03) + "px; -fx-font-size: "
-        + (Main.mainStage.getWidth() * 0.015) + "px;");
+    playerNameTextField.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.3),
+            Main.mainStage.widthProperty().multiply(0.03),
+            Main.mainStage.widthProperty().multiply(0.015))
+    );
 
     VBox.setVgrow(newRecordPopupButtonsContainer, Priority.ALWAYS);
 
-    newRecordPopupPlayAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
-        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
-        + (Main.mainStage.getWidth() * 0.15) + "px;");
+    newRecordPopupPlayAgainBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
   }
 
   @FXML
