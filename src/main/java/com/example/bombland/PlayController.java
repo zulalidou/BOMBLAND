@@ -706,30 +706,41 @@ public class PlayController {
     gameWonPopup.setManaged(true);
     gameWonPopup.setVisible(true);
 
-    gameWonPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.5);
-    gameWonPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.5);
-    gameWonPopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+    gameWonPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
+    gameWonPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    gameWonPopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
 
     gameWonPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
 
-    gameWonPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
-        + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.04) + " 0 0 0;");
-    gameWonPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.15);
-    gameWonPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.15);
+    gameWonPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    gameWonPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    gameWonPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
     gameWonPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
-    gameWonPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
+    gameWonPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
     VBox.setVgrow(gameWonPopupButtonsContainer, Priority.ALWAYS);
 
     gameWonPopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
 
-    gameWonPopupPlayAgainBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
-        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
-        + (Main.mainStage.getWidth() * 0.15) + "px;");
-    gameWonPopupMainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
-        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
-        + (Main.mainStage.getWidth() * 0.15) + "px;");
+    gameWonPopupPlayAgainBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+    gameWonPopupMainMenuBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
   }
 
   @FXML
