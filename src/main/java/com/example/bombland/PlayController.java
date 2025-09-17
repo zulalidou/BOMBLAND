@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +13,7 @@ import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -167,9 +165,6 @@ public class PlayController {
   HBox newRecordPopupButtonsContainer;
 
   @FXML
-  HBox playerInfoHbox;
-
-  @FXML
   HBox playPageContainerHeader;
 
   @FXML
@@ -186,6 +181,12 @@ public class PlayController {
 
   @FXML
   ImageView newRecordPopupImg;
+
+  @FXML
+  Label databaseErrorLastSentence;
+
+  @FXML
+  Button closeDatabaseErrorPopupBtn;
 
 
   private PlayController() {}
@@ -289,26 +290,38 @@ public class PlayController {
 
     exitPagePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
     exitPagePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
-    exitPagePopup.setStyle("-fx-background-radius: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    exitPagePopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
 
     exitPagePopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
 
-    exitPagePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1)
-        + "px; -fx-padding: " + (Main.mainStage.getHeight() * 0.03) + " 0 0 0;");
+    exitPagePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
     exitPagePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     exitPagePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
-    exitPagePopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.025) + "px;");
+    exitPagePopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
     VBox.setVgrow(exitPagePopupButtonsContainer, Priority.ALWAYS);
 
     exitPagePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
-    exitPagePopupCancelBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
-        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
-        + (Main.mainStage.getWidth() * 0.15) + "px;");
-    exitPagePopupMainMenuBtn.setStyle("-fx-font-size: " + Main.mainStage.getWidth() * 0.015
-        + "px; -fx-background-radius: " + Main.mainStage.getWidth() * 0.05 + "px; -fx-pref-width: "
-        + (Main.mainStage.getWidth() * 0.15) + "px;");
+    exitPagePopupCancelBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+    exitPagePopupMainMenuBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
   }
 
   /**
@@ -563,17 +576,64 @@ public class PlayController {
    * This function displays an error popup.
    */
   public void displayDatabaseErrorPopup() {
-    newRecordPopup.setEffect(new GaussianBlur());
-    newRecordPopup.setMouseTransparent(true);
+    gameWonPopup.setEffect(new GaussianBlur());
+    gameWonPopup.setMouseTransparent(true);
 
     databaseCommunicationErrorPopup.setManaged(true);
     databaseCommunicationErrorPopup.setVisible(true);
 
-    databaseCommunicationErrorPopup.setMaxWidth(500);
-    databaseCommunicationErrorPopup.setMaxHeight(400);
-    databaseCommunicationErrorPopup.setStyle("-fx-background-radius: 10px;");
+    databaseCommunicationErrorPopup.setMaxWidth(Main.mainStage.getWidth() * 0.33);
+    databaseCommunicationErrorPopup.setMaxHeight(Main.mainStage.getHeight() * 0.40);
 
-    databaseCommunicationErrorPopupTitle.setStyle("-fx-font-size: 25px;");
+    databaseCommunicationErrorPopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    databaseCommunicationErrorPopupTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.33))
+    );
+
+
+    // Find all nodes with the "databaseErrorText" style class
+    Set<Node> foundNodes = databaseCommunicationErrorPopup.lookupAll(".databaseErrorText");
+
+    // Iterate over the set and cast each Node to a Label
+    for (Node node : foundNodes) {
+      // Use an instanceof check for safety
+      if (node instanceof Label) {
+        Label label = (Label) node;
+
+        label.styleProperty().bind(
+            Bindings.format("-fx-font-size: %.2fpx;",
+                Main.mainStage.widthProperty().multiply(0.01))
+        );
+      }
+    }
+
+
+    databaseErrorLastSentence.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-text-fill: red; -fx-padding: %.2fpx 0 %.2fpx 0",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+
+    closeDatabaseErrorPopupBtn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
+
+    closeDatabaseErrorPopupBtn.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.31),
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.011))
+    );
   }
 
   /**
@@ -583,8 +643,8 @@ public class PlayController {
     databaseCommunicationErrorPopup.setManaged(false);
     databaseCommunicationErrorPopup.setVisible(false);
 
-    newRecordPopup.setEffect(null);
-    newRecordPopup.setMouseTransparent(false);
+    gameWonPopup.setEffect(null);
+    gameWonPopup.setMouseTransparent(false);
   }
 
   /**

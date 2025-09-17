@@ -27,13 +27,22 @@
 #exitPagePopup, #gameLostPopup, #gameWonPopup, #newRecordPopup {
     -fx-background-color: black;
     -fx-alignment: center;
+    -fx-border-color: red;
 }
 
 #exitPagePopupTitle, #gameLostPopupTitle, #gameWonPopupTitle, #newRecordPopupTitle {
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;
+    /*-fx-background-color: green;*/
 }
+
+#exitPagePopupImgContainer {
+    /*-fx-background-color: blue;*/
+}
+
+
+
 
 #gameLostPopupTimeTaken, #gameWonPopupTimeTaken, #newRecordPopupTimeTaken {
     -fx-font-weight: bold;
@@ -100,26 +109,21 @@
 
 #databaseCommunicationErrorPopup {
     -fx-background-color: black;
-    -fx-padding: 10px;
+    -fx-border-color: red;
 }
 
 #databaseCommunicationErrorPopupTitle {
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;
-    -fx-pref-width: 500px;
 }
 
 .databaseErrorText {
     -fx-wrap-text: true;
-    -fx-font-size: 16px;
     -fx-text-fill: red;
 }
 
 #closeDatabaseErrorPopupBtn {
-    -fx-pref-width: 480px;
-    -fx-pref-height: 40px;
-    -fx-background-radius: 20px;
     -fx-background-color: red;
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -131,7 +135,5 @@
 }
 
 #databaseErrorLastSentence {
-    -fx-padding: 12px 0 20px 0;
     -fx-text-fill: red;
-    -fx-font-size: 16px;
 }

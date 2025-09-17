@@ -512,7 +512,6 @@ public class HighScoresController {
     highScoresStackpaneChild.setEffect(new GaussianBlur());
     highScoresStackpaneChild.setMouseTransparent(true);
 
-
     databaseCommunicationErrorPopup.setManaged(true);
     databaseCommunicationErrorPopup.setVisible(true);
 
@@ -520,8 +519,10 @@ public class HighScoresController {
     databaseCommunicationErrorPopup.setMaxHeight(Main.mainStage.getHeight() * 0.40);
 
     databaseCommunicationErrorPopup.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx; -fx-padding: %.2fpx;",
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
             Main.mainStage.widthProperty().multiply(0.01))
     );
 

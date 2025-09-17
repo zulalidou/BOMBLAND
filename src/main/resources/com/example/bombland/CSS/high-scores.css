@@ -84,6 +84,8 @@
 
 #databaseCommunicationErrorPopup {
     -fx-background-color: black;
+    -fx-border-color: red;
+    /*-fx-border-width: thick;*/
 }
 
 #databaseCommunicationErrorPopupTitle {

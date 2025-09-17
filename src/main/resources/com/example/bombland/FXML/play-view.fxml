@@ -122,10 +122,10 @@
             <Label styleClass="databaseErrorText" text="- Check your internet connection to ensure you are connected."/>
             <Label styleClass="databaseErrorText" text="- Restart the application if the problem persists."/>
             <Label styleClass="databaseErrorText" text="- Try again later, as the issue may be temporary."/>
-            <Label id="databaseErrorLastSentence" styleClass="text" text="If the issue continues, please contact support for further assistance."/>
+            <Label fx:id="databaseErrorLastSentence" styleClass="text" text="If the issue continues, please contact support for further assistance."/>
 
             <VBox>
-                <Button id="closeDatabaseErrorPopupBtn" text="Close" onAction="#closeDatabaseErrorPopup"/>
+                <Button fx:id="closeDatabaseErrorPopupBtn" text="Close" onAction="#closeDatabaseErrorPopup"/>
             </VBox>
         </VBox>
     </StackPane>
