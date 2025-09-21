@@ -146,7 +146,7 @@ public class MultiplayerSelectionController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - MultiplayerSelectionController.goToModeSelection(): Could not return to the main menu page.");
+      System.out.println("ERROR - MultiplayerSelectionController.goToModeSelection(): Could not return to the mode selection page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
@@ -155,7 +155,24 @@ public class MultiplayerSelectionController {
 
   @FXML
   private void pickHostGame() {
+    FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/com/example/bombland/FXML/host-game-settings-view.fxml")
+    );
 
+    HostGameSettingsController hostGameController = HostGameSettingsController.getInstance();
+    loader.setController(hostGameController);
+
+    try {
+      Scene scene = new Scene(loader.load());
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - pickHostGame(): Could not open the host game settings page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+    }
   }
 
   @FXML

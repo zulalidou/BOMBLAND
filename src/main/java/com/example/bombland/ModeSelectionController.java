@@ -168,7 +168,7 @@ public class ModeSelectionController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - pickSinglePlayer(): Could not open the difficulty selection page.");
+      System.out.println("ERROR - pickSinglePlayer(): Could not open the single player selection page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
