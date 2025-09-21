@@ -45,12 +45,12 @@
                 <Label fx:id="playerNameText" text="Pick a name"/>
 
                 <HBox alignment="CENTER" fx:id="playerNameHbox">
-                    <TextField fx:id="playerNameTextField"/>
+                    <TextField fx:id="playerNameTextField" disable="true"/>
                 </HBox>
 
                 <Region fx:id="space"/>
 
-                <Button fx:id="changePlayerNameBtn" text="Change name"/>
+                <Button fx:id="changePlayerNameBtn" text="Change name" onAction="#setPlayerName"/>
             </VBox>
         </VBox>
     </VBox>

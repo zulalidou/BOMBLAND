@@ -1,6 +1,9 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,6 +63,35 @@ public class HostGameSettingsController {
 
   @FXML
   Button changePlayerNameBtn;
+
+
+  final ArrayList<String> COLORS = new ArrayList<>(Arrays.asList(
+      "red", "green", "blue", "indigo",
+      "orange", "yellow", "violet", "gray",
+      "maroon", "black", "olive", "cyan",
+      "pink", "magenta", "tan", "teal"
+  ));
+
+  final ArrayList<String> ADJECTIVES = new ArrayList<>(Arrays.asList(
+      "angry", "big", "clever", "sweaty",
+      "clumsy", "tough", "deadly", "fancy",
+      "hairy", "happy", "bold", "nice",
+      "noisy", "odd", "quiet", "smart"
+  ));
+
+  final ArrayList<String> ANIMALS = new ArrayList<>(Arrays.asList(
+      "dog", "cat", "horse", "lion",
+      "tiger", "snake", "deer", "bear",
+      "wolf", "goat", "koala", "giraffe",
+      "turtle", "shark", "otter", "panda"
+  ));
+
+  final ArrayList<String> NAMES = new ArrayList<>(Arrays.asList(
+      "anna", "alex", "sam", "james",
+      "john", "toby", "tom", "noah",
+      "emma", "amelia", "charlotte", "sophie",
+      "isabella", "henry", "nina", "marc"
+  ));
 
 
   private HostGameSettingsController() {}
@@ -164,6 +196,8 @@ public class HostGameSettingsController {
             Main.mainStage.widthProperty().multiply(0.05)
         )
     );
+
+    setPlayerName();
   }
 
   @FXML
@@ -185,6 +219,37 @@ public class HostGameSettingsController {
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
+    }
+  }
+
+  @FXML
+  private void setPlayerName() {
+    String firstHalf = getFirstHalfOfName();
+    String secondHalf = getSecondHalfOfName();
+    playerNameTextField.setText(firstHalf + "-" + secondHalf);
+  }
+
+  private String getFirstHalfOfName() {
+    Random random = new Random();
+    int randomNum = random.nextInt(2);
+    int randomIdx = random.nextInt(16);
+
+    if (randomNum == 0) {
+      return COLORS.get(randomIdx);
+    } else {
+      return ADJECTIVES.get(randomIdx);
+    }
+  }
+
+  private String getSecondHalfOfName() {
+    Random random = new Random();
+    int randomNum = random.nextInt(2);
+    int randomIdx = random.nextInt(16);
+
+    if (randomNum == 0) {
+      return ANIMALS.get(randomIdx);
+    } else {
+      return NAMES.get(randomIdx);
     }
   }
 }
