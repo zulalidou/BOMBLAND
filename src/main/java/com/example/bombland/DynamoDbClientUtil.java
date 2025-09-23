@@ -201,8 +201,6 @@ public class DynamoDbClientUtil {
    * @param tableName The name of the table that will store the high score.
    */
   public static void saveNewHighScore(JSONObject info, String tableName) {
-    Map<String, AttributeValue> newHighScoreInfo = getNewHighScoreInfo(info);
-
     // The AWS credentials have expired
     if (awsCredentials == null || awsCredentials.expiration().isBefore(Instant.now())) {
       try {
@@ -216,6 +214,8 @@ public class DynamoDbClientUtil {
         throw e;
       }
     }
+
+    Map<String, AttributeValue> newHighScoreInfo = getNewHighScoreInfo(info);
 
     try {
       putScoreInDb(newHighScoreInfo, tableName);
@@ -249,8 +249,6 @@ public class DynamoDbClientUtil {
     return newHighScoreInfo;
   }
 
-
-  // Use temporary AWS credentials to interact with DynamoDB
   private static void putScoreInDb(Map<String, AttributeValue> newHighScoreInfo, String tableName) {
     try {
       // Use the temporary credentials to create a DynamoDB client
@@ -272,6 +270,85 @@ public class DynamoDbClientUtil {
     } catch (Exception e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - putScoreInDb(): Could not save the new high score to the DB.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+      throw e;
+    }
+  }
+
+  /**
+   * This function saves the info of a new room in the database.
+   *
+   * @param info The JSONObject that stores the room's info.
+   */
+  public static void createRoom(JSONObject info) {
+    // The AWS credentials have expired
+    if (awsCredentials == null || awsCredentials.expiration().isBefore(Instant.now())) {
+      try {
+        getTemporaryAwsCredentials();
+      } catch (Exception e) {
+        System.out.println("\n====================================================================");
+        System.out.println("ERROR - DynamoDbClientUtil.createRoom(): Could not get temporary AWS credentials.");
+        System.out.println("---");
+        System.out.println(e.getCause());
+        System.out.println("====================================================================\n");
+        throw e;
+      }
+    }
+
+    Map<String, AttributeValue> newRoomInfo = getNewRoomInfo(info);
+
+    try {
+      storeRoomInDb(newRoomInfo);
+    } catch (Exception e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - DynamoDbClientUtil.createRoom(): Could not store new high score in database.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+      throw e;
+    }
+  }
+
+  /**
+   * This function converts the room info into a format that can be stored in the database.
+   *
+   * @param info The JSONObject that stores the room's info.
+   * @return A DynamoDB-formated map that stores info about the newest high score.
+   */
+  public static Map<String, AttributeValue> getNewRoomInfo(JSONObject info) {
+    Map<String, AttributeValue> newRoomInfo = new HashMap<>();
+
+    newRoomInfo.put("id", AttributeValue.builder().s(info.get("id").toString()).build());
+    newRoomInfo.put("name", AttributeValue.builder().s(info.get("name").toString()).build());
+    newRoomInfo.put("creator", AttributeValue.builder().s(info.get("creator").toString()).build());
+    newRoomInfo.put("timetolive", AttributeValue.builder().n(info.get("timetolive").toString()).build());
+
+    return newRoomInfo;
+  }
+
+  private static void storeRoomInDb(Map<String, AttributeValue> newRoomInfo) {
+    try {
+      // Use the temporary credentials to create a DynamoDB client
+      DynamoDbClient dynamoDbClient = DynamoDbClient.builder()
+          .region(Region.US_WEST_2)
+          .credentialsProvider(() -> AwsSessionCredentials.create(
+              awsCredentials.accessKeyId(),
+              awsCredentials.secretKey(),
+              awsCredentials.sessionToken()
+          ))
+          .build();
+
+      PutItemRequest insertNewRoomRequest = PutItemRequest.builder()
+          .tableName("BOMBLAND_Rooms")
+          .item(newRoomInfo)
+          .build();
+
+      dynamoDbClient.putItem(insertNewRoomRequest);
+    } catch (Exception e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - storeRoomInDb(): Could not save the new room to the DB.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");

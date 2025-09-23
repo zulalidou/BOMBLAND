@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
@@ -33,8 +32,8 @@
 
         <VBox fx:id="multiplayerSelectionPageContainerBottom" alignment="CENTER">
             <VBox fx:id="multiplayerSelectionPageContainerBottomInner" alignment="CENTER">
-                <Button fx:id="hostGameBtn" text="Host Game" onAction="#pickHostGame"/>
-                <Button fx:id="joinGameBtn" text="Join Game" onAction="#pickJoinGame"/>
+                <Button fx:id="createRoomBtn" text="Create A Room" onAction="#goToCreateRoom"/>
+                <Button fx:id="joinRoomBtn" text="Join A Room" onAction="#goToJoinRoom"/>
             </VBox>
         </VBox>
     </VBox>

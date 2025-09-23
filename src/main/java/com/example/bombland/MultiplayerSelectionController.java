@@ -45,10 +45,10 @@ public class MultiplayerSelectionController {
   Label multiplayerSelectionPageTitle;
 
   @FXML
-  Button hostGameBtn;
+  Button createRoomBtn;
 
   @FXML
-  Button joinGameBtn;
+  Button joinRoomBtn;
 
 
   private MultiplayerSelectionController() {}
@@ -112,7 +112,7 @@ public class MultiplayerSelectionController {
     multiplayerSelectionPageContainerBottomInner
         .setSpacing(Main.mainStage.heightProperty().get() * 0.04);
 
-    hostGameBtn.styleProperty().bind(
+    createRoomBtn.styleProperty().bind(
         Bindings.format(
             "-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; -fx-background-radius: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.4),
@@ -121,7 +121,7 @@ public class MultiplayerSelectionController {
         )
     );
 
-    joinGameBtn.styleProperty().bind(
+    joinRoomBtn.styleProperty().bind(
         Bindings.format(
             "-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; -fx-background-radius: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.4),
@@ -154,13 +154,13 @@ public class MultiplayerSelectionController {
   }
 
   @FXML
-  private void pickHostGame() {
+  private void goToCreateRoom() {
     FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/com/example/bombland/FXML/host-game-settings-view.fxml")
+        getClass().getResource("/com/example/bombland/FXML/create-room-view.fxml")
     );
 
-    HostGameSettingsController hostGameController = HostGameSettingsController.getInstance();
-    loader.setController(hostGameController);
+    CreateRoomController createRoomController = CreateRoomController.getInstance();
+    loader.setController(createRoomController);
 
     try {
       Scene scene = new Scene(loader.load());
@@ -168,7 +168,7 @@ public class MultiplayerSelectionController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - pickHostGame(): Could not open the host game settings page.");
+      System.out.println("ERROR - goToCreateRoom(): Could not open the create room page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
@@ -176,7 +176,7 @@ public class MultiplayerSelectionController {
   }
 
   @FXML
-  private void pickJoinGame() {
+  private void goToJoinRoom() {
 
   }
 }

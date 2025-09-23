@@ -1,0 +1,109 @@
+#createRoomPage {
+    -fx-alignment: center;
+}
+
+
+#createRoomPageContainer {
+    -fx-background-color: red;
+}
+
+#createRoomPageContainerTopMiddleChild {
+    -fx-alignment: center;
+}
+
+
+#backBtn {
+    -fx-background-color: black;
+}
+
+#backBtn:hover {
+    -fx-cursor: hand;
+}
+
+
+#createRoomPageTitle {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#roomNameTextField {
+    -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#roomNameError {
+    -fx-text-fill: white;
+}
+
+#playerNameTextField {
+    -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-background-color: gray;
+}
+
+#playerNameTextField:disabled {
+    -fx-opacity: 1.0;
+}
+
+#roomNameTextField:focused, #playerNameTextField:focused {
+    /* Normally, when you click on the newRecordPopupText, it's border color turns blue (to show that the element is in focus).
+       This prevents the border color from turning blue */
+    -fx-background-color: white;
+}
+
+#roomNameText, #playerNameText {
+    -fx-text-fill: black;
+}
+
+
+#changePlayerNameBtn {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#changePlayerNameBtn:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+
+#createRoomBtn {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#createRoomBtn:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+
+#errorPopup {
+    -fx-background-color: black;
+    -fx-border-color: red;
+}
+
+#errorPopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+.errorText {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+}
+
+#closeErrorPopupBtn {
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#closeErrorPopupBtn:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
