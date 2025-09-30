@@ -299,6 +299,8 @@ public class CreateRoomController {
       newRoomInfo.put("creator", playerNameTextField.getText().strip());
       newRoomInfo.put("timetolive", (System.currentTimeMillis() / 1000) + (60 * 60 * 24));
 
+      AppCache.getInstance().setRoomInfo(newRoomInfo);
+
       try {
         if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
           Main.getEnvironmentVariables();
@@ -386,6 +388,23 @@ public class CreateRoomController {
 
   @FXML
   private void goToRoom() {
-    System.out.println("\ngoToRoom()");
+    FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/com/example/bombland/FXML/room-view.fxml")
+    );
+
+    RoomController roomController = RoomController.getInstance();
+    loader.setController(roomController);
+
+    try {
+      Scene scene = new Scene(loader.load());
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - goToRoom(): Could not go to the room page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+    }
   }
 }

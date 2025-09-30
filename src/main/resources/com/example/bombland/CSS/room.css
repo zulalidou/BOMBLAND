@@ -1,0 +1,105 @@
+#topPageContainer {
+    -fx-background-color: red;
+}
+
+
+#backBtn {
+    -fx-background-color: black;
+}
+
+#backBtn:hover {
+    -fx-cursor: hand;
+}
+
+
+#roomNameLabel {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#settingsContainer {
+    -fx-border-color: black;
+}
+
+#settingsContainerTitleLabel {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: black;
+}
+
+
+#selectMapLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#mapBox {
+    -fx-background-color: white;
+}
+
+#mapBox:hover {
+    -fx-cursor: hand;
+}
+
+#mapNameLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#selectDifficultyLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#difficultyBox {
+    -fx-background-color: white;
+}
+
+#difficultyBox:hover {
+    -fx-cursor: hand;
+}
+
+#difficultyNameLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+.toggle_btn {
+    -fx-background-color: orange;
+}
+
+.toggle_btn:hover {
+    -fx-cursor: hand;
+}
+
+
+#readyButton {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#readyButton:hover {
+    -fx-cursor: hand;
+}
+
+#startGameButton {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#startGameButton:hover {
+    -fx-cursor: hand;
+}
+
+
+#playersContainer {
+    -fx-border-color: black;
+}
+
+#bottomPageContainer {
+    -fx-background-color: red;
+}

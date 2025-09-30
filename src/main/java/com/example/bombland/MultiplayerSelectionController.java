@@ -168,7 +168,7 @@ public class MultiplayerSelectionController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - goToCreateRoom(): Could not open the create room page.");
+      System.out.println("ERROR - MultiplayerSelectionController.goToCreateRoom(): Could not open the create room page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");

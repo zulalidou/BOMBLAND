@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <stylesheets>
+        <URL value="@../CSS/room.css"/>
+    </stylesheets>
+
+    <VBox>
+        <HBox fx:id="topPageContainer">
+            <HBox fx:id="backBtnContainer" alignment="CENTER">
+                <Button fx:id="backBtn" onAction="#goToMainMenu">
+                    <graphic>
+                        <ImageView fitWidth="20" preserveRatio="true">
+                            <Image url="/com/example/bombland/images/back-button.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <VBox fx:id="emptySpace1"/>
+            <Label fx:id="roomNameLabel"/>
+            <VBox fx:id="emptySpace2"/>
+        </HBox>
+
+        <HBox fx:id="middlePageContainer">
+            <VBox fx:id="settingsContainer">
+                <Label fx:id="settingsContainerTitleLabel" text="SETTINGS"/>
+
+                <Region fx:id="sectionSpace1"/>
+
+                <VBox fx:id="mapContainer" alignment="CENTER">
+                    <Label fx:id="selectMapLabel" text="Select Map"/>
+
+                    <HBox fx:id="mapContainerInner" alignment="CENTER">
+                        <Button text="◀" styleClass="toggle_btn"/>
+
+                        <Region fx:id="mapContainerSpace1"/>
+
+                        <VBox fx:id="mapBox" alignment="CENTER">
+                            <ImageView>
+                                <Image url="/com/example/bombland/images/rectangle.png"/>
+                            </ImageView>
+
+                            <Label fx:id="mapNameLabel" text="Rectangle"/>
+                        </VBox>
+
+                        <Region fx:id="mapContainerSpace2"/>
+
+                        <Button text="▶" styleClass="toggle_btn"/>
+                    </HBox>
+                </VBox>
+
+                <Region fx:id="sectionSpace2"/>
+
+                <VBox fx:id="difficultyContainer" alignment="CENTER">
+                    <Label fx:id="selectDifficultyLabel" text="Select Difficulty"/>
+
+                    <HBox fx:id="difficultyContainerInner" alignment="CENTER">
+                        <Button text="◀" styleClass="toggle_btn"/>
+
+                        <Region fx:id="difficultyContainerSpace1"/>
+
+                        <VBox fx:id="difficultyBox" alignment="CENTER">
+                            <ImageView>
+                                <Image url="/com/example/bombland/images/flower.png"/>
+                            </ImageView>
+
+                            <Label fx:id="difficultyNameLabel" text="Easy"/>
+                        </VBox>
+
+                        <Region fx:id="difficultyContainerSpace2"/>
+
+                        <Button text="▶" styleClass="toggle_btn"/>
+                    </HBox>
+                </VBox>
+
+                <Region fx:id="sectionSpace3"/>
+
+                <VBox fx:id="buttonsContainer" alignment="CENTER">
+                    <Button fx:id="readyButton" text="NOT READY"/>
+                    <Region fx:id="buttonSpace"/>
+                    <Button fx:id="startGameButton" text="Start Game" disable="true"/>
+                </VBox>
+            </VBox>
+
+            <VBox fx:id="playersContainer">
+                <Label text="PLAYERS"/>
+            </VBox>
+        </HBox>
+
+        <HBox fx:id="bottomPageContainer"/>
+    </VBox>
+</VBox>

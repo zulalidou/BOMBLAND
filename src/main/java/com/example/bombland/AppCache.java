@@ -19,6 +19,7 @@ public class AppCache {
   private String mapOfHighScoresBeingShown;
   private boolean isServerConnectionGood;
   private boolean highScoresRetrievedAtLeastOnce;
+  private JSONObject roomInfo;
 
   private AppCache() {
     gettingData = false;
@@ -31,6 +32,7 @@ public class AppCache {
     mapOfHighScoresBeingShown = "";
     isServerConnectionGood = false;
     highScoresRetrievedAtLeastOnce = false;
+    roomInfo = null;
   }
 
   /**
@@ -118,5 +120,13 @@ public class AppCache {
 
   void setHighScoresHaveBeenRetrieved() {
     highScoresRetrievedAtLeastOnce = true;
+  }
+
+  void setRoomInfo(JSONObject newRoomInfo) {
+    roomInfo = newRoomInfo;
+  }
+
+  JSONObject getRoomInfo() {
+    return roomInfo;
   }
 }

@@ -198,7 +198,7 @@ public class DifficultySelectionController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - goToMainMenu(): Could not open the map selection page.");
+      System.out.println("ERROR - openMapSelectionPage(): Could not open the map selection page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
