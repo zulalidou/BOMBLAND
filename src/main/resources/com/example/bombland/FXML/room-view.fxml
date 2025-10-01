@@ -39,12 +39,12 @@
                     <Label fx:id="selectMapLabel" text="Select Map"/>
 
                     <HBox fx:id="mapContainerInner" alignment="CENTER">
-                        <Button text="◀" styleClass="toggle_btn"/>
+                        <Button text="◀" styleClass="toggle_btn" onAction="#goToLeftMap"/>
 
                         <Region fx:id="mapContainerSpace1"/>
 
                         <VBox fx:id="mapBox" alignment="CENTER">
-                            <ImageView>
+                            <ImageView fx:id="mapImgView">
                                 <Image url="/com/example/bombland/images/rectangle.png"/>
                             </ImageView>
 
@@ -53,7 +53,7 @@
 
                         <Region fx:id="mapContainerSpace2"/>
 
-                        <Button text="▶" styleClass="toggle_btn"/>
+                        <Button text="▶" styleClass="toggle_btn" onAction="#goToRightMap"/>
                     </HBox>
                 </VBox>
 
@@ -63,12 +63,12 @@
                     <Label fx:id="selectDifficultyLabel" text="Select Difficulty"/>
 
                     <HBox fx:id="difficultyContainerInner" alignment="CENTER">
-                        <Button text="◀" styleClass="toggle_btn"/>
+                        <Button text="◀" styleClass="toggle_btn" onAction="#goToLeftDifficulty"/>
 
                         <Region fx:id="difficultyContainerSpace1"/>
 
                         <VBox fx:id="difficultyBox" alignment="CENTER">
-                            <ImageView>
+                            <ImageView fx:id="difficultyImgView">
                                 <Image url="/com/example/bombland/images/easy-difficulty.png"/>
                             </ImageView>
 
@@ -77,14 +77,14 @@
 
                         <Region fx:id="difficultyContainerSpace2"/>
 
-                        <Button text="▶" styleClass="toggle_btn"/>
+                        <Button text="▶" styleClass="toggle_btn" onAction="#goToRightDifficulty"/>
                     </HBox>
                 </VBox>
 
                 <Region fx:id="sectionSpace3"/>
 
                 <VBox fx:id="buttonsContainer" alignment="CENTER">
-                    <Button fx:id="readyButton" text="NOT READY"/>
+                    <Button fx:id="readyButton" text="READY" disable="true"/>
                     <Region fx:id="buttonSpace"/>
                     <Button fx:id="startGameButton" text="Start Game" disable="true"/>
                 </VBox>

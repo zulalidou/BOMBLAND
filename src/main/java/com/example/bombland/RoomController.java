@@ -1,12 +1,15 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.net.URL;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -64,6 +67,9 @@ public class RoomController {
   VBox mapBox;
 
   @FXML
+  ImageView mapImgView;
+
+  @FXML
   Label mapNameLabel;
 
   @FXML
@@ -86,6 +92,9 @@ public class RoomController {
 
   @FXML
   VBox difficultyBox;
+
+  @FXML
+  ImageView difficultyImgView;
 
   @FXML
   Label difficultyNameLabel;
@@ -359,6 +368,122 @@ public class RoomController {
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
+    }
+  }
+
+  @FXML
+  private void goToLeftMap() {
+    String newMap = "";
+
+    if (mapNameLabel.getText().equals("Rectangle")) {
+      mapNameLabel.setText("Flower");
+      newMap = "flower";
+    } else if (mapNameLabel.getText().equals("Bomb")) {
+      mapNameLabel.setText("Rectangle");
+      newMap = "rectangle";
+    } else if (mapNameLabel.getText().equals("Face")) {
+      mapNameLabel.setText("Bomb");
+      newMap = "bomb";
+    } else {
+      mapNameLabel.setText("Face");
+
+      if (difficultyNameLabel.getText().equals("Easy")) {
+        newMap = "smiley-face";
+      } else if (difficultyNameLabel.getText().equals("Medium")) {
+        newMap = "poker-face";
+      } else {
+        newMap = "sad-face";
+      }
+    }
+
+    URL imageUrl = getClass().getResource("/com/example/bombland/Images/" + newMap + ".png");
+    Image newImage = new Image(imageUrl.toString());
+    mapImgView.setImage(newImage);
+  }
+
+  @FXML
+  private void goToRightMap() {
+    String newMap = "";
+
+    if (mapNameLabel.getText().equals("Rectangle")) {
+      mapNameLabel.setText("Bomb");
+      newMap = "bomb";
+    } else if (mapNameLabel.getText().equals("Bomb")) {
+      mapNameLabel.setText("Face");
+
+      if (difficultyNameLabel.getText().equals("Easy")) {
+        newMap = "smiley-face";
+      } else if (difficultyNameLabel.getText().equals("Medium")) {
+        newMap = "poker-face";
+      } else {
+        newMap = "sad-face";
+      }
+    } else if (mapNameLabel.getText().equals("Face")) {
+      mapNameLabel.setText("Flower");
+      newMap = "flower";
+    } else {
+      mapNameLabel.setText("Rectangle");
+      newMap = "rectangle";
+    }
+
+    URL imageUrl = getClass().getResource("/com/example/bombland/Images/" + newMap + ".png");
+    Image newImage = new Image(imageUrl.toString());
+    mapImgView.setImage(newImage);
+  }
+
+  @FXML
+  private void goToLeftDifficulty() {
+    if (difficultyNameLabel.getText().equals("Easy")) {
+      difficultyNameLabel.setText("Hard");
+    } else if (difficultyNameLabel.getText().equals("Medium")) {
+      difficultyNameLabel.setText("Easy");
+    } else {
+      difficultyNameLabel.setText("Medium");
+    }
+
+    URL imageUrl = getClass().getResource("/com/example/bombland/Images/" + difficultyNameLabel.getText().toLowerCase() + "-difficulty.png");
+    Image newImage = new Image(imageUrl.toString());
+    difficultyImgView.setImage(newImage);
+
+    if (mapNameLabel.getText().equals("Face")) {
+      if (difficultyNameLabel.getText().equals("Easy")) {
+        imageUrl = getClass().getResource("/com/example/bombland/Images/smiley-face.png");
+      } else if (difficultyNameLabel.getText().equals("Medium")) {
+        imageUrl = getClass().getResource("/com/example/bombland/Images/poker-face.png");
+      } else {
+        imageUrl = getClass().getResource("/com/example/bombland/Images/sad-face.png");
+      }
+
+      newImage = new Image(imageUrl.toString());
+      mapImgView.setImage(newImage);
+    }
+  }
+
+  @FXML
+  private void goToRightDifficulty() {
+    if (difficultyNameLabel.getText().equals("Easy")) {
+      difficultyNameLabel.setText("Medium");
+    } else if (difficultyNameLabel.getText().equals("Medium")) {
+      difficultyNameLabel.setText("Hard");
+    } else {
+      difficultyNameLabel.setText("Easy");
+    }
+
+    URL imageUrl = getClass().getResource("/com/example/bombland/Images/" + difficultyNameLabel.getText().toLowerCase() + "-difficulty.png");
+    Image newImage = new Image(imageUrl.toString());
+    difficultyImgView.setImage(newImage);
+
+    if (mapNameLabel.getText().equals("Face")) {
+      if (difficultyNameLabel.getText().equals("Easy")) {
+        imageUrl = getClass().getResource("/com/example/bombland/Images/smiley-face.png");
+      } else if (difficultyNameLabel.getText().equals("Medium")) {
+        imageUrl = getClass().getResource("/com/example/bombland/Images/poker-face.png");
+      } else {
+        imageUrl = getClass().getResource("/com/example/bombland/Images/sad-face.png");
+      }
+
+      newImage = new Image(imageUrl.toString());
+      mapImgView.setImage(newImage);
     }
   }
 }
