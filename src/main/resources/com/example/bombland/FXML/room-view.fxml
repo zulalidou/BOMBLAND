@@ -69,7 +69,7 @@
 
                         <VBox fx:id="difficultyBox" alignment="CENTER">
                             <ImageView>
-                                <Image url="/com/example/bombland/images/flower.png"/>
+                                <Image url="/com/example/bombland/images/easy-difficulty.png"/>
                             </ImageView>
 
                             <Label fx:id="difficultyNameLabel" text="Easy"/>
@@ -91,7 +91,33 @@
             </VBox>
 
             <VBox fx:id="playersContainer">
-                <Label text="PLAYERS"/>
+                <Label fx:id="playersContainerTitleLabel" text="PLAYERS"/>
+
+                <HBox fx:id="playerIconsContainer" alignment="CENTER">
+                    <VBox fx:id="player1BoxContainer" alignment="CENTER">
+                        <VBox fx:id="player1Box" alignment="CENTER">
+                            <ImageView>
+                                <Image url="/com/example/bombland/images/profile-picture.png"/>
+                            </ImageView>
+
+                            <Label fx:id="playerNameLabel"/>
+                        </VBox>
+
+                        <Label fx:id="player1ReadyStateLabel" text="NOT READY"/>
+                    </VBox>
+                </HBox>
+
+                <HBox fx:id="utilitiesContainer" alignment="CENTER">
+                    <VBox fx:id="voiceChatBoxContainer" alignment="CENTER">
+                        <VBox fx:id="voiceChatBox" alignment="CENTER">
+                            <ImageView>
+                                <Image url="/com/example/bombland/images/sound.png"/>
+                            </ImageView>
+
+                            <Label fx:id="voiceChatLabel" text="Voice Chat"/>
+                        </VBox>
+                    </VBox>
+                </HBox>
             </VBox>
         </HBox>
 

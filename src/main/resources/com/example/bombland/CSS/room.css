@@ -2,7 +2,6 @@
     -fx-background-color: red;
 }
 
-
 #backBtn {
     -fx-background-color: black;
 }
@@ -10,7 +9,6 @@
 #backBtn:hover {
     -fx-cursor: hand;
 }
-
 
 #roomNameLabel {
     -fx-alignment: center;
@@ -41,6 +39,7 @@
 
 #mapBox:hover {
     -fx-cursor: hand;
+    -fx-background-color: #CCCCCC;
 }
 
 #mapNameLabel {
@@ -60,6 +59,7 @@
 
 #difficultyBox:hover {
     -fx-cursor: hand;
+    -fx-background-color: #CCCCCC;
 }
 
 #difficultyNameLabel {
@@ -74,6 +74,7 @@
 
 .toggle_btn:hover {
     -fx-cursor: hand;
+    -fx-background-color: #FFC755;
 }
 
 
@@ -84,6 +85,7 @@
 
 #readyButton:hover {
     -fx-cursor: hand;
+    -fx-background-color: #808080;
 }
 
 #startGameButton {
@@ -99,6 +101,46 @@
 #playersContainer {
     -fx-border-color: black;
 }
+
+#playersContainerTitleLabel {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: black;
+}
+
+#playerIconsContainer {
+    -fx-border-color: transparent transparent black transparent;
+}
+
+#player1Box {
+    -fx-background-color: gold;
+}
+
+#playerNameLabel {
+    -fx-alignment: center;
+    -fx-text-fill: black;
+}
+
+#player1ReadyStateLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#voiceChatBox {
+    -fx-background-color: #4682B4;
+}
+
+#voiceChatBox:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #5B8FB6;
+}
+
+#voiceChatLabel {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+}
+
 
 #bottomPageContainer {
     -fx-background-color: red;
