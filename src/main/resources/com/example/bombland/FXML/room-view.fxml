@@ -24,9 +24,20 @@
                 </Button>
             </HBox>
 
-            <VBox fx:id="emptySpace1"/>
-            <Label fx:id="roomNameLabel"/>
-            <VBox fx:id="emptySpace2"/>
+            <VBox fx:id="roomIdContainer" alignment="CENTER">
+                <Label fx:id="roomIdTitleLabel" text="ROOM ID"/>
+                <Label fx:id="roomIdLabel"/>
+            </VBox>
+
+            <VBox fx:id="roomNameContainer" alignment="CENTER">
+                <Label fx:id="roomNameTitleLabel" text="ROOM NAME"/>
+                <Label fx:id="roomNameLabel"/>
+            </VBox>
+
+            <VBox fx:id="totalPlayersContainer" alignment="CENTER">
+                <Label fx:id="totalPlayersTitleLabel" text="PLAYERS"/>
+                <Label fx:id="totalPlayersLabel" text="1 / 2"/>
+            </VBox>
         </HBox>
 
         <HBox fx:id="middlePageContainer">

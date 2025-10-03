@@ -101,8 +101,8 @@ public class MapSelectionController {
    */
   @FXML
   public void initialize() {
-    // Prevents the width of the difficultySelectionPageContainer VBox
-    // from having the same width as its parent container (difficultySelectionPage)
+    // Prevents the width of the mapSelectionPageContainer VBox
+    // from having the same width as its parent container (mapSelectionPage)
     mapSelectionPage.setFillWidth(false);
 
     mapSelectionPageContainer.styleProperty().bind(

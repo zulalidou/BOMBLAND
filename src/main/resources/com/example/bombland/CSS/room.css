@@ -10,8 +10,18 @@
     -fx-cursor: hand;
 }
 
-#roomNameLabel {
-    -fx-alignment: center;
+
+#roomIdTitleLabel, #roomIdLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#roomNameTitleLabel, #roomNameLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#totalPlayersTitleLabel, #totalPlayersLabel {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }

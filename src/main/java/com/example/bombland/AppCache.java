@@ -19,7 +19,7 @@ public class AppCache {
   private String mapOfHighScoresBeingShown;
   private boolean isServerConnectionGood;
   private boolean highScoresRetrievedAtLeastOnce;
-  private JSONObject roomInfo;
+  private JSONObject multiplayerRoom;
 
   private AppCache() {
     gettingData = false;
@@ -32,7 +32,7 @@ public class AppCache {
     mapOfHighScoresBeingShown = "";
     isServerConnectionGood = false;
     highScoresRetrievedAtLeastOnce = false;
-    roomInfo = null;
+    multiplayerRoom = null;
   }
 
   /**
@@ -122,11 +122,11 @@ public class AppCache {
     highScoresRetrievedAtLeastOnce = true;
   }
 
-  void setRoomInfo(JSONObject newRoomInfo) {
-    roomInfo = newRoomInfo;
+  void setMultiplayerRoom(JSONObject roomInfo) {
+    multiplayerRoom = roomInfo;
   }
 
-  JSONObject getRoomInfo() {
-    return roomInfo;
+  JSONObject getMultiplayerRoom() {
+    return multiplayerRoom;
   }
 }

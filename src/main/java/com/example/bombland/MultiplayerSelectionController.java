@@ -177,6 +177,23 @@ public class MultiplayerSelectionController {
 
   @FXML
   private void goToJoinRoom() {
+    FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/com/example/bombland/FXML/join-room-view.fxml")
+    );
 
+    JoinRoomController joinRoomController = JoinRoomController.getInstance();
+    loader.setController(joinRoomController);
+
+    try {
+      Scene scene = new Scene(loader.load());
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - goToJoinRoom(): Could not open the join room page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+    }
   }
 }

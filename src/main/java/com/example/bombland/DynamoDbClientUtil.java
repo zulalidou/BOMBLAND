@@ -19,6 +19,8 @@ import software.amazon.awssdk.services.cognitoidentity.model.GetIdResponse;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
+import software.amazon.awssdk.services.dynamodb.model.GetItemResponse;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.ScanRequest;
 import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
@@ -322,7 +324,7 @@ public class DynamoDbClientUtil {
 
     newRoomInfo.put("id", AttributeValue.builder().s(info.get("id").toString()).build());
     newRoomInfo.put("name", AttributeValue.builder().s(info.get("name").toString()).build());
-    newRoomInfo.put("creator", AttributeValue.builder().s(info.get("creator").toString()).build());
+    newRoomInfo.put("player1", AttributeValue.builder().s(info.get("player1").toString()).build());
     newRoomInfo.put("timetolive", AttributeValue.builder().n(info.get("timetolive").toString()).build());
 
     return newRoomInfo;
@@ -353,6 +355,75 @@ public class DynamoDbClientUtil {
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
       throw e;
+    }
+  }
+
+  /**
+   * This function retrieves the room from the database.
+   */
+  public static JSONObject getRoom(String roomId) {
+    // The AWS credentials have expired
+    if (awsCredentials == null || awsCredentials.expiration().isBefore(Instant.now())) {
+      try {
+        getTemporaryAwsCredentials();
+      } catch (Exception e) {
+        System.out.println("\n====================================================================");
+        System.out.println("ERROR - getRoom(): Could not get temporary AWS credentials.");
+        System.out.println("---");
+        System.out.println(e.getCause());
+        System.out.println("====================================================================\n");
+        throw e;
+      }
+    }
+
+    try {
+      return pullRoomInfo(roomId);
+    } catch (CompletionException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - getRoom(): Could not pull the room info from DynamoDB.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+      throw e;
+    }
+  }
+
+  /**
+   * This function retrieves high scores from the database.
+   */
+  public static JSONObject pullRoomInfo(String roomId) {
+    dynamodbAsyncClient = DynamoDbAsyncClient.builder()
+        .region(Region.US_WEST_2)
+        .credentialsProvider(() -> AwsSessionCredentials.create(
+            awsCredentials.accessKeyId(),
+            awsCredentials.secretKey(),
+            awsCredentials.sessionToken()
+        ))
+        .build();
+
+    HashMap<String, AttributeValue> keyToGet = new HashMap<>();
+    keyToGet.put("id", AttributeValue.builder().s(roomId).build());
+
+    GetItemRequest request = GetItemRequest.builder()
+        .key(keyToGet)
+        .tableName("BOMBLAND_Rooms")
+        .build();
+
+    GetItemResponse response = dynamodbAsyncClient.getItem(request).join();
+
+    if (response.hasItem()) {
+      Map<String, AttributeValue> item = response.item();
+      System.out.println("Item found: " + item);
+
+      JSONObject roomInfo = new JSONObject();
+      roomInfo.put("id", roomId);
+      roomInfo.put("name", item.get("name").s());
+      roomInfo.put("player1", item.get("player1").s());
+      roomInfo.put("timetolive", item.get("timetolive").n());
+      return roomInfo;
+    } else {
+      System.out.println("Item not found with key: " + keyToGet);
+      return null;
     }
   }
 }

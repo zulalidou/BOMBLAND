@@ -2,7 +2,6 @@ package com.example.bombland;
 
 import java.io.IOException;
 import java.util.Set;
-import java.util.UUID;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,43 +18,43 @@ import javafx.scene.layout.VBox;
 import org.json.JSONObject;
 
 /**
- * This class implements the UI for the Create-A-Room page.
+ * This class implements the UI for the Join-A-Room page.
  */
-public class CreateRoomController {
-  private static CreateRoomController instance;
+public class JoinRoomController {
+  private static JoinRoomController instance;
 
   @FXML
   Button backBtn;
 
   @FXML
-  VBox createRoomPage;
+  VBox page;
 
   @FXML
-  VBox createRoomPageContainer;
+  VBox pageContainer;
 
   @FXML
-  VBox createRoomPageContainerBottom;
+  VBox pageContainerBottom;
 
   @FXML
-  HBox createRoomPageContainerTopLeftChild;
+  HBox pageContainerTopLeftChild;
 
   @FXML
-  HBox createRoomPageContainerTopMiddleChild;
+  HBox pageContainerTopMiddleChild;
 
   @FXML
-  HBox createRoomPageContainerTopRightChild;
+  HBox pageContainerTopRightChild;
 
   @FXML
-  Label createRoomPageTitle;
+  Label pageTitle;
 
   @FXML
-  Label roomNameText;
+  Label roomIdText;
 
   @FXML
-  TextField roomNameTextField;
+  TextField roomIdTextField;
 
   @FXML
-  Label roomNameError;
+  Label roomIdError;
 
   @FXML
   Label playerNameText;
@@ -70,47 +69,60 @@ public class CreateRoomController {
   Button changePlayerNameBtn;
 
   @FXML
-  Button createRoomBtn;
+  Button joinRoomBtn;
 
   @FXML
-  VBox errorPopup;
+  VBox errorPopup1;
 
   @FXML
-  Label errorPopupTitle;
+  Label errorPopupTitle1;
 
   @FXML
-  Label errorLastSentence;
+  Label errorLastSentence1;
 
   @FXML
-  Button closeErrorPopupBtn;
+  Button closeErrorPopup1Btn;
+
+  @FXML
+  VBox errorPopup2;
+
+  @FXML
+  Label errorPopupTitle2;
+
+  @FXML
+  Label errorLastSentence2;
+
+  @FXML
+  Button closeErrorPopup2Btn;
 
 
-  private CreateRoomController() {}
+  private JoinRoomController() {}
 
   /**
    * This function creates an instance of this class.
    *
    * @return an instance of this class.
    */
-  public static CreateRoomController getInstance() {
+  public static JoinRoomController getInstance() {
     if (instance == null) {
-      instance = new CreateRoomController();
+      instance = new JoinRoomController();
     }
 
     return instance;
   }
+
 
   /**
    * This function sets up the multiplayer Selection page.
    */
   @FXML
   public void initialize() {
-    // Prevents the width of the createRoomPageContainer VBox
-    // from having the same width as its parent container (createRoomPage)
-    createRoomPage.setFillWidth(false);
+    // Prevents the width of the pageContainer VBox
+    // from having the same width as its parent container (page)
+    page.setFillWidth(false);
 
 
-    createRoomPageContainer.styleProperty().bind(
+    pageContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.75),
             Main.mainStage.heightProperty().multiply(0.6),
@@ -118,7 +130,7 @@ public class CreateRoomController {
         )
     );
 
-    createRoomPageContainerTopLeftChild.styleProperty().bind(
+    pageContainerTopLeftChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
     );
 
@@ -128,30 +140,30 @@ public class CreateRoomController {
         )
     );
 
-    createRoomPageContainerTopMiddleChild.styleProperty().bind(
+    pageContainerTopMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.6))
     );
 
-    createRoomPageTitle.styleProperty().bind(
+    pageTitle.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.04))
     );
 
-    createRoomPageContainerTopRightChild.styleProperty().bind(
+    pageContainerTopRightChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
     );
 
 
-    VBox.setVgrow(createRoomPageContainerBottom, Priority.ALWAYS);
+    VBox.setVgrow(pageContainerBottom, Priority.ALWAYS);
 
 
-    roomNameTextField.styleProperty().bind(
+    roomIdTextField.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-font-size: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.3),
             Main.mainStage.widthProperty().multiply(0.03),
             Main.mainStage.widthProperty().multiply(0.015))
     );
 
-    roomNameText.styleProperty().bind(
+    roomIdText.styleProperty().bind(
         Bindings.format(
             "-fx-font-size: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.03)
@@ -190,7 +202,7 @@ public class CreateRoomController {
         )
     );
 
-    createRoomBtn.styleProperty().bind(
+    joinRoomBtn.styleProperty().bind(
         Bindings.format(
             "-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; -fx-background-radius: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.4),
@@ -206,8 +218,8 @@ public class CreateRoomController {
         getClass().getResource("/com/example/bombland/FXML/multiplayer-selection-view.fxml")
     );
 
-    MultiplayerSelectionController multiplayerController = MultiplayerSelectionController.getInstance();
-    loader.setController(multiplayerController);
+    MultiplayerSelectionController multiplayerSelectionController = MultiplayerSelectionController.getInstance();
+    loader.setController(multiplayerSelectionController);
 
     try {
       Scene scene = new Scene(loader.load());
@@ -215,7 +227,7 @@ public class CreateRoomController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - CreateRoomController.goToMultiplayerSelection(): Could not return to the multiplayer selection page.");
+      System.out.println("ERROR - JoinRoomController.goToMultiplayerSelection(): Could not return to the multiplayer selection page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
@@ -230,47 +242,45 @@ public class CreateRoomController {
   }
 
   @FXML
-  private void createRoom() {
-    if (roomNameTextField.getText().isBlank()) {
-      roomNameError.setVisible(true); // display error
-      roomNameTextField.setText("");
+  private void joinRoom() {
+    if (roomIdTextField.getText().isBlank()) {
+      roomIdError.setVisible(true); // display error
+      roomIdTextField.setText("");
     } else {
-      roomNameError.setVisible(false);
-
-      JSONObject newRoomInfo = new JSONObject();
-      newRoomInfo.put("id", UUID.randomUUID().toString().substring(0, 8));
-      newRoomInfo.put("name", roomNameTextField.getText().strip());
-      newRoomInfo.put("player1", playerNameTextField.getText());
-      newRoomInfo.put("timetolive", (System.currentTimeMillis() / 1000) + (60 * 60 * 24));
-
-      AppCache.getInstance().setMultiplayerRoom(newRoomInfo);
+      roomIdError.setVisible(false);
+      String roomId = roomIdTextField.getText().strip().toLowerCase();
 
       try {
         if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
           Main.getEnvironmentVariables();
         }
 
-        DynamoDbClientUtil.createRoom(newRoomInfo);
+        JSONObject roomInfo = DynamoDbClientUtil.getRoom(roomId);
 
-        goToRoom();
+        if (roomInfo == null) {
+          displayRoomDoesNotExistPopup();
+        } else {
+          AppCache.getInstance().setMultiplayerRoom(roomInfo);
+          goToRoom();
+        }
       } catch (Exception e) {
-        displayErrorPopup();
+        displayGenericErrorPopup();
       }
     }
   }
 
   @FXML
-  private void displayErrorPopup() {
-    createRoomPageContainer.setEffect(new GaussianBlur());
-    createRoomPageContainer.setMouseTransparent(true);
+  private void displayRoomDoesNotExistPopup() {
+    pageContainer.setEffect(new GaussianBlur());
+    pageContainer.setMouseTransparent(true);
 
-    errorPopup.setManaged(true);
-    errorPopup.setVisible(true);
+    errorPopup1.setManaged(true);
+    errorPopup1.setVisible(true);
 
-    errorPopup.setMaxWidth(Main.mainStage.getWidth() * 0.33);
-    errorPopup.setMaxHeight(Main.mainStage.getHeight() * 0.40);
+    errorPopup1.setMaxWidth(Main.mainStage.getWidth() * 0.33);
+    errorPopup1.setMaxHeight(Main.mainStage.getHeight() * 0.32);
 
-    errorPopup.styleProperty().bind(
+    errorPopup1.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
             Main.mainStage.widthProperty().multiply(0.005),
@@ -278,7 +288,62 @@ public class CreateRoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    errorPopupTitle.styleProperty().bind(
+    errorPopupTitle1.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.33))
+    );
+
+
+    errorLastSentence1.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01),
+            errorPopup1.widthProperty().multiply(1))
+    );
+
+
+    closeErrorPopup1Btn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
+
+    closeErrorPopup1Btn.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.31),
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.011))
+    );
+  }
+
+  @FXML
+  private void closeRoomDoesNotExistPopup() {
+    errorPopup1.setManaged(false);
+    errorPopup1.setVisible(false);
+
+    pageContainer.setEffect(null);
+    pageContainer.setMouseTransparent(false);
+  }
+
+  @FXML
+  private void displayGenericErrorPopup() {
+    pageContainer.setEffect(new GaussianBlur());
+    pageContainer.setMouseTransparent(true);
+
+    errorPopup2.setManaged(true);
+    errorPopup2.setVisible(true);
+
+    errorPopup2.setMaxWidth(Main.mainStage.getWidth() * 0.33);
+    errorPopup2.setMaxHeight(Main.mainStage.getHeight() * 0.40);
+
+    errorPopup2.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    errorPopupTitle2.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.02),
             Main.mainStage.widthProperty().multiply(0.33))
@@ -286,7 +351,7 @@ public class CreateRoomController {
 
 
     // Find all nodes with the "databaseErrorText" style class
-    Set<Node> foundNodes = errorPopup.lookupAll(".errorText");
+    Set<Node> foundNodes = errorPopup2.lookupAll(".errorText");
 
     // Iterate over the set and cast each Node to a Label
     for (Node node : foundNodes) {
@@ -302,7 +367,7 @@ public class CreateRoomController {
     }
 
 
-    errorLastSentence.styleProperty().bind(
+    errorLastSentence2.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-text-fill: red; -fx-padding: %.2fpx 0 %.2fpx 0",
             Main.mainStage.widthProperty().multiply(0.01),
             Main.mainStage.widthProperty().multiply(0.01),
@@ -310,9 +375,9 @@ public class CreateRoomController {
     );
 
 
-    closeErrorPopupBtn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
+    closeErrorPopup2Btn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
 
-    closeErrorPopupBtn.styleProperty().bind(
+    closeErrorPopup2Btn.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.31),
             Main.mainStage.widthProperty().multiply(0.02),
@@ -322,12 +387,12 @@ public class CreateRoomController {
   }
 
   @FXML
-  private void closeErrorPopup() {
-    errorPopup.setManaged(false);
-    errorPopup.setVisible(false);
+  private void closeGenericErrorPopup() {
+    errorPopup2.setManaged(false);
+    errorPopup2.setVisible(false);
 
-    createRoomPageContainer.setEffect(null);
-    createRoomPageContainer.setMouseTransparent(false);
+    pageContainer.setEffect(null);
+    pageContainer.setMouseTransparent(false);
   }
 
   @FXML
@@ -345,7 +410,7 @@ public class CreateRoomController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - CreateRoomController.goToRoom(): Could not go to the room page.");
+      System.out.println("ERROR - JoinRoomController.goToRoom(): Could not go to the room page.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");

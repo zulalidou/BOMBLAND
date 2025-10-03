@@ -31,13 +31,31 @@ public class RoomController {
   Button backBtn;
 
   @FXML
-  VBox emptySpace1;
+  VBox roomIdContainer;
+
+  @FXML
+  Label roomIdTitleLabel;
+
+  @FXML
+  Label roomIdLabel;
+
+  @FXML
+  VBox roomNameContainer;
+
+  @FXML
+  Label roomNameTitleLabel;
 
   @FXML
   Label roomNameLabel;
 
   @FXML
-  VBox emptySpace2;
+  VBox totalPlayersContainer;
+
+  @FXML
+  Label totalPlayersTitleLabel;
+
+  @FXML
+  Label totalPlayersLabel;
 
   @FXML
   HBox middlePageContainer;
@@ -157,7 +175,7 @@ public class RoomController {
 
 
   private RoomController() {
-    roomInfo = AppCache.getInstance().getRoomInfo();
+    roomInfo = AppCache.getInstance().getMultiplayerRoom();
   }
 
   /**
@@ -187,20 +205,44 @@ public class RoomController {
             backBtnContainer.widthProperty().multiply(0.2))
     );
 
-    emptySpace1.styleProperty().bind(
+    roomIdContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
+    );
+
+    roomIdTitleLabel.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
+    );
+
+    roomIdLabel.setText(roomInfo.get("id").toString());
+
+    roomIdLabel.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
+    );
+
+    roomNameContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
+    );
+
+    roomNameTitleLabel.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
     );
 
     roomNameLabel.setText(roomInfo.get("name").toString());
 
     roomNameLabel.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
-            topPageContainer.widthProperty().multiply(0.3),
-            topPageContainer.widthProperty().multiply(0.035))
+        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
     );
 
-    emptySpace2.styleProperty().bind(
+    totalPlayersContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
+    );
+
+    totalPlayersTitleLabel.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
+    );
+
+    totalPlayersLabel.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
     );
 
 
@@ -308,7 +350,7 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    playerNameLabel.setText(roomInfo.get("creator").toString());
+    playerNameLabel.setText(roomInfo.get("player1").toString());
 
     playerNameLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",

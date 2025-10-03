@@ -1,0 +1,114 @@
+#page {
+    -fx-alignment: center;
+}
+
+#pageContainer {
+    -fx-background-color: red;
+}
+
+#pageContainerTopMiddleChild {
+    -fx-alignment: center;
+}
+
+
+#backBtn {
+    -fx-background-color: black;
+}
+
+#backBtn:hover {
+    -fx-cursor: hand;
+}
+
+
+#pageTitle {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#roomIdTextField {
+    -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#roomIdError {
+    -fx-text-fill: white;
+}
+
+#playerNameTextField {
+    -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-background-color: gray;
+}
+
+#playerNameTextField:disabled {
+    -fx-opacity: 1.0;
+}
+
+#roomIdTextField:focused, #playerNameTextField:focused {
+    /* Normally, when you click on the TextField, it's border color turns blue (to show that the element is in focus).
+       This prevents the border color from turning blue */
+    -fx-background-color: white;
+}
+
+#roomIdText, #playerNameText {
+    -fx-text-fill: black;
+}
+
+
+#changePlayerNameBtn {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#changePlayerNameBtn:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+
+#joinRoomBtn {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+#joinRoomBtn:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+
+#errorPopup1, #errorPopup2 {
+    -fx-background-color: black;
+    -fx-border-color: red;
+}
+
+#errorPopupTitle1, #errorPopupTitle2 {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+.errorText {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+}
+
+#errorLastSentence1 {
+    -fx-text-fill: red;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#closeErrorPopup1Btn, #closeErrorPopup2Btn {
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#closeErrorPopup1Btn:hover, #closeErrorPopup2Btn:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}

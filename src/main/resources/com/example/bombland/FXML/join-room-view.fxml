@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+
+<VBox fx:id="page" xmlns:fx="http://javafx.com/fxml">
+    <stylesheets>
+        <URL value="@../CSS/join-room.css"/>
+    </stylesheets>
+
+    <StackPane>
+        <VBox fx:id="pageContainer">
+            <HBox fx:id="pageContainerTop">
+                <HBox fx:id="pageContainerTopLeftChild" alignment="CENTER_LEFT">
+                    <Button fx:id="backBtn" onAction="#goToMultiplayerSelection">
+                        <graphic>
+                            <ImageView fitWidth="20" preserveRatio="true">
+                                <Image url="/com/example/bombland/images/back-button.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+
+                <HBox fx:id="pageContainerTopMiddleChild">
+                    <Label fx:id="pageTitle" text="Join A Room"/>
+                </HBox>
+
+                <HBox fx:id="pageContainerTopRightChild" />
+            </HBox>
+
+
+
+            <VBox fx:id="pageContainerBottom" alignment="CENTER">
+                <VBox fx:id="roomIdContainer" alignment="CENTER">
+                    <Label fx:id="roomIdText" text="Room ID"/>
+
+                    <HBox alignment="CENTER" fx:id="roomIdHbox">
+                        <TextField fx:id="roomIdTextField"/>
+                    </HBox>
+
+                    <Label fx:id="roomIdError" text="Please enter a room ID" visible="false"/>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <VBox fx:id="playerNameContainer" alignment="CENTER">
+                    <Label fx:id="playerNameText" text="Pick a username"/>
+
+                    <HBox alignment="CENTER" fx:id="playerNameHbox">
+                        <TextField fx:id="playerNameTextField" disable="true"/>
+                    </HBox>
+
+                    <Region fx:id="space"/>
+
+                    <Button fx:id="changePlayerNameBtn" text="Change name" onAction="#setPlayerName"/>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <VBox alignment="CENTER">
+                    <Button fx:id="joinRoomBtn" text="Join Room" onAction="#joinRoom"/>
+                </VBox>
+            </VBox>
+        </VBox>
+
+
+
+        <VBox fx:id="errorPopup1" managed="false" visible="false">
+            <Label fx:id="errorPopupTitle1" text="AN ERROR HAS OCCURRED"/>
+
+            <VBox alignment="CENTER">
+                <ImageView>
+                    <Image url="/com/example/bombland/images/error.png"/>
+                </ImageView>
+            </VBox>
+
+            <Label fx:id="errorLastSentence1" text="No room found. Please try again."/>
+
+            <VBox>
+                <Button fx:id="closeErrorPopup1Btn" text="Close" onAction="#closeRoomDoesNotExistPopup"/>
+            </VBox>
+        </VBox>
+
+        <VBox fx:id="errorPopup2" managed="false" visible="false">
+            <Label fx:id="errorPopupTitle2" text="AN ERROR HAS OCCURRED"/>
+
+            <VBox alignment="CENTER">
+                <ImageView>
+                    <Image url="/com/example/bombland/images/error.png"/>
+                </ImageView>
+            </VBox>
+
+            <Label styleClass="errorText" text="Please try the following to resolve the issue:"/>
+            <Label styleClass="errorText" text="- Check your internet connection to ensure you are connected."/>
+            <Label styleClass="errorText" text="- Restart the application if the problem persists."/>
+            <Label styleClass="errorText" text="- Try again later, as the issue may be temporary."/>
+            <Label fx:id="errorLastSentence2" text="If the issue continues, please contact support for further assistance."/>
+
+            <VBox>
+                <Button fx:id="closeErrorPopup2Btn" text="Close" onAction="#closeGenericErrorPopup"/>
+            </VBox>
+        </VBox>
+    </StackPane>
+</VBox>
