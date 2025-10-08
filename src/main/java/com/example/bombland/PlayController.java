@@ -576,7 +576,7 @@ public class PlayController {
             // sooner or later all players will have access to the latest scores.
             if (AppCache.getInstance().serverConnectionIsGood()) {
               // Send new score to WebSocket server (to be distributed to other active users)
-              Main.socketClient.sendHighScore(String.valueOf(newScoreInfo));
+              Main.socketClient.sendHighScore(newScoreInfo);
             }
           } catch (Exception e) {
             displayDatabaseErrorPopup();

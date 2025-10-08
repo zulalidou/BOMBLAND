@@ -20,6 +20,7 @@ public class AppCache {
   private boolean isServerConnectionGood;
   private boolean highScoresRetrievedAtLeastOnce;
   private JSONObject multiplayerRoom;
+  private String playerName;
 
   private AppCache() {
     gettingData = false;
@@ -33,6 +34,7 @@ public class AppCache {
     isServerConnectionGood = false;
     highScoresRetrievedAtLeastOnce = false;
     multiplayerRoom = null;
+    playerName = null;
   }
 
   /**
@@ -128,5 +130,13 @@ public class AppCache {
 
   JSONObject getMultiplayerRoom() {
     return multiplayerRoom;
+  }
+
+  void setPlayerName(String name) {
+    playerName = name;
+  }
+
+  String getPlayerName() {
+    return playerName;
   }
 }

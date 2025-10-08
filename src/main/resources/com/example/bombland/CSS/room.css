@@ -122,16 +122,16 @@
     -fx-border-color: transparent transparent black transparent;
 }
 
-#player1Box {
+#player1Box, #player2Box {
     -fx-background-color: gold;
 }
 
-#playerNameLabel {
+#player1NameLabel, #player2NameLabel {
     -fx-alignment: center;
     -fx-text-fill: black;
 }
 
-#player1ReadyStateLabel {
+#player1ReadyStateLabel, #player2ReadyStateLabel {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }

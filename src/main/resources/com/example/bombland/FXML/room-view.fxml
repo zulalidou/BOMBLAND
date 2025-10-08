@@ -50,7 +50,7 @@
                     <Label fx:id="selectMapLabel" text="Select Map"/>
 
                     <HBox fx:id="mapContainerInner" alignment="CENTER">
-                        <Button text="◀" styleClass="toggle_btn" onAction="#goToLeftMap"/>
+                        <Button fx:id="leftMapBtn" text="◀" styleClass="toggle_btn" onAction="#goToLeftMap"/>
 
                         <Region fx:id="mapContainerSpace1"/>
 
@@ -64,7 +64,7 @@
 
                         <Region fx:id="mapContainerSpace2"/>
 
-                        <Button text="▶" styleClass="toggle_btn" onAction="#goToRightMap"/>
+                        <Button fx:id="rightMapBtn" text="▶" styleClass="toggle_btn" onAction="#goToRightMap"/>
                     </HBox>
                 </VBox>
 
@@ -74,7 +74,7 @@
                     <Label fx:id="selectDifficultyLabel" text="Select Difficulty"/>
 
                     <HBox fx:id="difficultyContainerInner" alignment="CENTER">
-                        <Button text="◀" styleClass="toggle_btn" onAction="#goToLeftDifficulty"/>
+                        <Button fx:id="leftDifficultyBtn" text="◀" styleClass="toggle_btn" onAction="#goToLeftDifficulty"/>
 
                         <Region fx:id="difficultyContainerSpace1"/>
 
@@ -88,14 +88,14 @@
 
                         <Region fx:id="difficultyContainerSpace2"/>
 
-                        <Button text="▶" styleClass="toggle_btn" onAction="#goToRightDifficulty"/>
+                        <Button fx:id="rightDifficultyBtn" text="▶" styleClass="toggle_btn" onAction="#goToRightDifficulty"/>
                     </HBox>
                 </VBox>
 
                 <Region fx:id="sectionSpace3"/>
 
                 <VBox fx:id="buttonsContainer" alignment="CENTER">
-                    <Button fx:id="readyButton" text="READY" disable="true"/>
+                    <Button fx:id="readyButton" text="READY" disable="true" onAction="#setReadyState"/>
                     <Region fx:id="buttonSpace"/>
                     <Button fx:id="startGameButton" text="Start Game" disable="true"/>
                 </VBox>
@@ -111,10 +111,24 @@
                                 <Image url="/com/example/bombland/images/profile-picture.png"/>
                             </ImageView>
 
-                            <Label fx:id="playerNameLabel"/>
+                            <Label fx:id="player1NameLabel"/>
                         </VBox>
 
                         <Label fx:id="player1ReadyStateLabel" text="NOT READY"/>
+                    </VBox>
+
+                    <Region fx:id="playerProfileSpace" visible="false" managed="false"/>
+
+                    <VBox fx:id="player2BoxContainer" alignment="CENTER" visible="false" managed="false">
+                        <VBox fx:id="player2Box" alignment="CENTER">
+                            <ImageView>
+                                <Image url="/com/example/bombland/images/profile-picture-2.png"/>
+                            </ImageView>
+
+                            <Label fx:id="player2NameLabel"/>
+                        </VBox>
+
+                        <Label fx:id="player2ReadyStateLabel" text="NOT READY"/>
                     </VBox>
                 </HBox>
 

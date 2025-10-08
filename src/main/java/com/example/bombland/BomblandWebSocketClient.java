@@ -2,9 +2,9 @@ package com.example.bombland;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import javafx.application.Platform;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -21,40 +21,95 @@ public class BomblandWebSocketClient extends WebSocketClient {
    * @throws URISyntaxException is thrown if the URI passed is not valid.
    */
   public BomblandWebSocketClient() throws URISyntaxException {
-    super(new URI("wss://bombland-server.onrender.com/websocket/distribute-new-highscore"));
-//    super(new URI("wss://bombland-server.onrender.com/establish-server-connection"));
+    super(new URI("wss://bombland-server.onrender.com/websocket/establish-server-connection"));
+//    super(new URI("ws://localhost:8080/websocket/establish-server-connection"));
   }
 
-  @Override
-  public void onOpen(ServerHandshake handshakeData) {
-    System.out.println("\nonOpen() - websocketClient class");
-    isConnected = true;
+  /**
+   * This function is called when attempting to connect to the server.
+   * When "this.connect()" executes, the client initiates a WebSocket handshake with the server.
+   * - If the handshake is successful and the connection is open and ready to send and receive data,
+   *   onOpen() gets called.
+   */
+  public void connectClient() {
+    System.out.println("\nconnectClient() - start");
 
-    System.out.println("Connected to the WebSocket server.");
-    AppCache.getInstance().setServerConnectionGood(true);
-
-    // Send a message (e.g., a high score) when the connection is established
-    // sendHighScore("1500");
-  }
-
-  @Override
-  public void onMessage(String message) {
-    System.out.println("\nonMessage()");
-
-    // Handle incoming messages from the server
-    System.out.println("--> Received from server: " + message);
-    System.out.println("\nmessage: " + message);
-
-    try {
-      // The message variable (sent from the server) is a stringified JSONObject object
-      // that represents a new high score set on another client
-      JSONObject jsonObject = new JSONObject(message);
-      PlayController.updateAppCache(jsonObject);
-    } catch (JSONException e) {
-      System.out.println("The message from the server is a simple string\n");
+    if (!isConnected) {
+      isConnected = true;
+      this.connect();
+      System.out.println("connectClient() - end");
+    } else {
+      System.out.println("Already connected to the server.");
     }
   }
 
+  /**
+   * This is a callback method that's called automatically when the WebSocket connection to the
+   * server is successfully established.
+   */
+  @Override
+  public void onOpen(ServerHandshake handshakeData) {
+    System.out.println("\nonOpen()");
+    isConnected = true;
+    AppCache.getInstance().setServerConnectionGood(true);
+  }
+
+  /**
+   * This is a callback method that gets invoked whenever a message is received from the server.
+   */
+  @Override
+  public void onMessage(String message) {
+    System.out.println("\nonMessage()");
+    JSONObject responseObject = new JSONObject(message);
+
+    if (responseObject.get("message_type").equals("HIGH_SCORE_INFO")) {
+      responseObject.remove("message_type");
+      PlayController.updateAppCache(responseObject);
+    } else if (responseObject.get("message_type").equals("CHECK_ROOM")) {
+      if (responseObject.get("room_exists").equals("False")) {
+        JoinRoomController.getInstance().displayRoomDoesNotExistPopup();
+      } else {
+        responseObject.remove("room_exists");
+        joinRoom(responseObject);
+      }
+    } else if (responseObject.get("message_type").equals("JOIN_ROOM")) {
+      responseObject.remove("message_type");
+
+      AppCache.getInstance().setMultiplayerRoom(responseObject);
+      AppCache.getInstance().setPlayerName(responseObject.get("player2").toString());
+
+      Platform.runLater(() -> {
+        JoinRoomController.getInstance().goToRoom();
+      });
+    } else if (responseObject.get("message_type").equals("PLAYER_JOINED_ROOM")) {
+      String player2 = responseObject.getString("player2");
+      JSONObject roomInfo = AppCache.getInstance().getMultiplayerRoom();
+      roomInfo.put("player2", player2);
+      AppCache.getInstance().setMultiplayerRoom(roomInfo);
+
+      Platform.runLater(() -> {
+        RoomController.getInstance().playerJoinedRoom();
+      });
+    } else if (responseObject.get("message_type").equals("UPDATE_READY_STATE_UI")) {
+      boolean isReady = responseObject.get("ready").equals("True");
+
+      Platform.runLater(() -> {
+        RoomController.getInstance().updateReadyState(isReady);
+      });
+    } else if (responseObject.get("message_type").equals("UPDATE_SETTINGS_UI")) {
+      System.out.println("It's a UPDATE_SETTINGS_UI msg");
+
+      Platform.runLater(() -> {
+        RoomController.getInstance().updatePlayer2SettingsUi(responseObject);
+      });
+    }
+  }
+
+  /**
+   * This is a callback method that gets invoked when the WebSocket connection is closed. It's the
+   * last method that'll be called for a specific connection instance, and it provides info about
+   * the reason for the closure.
+   */
   @Override
   public void onClose(int code, String reason, boolean remote) {
     System.out.println("\nonClose()");
@@ -74,37 +129,112 @@ public class BomblandWebSocketClient extends WebSocketClient {
     AppCache.getInstance().setServerConnectionGood(false);
   }
 
+  /**
+   * This is a callback method that gets invoked when any exception or error occurs during the
+   * lifecycle of the WebSocket connection.
+   */
   @Override
   public void onError(Exception ex) {
-    System.out.println("\nonError()");
+    System.out.println("\n====================================================================");
+    System.out.println("ERROR - BomblandWebSocketClient onError()");
+    System.out.println("---");
+    System.out.println(ex.getCause());
+    System.out.println("====================================================================\n");
   }
 
   /**
-   * This function sends a score to the server.
+   * This function sends info about a new high score to the server, for it to be distributed to
+   * other (active) users.
    *
-   * @param score the value sent to the server.
+   * @param newScoreInfo the info about the new score.
    */
-  public void sendHighScore(String score) {
+  public void sendHighScore(JSONObject newScoreInfo) {
     if (isConnected && getConnection().isOpen()) {
-      System.out.println("score: " + score);
-      send(score); // creates a new thread
+      newScoreInfo.put("message_type", "HIGH_SCORE_INFO");
+      send(String.valueOf(newScoreInfo)); // creates a new thread
     } else {
-      System.out.println("Connection not open. Unable to send message.");
+      System.out.println("sendHighScore(): Connection not open. Unable to send high score.");
     }
   }
 
   /**
-   * This function is used for connecting to the server.
+   * This function sends info about a newly created multiplayer room to the server.
+   *
+   * @param roomInfo an object that contains the info of a newly created multiplayer room.
    */
-  public void connectClient() {
-    System.out.println("\nconnectClient() - start");
+  public void createRoom(JSONObject roomInfo) {
+    roomInfo.put("message_type", "CREATE_ROOM");
 
-    if (!isConnected) {
-      isConnected = true;
-      this.connect();
-      System.out.println("connectClient() - end");
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(roomInfo)); // creates a new thread
     } else {
-      System.out.println("Already connected to the server.");
+      System.out.println("createRoom(): Connection not open. Unable to send room info.");
+    }
+  }
+
+  /**
+   * This function queries the server to see if a room exists.
+   *
+   * @param roomInfo an object that contains the info of a room being queried.
+   */
+  public void checkRoom(JSONObject roomInfo) {
+    roomInfo.put("message_type", "CHECK_ROOM");
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(roomInfo)); // creates a new thread
+    } else {
+      System.out.println("checkRoom(): Connection not open. Unable to send room info.");
+    }
+  }
+
+  /**
+   * This function lets the server know that a new player has joined a certain room.
+   *
+   * @param roomInfo the info about the room just joined.
+   */
+  public void joinRoom(JSONObject roomInfo) {
+    roomInfo.put("message_type", "JOIN_ROOM");
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(roomInfo)); // creates a new thread
+    } else {
+      System.out.println("joinRoom(): Connection not open. Unable to send room info.");
+    }
+  }
+
+  /**
+   * This function lets the server know that a player's state has been updated
+   * (in a multiplayer room).
+   *
+   * @param playerState whether the player is ready to start a (multiplayer) game.
+   */
+  public void updatePlayerState(String playerState) {
+    JSONObject playerInfo = new JSONObject();
+    playerInfo.put("message_type", "UPDATE_READY_STATE_UI");
+    playerInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+    playerInfo.put("ready", (playerState.equals("READY") ? "True" : "False"));
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(playerInfo)); // creates a new thread
+    } else {
+      System.out.println("updatePlayerState(): Connection not open. Unable to send player info.");
+    }
+  }
+
+  /**
+   * This function sends the server the game setting (map or difficulty) that was changed,
+   * and what it was changed to.
+   *
+   * @param settingsObj an object that stores the info about the settings changed.
+   */
+  public void updateP2Ui(JSONObject settingsObj) {
+    settingsObj.put("message_type", "UPDATE_SETTINGS_UI");
+    settingsObj.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(settingsObj)); // creates a new thread
+    } else {
+      System.out.println("updateP2Ui(): Connection not open. Unable to send settings info.");
     }
   }
 

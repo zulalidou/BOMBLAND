@@ -237,21 +237,16 @@ public class CreateRoomController {
     } else {
       roomNameError.setVisible(false);
 
-      JSONObject newRoomInfo = new JSONObject();
-      newRoomInfo.put("id", UUID.randomUUID().toString().substring(0, 8));
-      newRoomInfo.put("name", roomNameTextField.getText().strip());
-      newRoomInfo.put("player1", playerNameTextField.getText());
-      newRoomInfo.put("timetolive", (System.currentTimeMillis() / 1000) + (60 * 60 * 24));
+      JSONObject roomInfo = new JSONObject();
+      roomInfo.put("id", UUID.randomUUID().toString().substring(0, 8));
+      roomInfo.put("name", roomNameTextField.getText().strip());
+      roomInfo.put("player1", playerNameTextField.getText());
 
-      AppCache.getInstance().setMultiplayerRoom(newRoomInfo);
+      AppCache.getInstance().setMultiplayerRoom(roomInfo);
+      AppCache.getInstance().setPlayerName(playerNameTextField.getText());
 
       try {
-        if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
-          Main.getEnvironmentVariables();
-        }
-
-        DynamoDbClientUtil.createRoom(newRoomInfo);
-
+        Main.socketClient.createRoom(roomInfo);
         goToRoom();
       } catch (Exception e) {
         displayErrorPopup();

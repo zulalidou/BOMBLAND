@@ -111,7 +111,6 @@ public class JoinRoomController {
     return instance;
   }
 
-
   /**
    * This function sets up the multiplayer Selection page.
    */
@@ -248,21 +247,17 @@ public class JoinRoomController {
       roomIdTextField.setText("");
     } else {
       roomIdError.setVisible(false);
-      String roomId = roomIdTextField.getText().strip().toLowerCase();
+
+      JSONObject roomInfo = new JSONObject();
+      roomInfo.put("id", roomIdTextField.getText().strip().toLowerCase());
+      roomInfo.put("player2", playerNameTextField.getText());
 
       try {
-        if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
-          Main.getEnvironmentVariables();
-        }
+        // It checks if the room exists in the checkRoom() function below
+        // - If it does, the user is sent to the room
+        // - If it doesn't, an error popup message gets displayed
 
-        JSONObject roomInfo = DynamoDbClientUtil.getRoom(roomId);
-
-        if (roomInfo == null) {
-          displayRoomDoesNotExistPopup();
-        } else {
-          AppCache.getInstance().setMultiplayerRoom(roomInfo);
-          goToRoom();
-        }
+        Main.socketClient.checkRoom(roomInfo);
       } catch (Exception e) {
         displayGenericErrorPopup();
       }
@@ -270,7 +265,7 @@ public class JoinRoomController {
   }
 
   @FXML
-  private void displayRoomDoesNotExistPopup() {
+  void displayRoomDoesNotExistPopup() {
     pageContainer.setEffect(new GaussianBlur());
     pageContainer.setMouseTransparent(true);
 
@@ -396,7 +391,7 @@ public class JoinRoomController {
   }
 
   @FXML
-  private void goToRoom() {
+  void goToRoom() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/room-view.fxml")
     );
