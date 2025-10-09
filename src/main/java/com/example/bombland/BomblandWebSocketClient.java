@@ -74,7 +74,6 @@ public class BomblandWebSocketClient extends WebSocketClient {
       }
     } else if (responseObject.get("message_type").equals("JOIN_ROOM")) {
       responseObject.remove("message_type");
-
       AppCache.getInstance().setMultiplayerRoom(responseObject);
       AppCache.getInstance().setPlayerName(responseObject.get("player2").toString());
 
@@ -97,8 +96,6 @@ public class BomblandWebSocketClient extends WebSocketClient {
         RoomController.getInstance().updateReadyState(isReady);
       });
     } else if (responseObject.get("message_type").equals("UPDATE_SETTINGS_UI")) {
-      System.out.println("It's a UPDATE_SETTINGS_UI msg");
-
       Platform.runLater(() -> {
         RoomController.getInstance().updatePlayer2SettingsUi(responseObject);
       });

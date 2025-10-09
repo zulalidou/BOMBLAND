@@ -732,7 +732,9 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     mapImgView.setImage(newImage);
 
-    sendNewSettingToPlayer2("map", newMap);
+    if (roomInfo.has("player2")) {
+      sendNewSettingToPlayer2("map", newMap);
+    }
   }
 
   /**
@@ -768,7 +770,9 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     mapImgView.setImage(newImage);
 
-    sendNewSettingToPlayer2("map", newMap);
+    if (roomInfo.has("player2")) {
+      sendNewSettingToPlayer2("map", newMap);
+    }
   }
 
   /**
@@ -789,7 +793,9 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     difficultyImgView.setImage(newImage);
 
-    sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
+    if (roomInfo.has("player2")) {
+      sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
+    }
 
 
     if (mapNameLabel.getText().equals("Face")) {
@@ -807,7 +813,9 @@ public class RoomController {
       newImage = new Image(imageUrl.toString());
       mapImgView.setImage(newImage);
 
-      sendNewSettingToPlayer2("map", imgName);
+      if (roomInfo.has("player2")) {
+        sendNewSettingToPlayer2("map", imgName);
+      }
     }
   }
 
@@ -829,7 +837,9 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     difficultyImgView.setImage(newImage);
 
-    sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
+    if (roomInfo.has("player2")) {
+      sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
+    }
 
 
     if (mapNameLabel.getText().equals("Face")) {
@@ -847,7 +857,9 @@ public class RoomController {
       newImage = new Image(imageUrl.toString());
       mapImgView.setImage(newImage);
 
-      sendNewSettingToPlayer2("map", imgName);
+      if (roomInfo.has("player2")) {
+        sendNewSettingToPlayer2("map", imgName);
+      }
     }
   }
 
