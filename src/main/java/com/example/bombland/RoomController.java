@@ -8,11 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import org.json.JSONObject;
 
 /**
@@ -20,6 +22,9 @@ import org.json.JSONObject;
  */
 public class RoomController {
   private static RoomController instance;
+
+  @FXML
+  VBox topPageOuterContainer;
 
   @FXML
   HBox topPageContainer;
@@ -136,6 +141,9 @@ public class RoomController {
   Region sectionSpace3;
 
   @FXML
+  Label leaveRoomPopupErrorMsg;
+
+  @FXML
   VBox buttonsContainer;
 
   @FXML
@@ -198,12 +206,47 @@ public class RoomController {
   @FXML
   HBox bottomPageContainer;
 
-  JSONObject roomInfo;
+  @FXML
+  VBox leaveRoomPopup;
+
+  @FXML
+  Label leaveRoomPopupTitle;
+
+  @FXML
+  VBox leaveRoomPopupImgContainer;
+
+  @FXML
+  ImageView leaveRoomPopupImg;
+
+  @FXML
+  HBox leaveRoomPopupButtonsContainer;
+
+  @FXML
+  Button leaveRoomPopupYesBtn;
+
+  @FXML
+  Button leaveRoomPopupNoBtn;
+
+  @FXML
+  VBox kickOutPlayer2Popup;
+
+  @FXML
+  Label kickOutPlayer2PopupTitle;
+
+  @FXML
+  VBox kickOutPlayer2PopupImgContainer;
+
+  @FXML
+  ImageView kickOutPlayer2PopupImg;
+
+  @FXML
+  Label kickOutPlayer2PopupErrorMsg;
+
+  @FXML
+  Button kickOutPlayer2PopupCloseButton;
 
 
-  private RoomController() {
-    roomInfo = AppCache.getInstance().getMultiplayerRoom();
-  }
+  private RoomController() {}
 
   /**
    * This function creates an instance of this class.
@@ -251,7 +294,7 @@ public class RoomController {
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
     );
 
-    roomIdLabel.setText(roomInfo.get("id").toString());
+    roomIdLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("id").toString());
 
     roomIdLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
@@ -265,7 +308,7 @@ public class RoomController {
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
     );
 
-    roomNameLabel.setText(roomInfo.get("name").toString());
+    roomNameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("name").toString());
 
     roomNameLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
@@ -447,7 +490,7 @@ public class RoomController {
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
     );
 
-    roomIdLabel.setText(roomInfo.get("id").toString());
+    roomIdLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("id").toString());
 
     roomIdLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
@@ -461,7 +504,7 @@ public class RoomController {
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
     );
 
-    roomNameLabel.setText(roomInfo.get("name").toString());
+    roomNameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("name").toString());
 
     roomNameLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
@@ -677,8 +720,78 @@ public class RoomController {
     );
   }
 
+  /**
+   * This function displays a popup to ask the user if they're sure they'd like to leave the room.
+   */
+  @FXML
+  private void displayLeaveRoomPopup() {
+    topPageOuterContainer.setEffect(new GaussianBlur()); // blurs room page
+    topPageOuterContainer.setMouseTransparent(true); // makes items in room page "unclickable"
+
+    leaveRoomPopup.setManaged(true);
+    leaveRoomPopup.setVisible(true);
+
+    leaveRoomPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
+    leaveRoomPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
+
+    leaveRoomPopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    leaveRoomPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    leaveRoomPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    leaveRoomPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    leaveRoomPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+
+    leaveRoomPopupErrorMsg.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    String currentPlayerName = AppCache.getInstance().getPlayerName();
+    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
+
+    if (currentPlayerName.equals(player1Name)) {
+      leaveRoomPopupErrorMsg.setText("Are you sure you want to leave? Doing so will delete the room.");
+    } else {
+      leaveRoomPopupErrorMsg.setText("Are you sure you want to leave?");
+    }
+
+    leaveRoomPopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
+
+
+    leaveRoomPopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+
+    leaveRoomPopupYesBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+    leaveRoomPopupNoBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+  }
+
   @FXML
   private void goToMainMenu() {
+    String currentPlayerName = AppCache.getInstance().getPlayerName();
+    Main.socketClient.leaveRoom(currentPlayerName);
+
+    AppCache.getInstance().setMultiplayerRoom(null);
+    AppCache.getInstance().setPlayerName(null);
+
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/main-view.fxml")
     );
@@ -700,8 +813,20 @@ public class RoomController {
   }
 
   /**
+   * This function closes an error popup.
+   */
+  @FXML
+  private void closeLeaveRoomPopup() {
+    leaveRoomPopup.setManaged(false);
+    leaveRoomPopup.setVisible(false);
+    topPageOuterContainer.setEffect(null);
+    topPageOuterContainer.setMouseTransparent(false);
+  }
+
+  /**
    * When the button to the left of the map is clicked, it updates the UI to reflect the
-   * change made.
+   * change made. (If another player is also in the room, a signal gets sent to the server
+   * so that they also see the change in real-time.)
    */
   @FXML
   private void goToLeftMap() {
@@ -732,14 +857,15 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     mapImgView.setImage(newImage);
 
-    if (roomInfo.has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
       sendNewSettingToPlayer2("map", newMap);
     }
   }
 
   /**
    * When the button to the right of the map is clicked, it updates the UI to reflect the
-   * change made.
+   * change made. (If another player is also in the room, a signal gets sent to the server
+   * so that they also see the change in real-time.)
    */
   @FXML
   private void goToRightMap() {
@@ -770,14 +896,15 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     mapImgView.setImage(newImage);
 
-    if (roomInfo.has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
       sendNewSettingToPlayer2("map", newMap);
     }
   }
 
   /**
    * When the button to the left of the difficulty is clicked, it updates the UI to reflect the
-   * change made.
+   * change made. (If another player is also in the room, a signal gets sent to the server
+   *  so that they also see the change in real-time.)
    */
   @FXML
   private void goToLeftDifficulty() {
@@ -793,7 +920,7 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     difficultyImgView.setImage(newImage);
 
-    if (roomInfo.has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
       sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
     }
 
@@ -813,7 +940,7 @@ public class RoomController {
       newImage = new Image(imageUrl.toString());
       mapImgView.setImage(newImage);
 
-      if (roomInfo.has("player2")) {
+      if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
         sendNewSettingToPlayer2("map", imgName);
       }
     }
@@ -821,7 +948,8 @@ public class RoomController {
 
   /**
    * When the button to the right of the difficulty is clicked, it updates the UI to reflect the
-   * change made.
+   * change made. (If another player is also in the room, a signal gets sent to the server
+   * so that they also see the change in real-time.)
    */
   @FXML
   private void goToRightDifficulty() {
@@ -837,7 +965,7 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     difficultyImgView.setImage(newImage);
 
-    if (roomInfo.has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
       sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
     }
 
@@ -857,7 +985,7 @@ public class RoomController {
       newImage = new Image(imageUrl.toString());
       mapImgView.setImage(newImage);
 
-      if (roomInfo.has("player2")) {
+      if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
         sendNewSettingToPlayer2("map", imgName);
       }
     }
@@ -1017,5 +1145,90 @@ public class RoomController {
       Image newImage = new Image(imageUrl.toString());
       difficultyImgView.setImage(newImage);
     }
+  }
+
+  /**
+   * When Player2 leaves the room (with Player1 left in it), this function will run to update Player1's
+   * UI, so they know that Player2 has left the room.
+   */
+  @FXML
+  void removePlayer2FromRoom() {
+    AppCache.getInstance().getMultiplayerRoom().remove("player2");
+
+    totalPlayersLabel.setText("1 / 2");
+
+    readyButton.setDisable(true);
+    startGameButton.setDisable(true);
+
+    player1ReadyStateLabel.setText("NOT READY");
+    removePlayer2Icon();
+  }
+
+  /**
+   * This function displays a message to Player2 to let them know that they're being kicked out of
+   * the room because Player1 exited the room.
+   */
+  @FXML
+  void kickOutPlayer2FromRoom() {
+    totalPlayersLabel.setText("1 / 2");
+
+    removePlayer1Icon();
+
+    topPageOuterContainer.setEffect(new GaussianBlur()); // blurs room page
+    topPageOuterContainer.setMouseTransparent(true); // makes items in room page "unclickable"
+
+    kickOutPlayer2Popup.setManaged(true);
+    kickOutPlayer2Popup.setVisible(true);
+
+    kickOutPlayer2Popup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
+    kickOutPlayer2Popup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+
+    kickOutPlayer2Popup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    kickOutPlayer2PopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
+
+    kickOutPlayer2PopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    kickOutPlayer2PopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    kickOutPlayer2PopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+    kickOutPlayer2PopupErrorMsg.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01),
+            kickOutPlayer2Popup.widthProperty().multiply(1))
+    );
+
+    kickOutPlayer2PopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
+
+    kickOutPlayer2PopupCloseButton.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.31),
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.011))
+    );
+  }
+
+  void removePlayer1Icon() {
+    player1BoxContainer.setVisible(false);
+    player1BoxContainer.setManaged(false);
+
+    playerProfileSpace.setVisible(false);
+    playerProfileSpace.setManaged(false);
+  }
+
+  void removePlayer2Icon() {
+    playerProfileSpace.setVisible(false);
+    playerProfileSpace.setManaged(false);
+
+    player2BoxContainer.setVisible(false);
+    player2BoxContainer.setManaged(false);
   }
 }

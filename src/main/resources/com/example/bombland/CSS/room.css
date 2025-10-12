@@ -155,3 +155,69 @@
 #bottomPageContainer {
     -fx-background-color: red;
 }
+
+
+#leaveRoomPopup {
+    -fx-background-color: black;
+    -fx-alignment: center;
+    -fx-border-color: red;
+}
+
+#leaveRoomPopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+#leaveRoomPopupErrorMsg {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+#leaveRoomPopupNoBtn {
+    -fx-text-fill: white;
+    -fx-background-color: green;
+    -fx-font-weight: bold;
+}
+
+#leaveRoomPopupYesBtn {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+
+#leaveRoomPopupNoBtn:hover, #leaveRoomPopupYesBtn:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+
+
+#kickOutPlayer2Popup {
+    -fx-background-color: black;
+    -fx-alignment: center;
+    -fx-border-color: red;
+}
+
+#kickOutPlayer2PopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+#kickOutPlayer2PopupErrorMsg {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+#kickOutPlayer2PopupCloseButton {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+
+#kickOutPlayer2PopupCloseButton:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}

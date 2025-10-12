@@ -309,8 +309,8 @@ public class PlayController {
     exitPagePopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
     VBox.setVgrow(exitPagePopupButtonsContainer, Priority.ALWAYS);
-
     exitPagePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+
     exitPagePopupCancelBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.015),
@@ -640,7 +640,7 @@ public class PlayController {
 
 
     databaseErrorLastSentence.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-text-fill: red; -fx-padding: %.2fpx 0 %.2fpx 0",
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0",
             Main.mainStage.widthProperty().multiply(0.01),
             Main.mainStage.widthProperty().multiply(0.01),
             Main.mainStage.widthProperty().multiply(0.01))

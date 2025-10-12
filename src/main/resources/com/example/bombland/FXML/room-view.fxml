@@ -12,140 +12,173 @@
         <URL value="@../CSS/room.css"/>
     </stylesheets>
 
-    <VBox>
-        <HBox fx:id="topPageContainer">
-            <HBox fx:id="backBtnContainer" alignment="CENTER">
-                <Button fx:id="backBtn" onAction="#goToMainMenu">
-                    <graphic>
-                        <ImageView fitWidth="20" preserveRatio="true">
-                            <Image url="/com/example/bombland/images/back-button.png"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
+    <StackPane>
+        <VBox fx:id="topPageOuterContainer">
+            <HBox fx:id="topPageContainer">
+                <HBox fx:id="backBtnContainer" alignment="CENTER">
+                    <Button fx:id="backBtn" onAction="#displayLeaveRoomPopup">
+                        <graphic>
+                            <ImageView fitWidth="20" preserveRatio="true">
+                                <Image url="/com/example/bombland/images/back-button.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+
+                <VBox fx:id="roomIdContainer" alignment="CENTER">
+                    <Label fx:id="roomIdTitleLabel" text="ROOM ID"/>
+                    <Label fx:id="roomIdLabel"/>
+                </VBox>
+
+                <VBox fx:id="roomNameContainer" alignment="CENTER">
+                    <Label fx:id="roomNameTitleLabel" text="ROOM NAME"/>
+                    <Label fx:id="roomNameLabel"/>
+                </VBox>
+
+                <VBox fx:id="totalPlayersContainer" alignment="CENTER">
+                    <Label fx:id="totalPlayersTitleLabel" text="PLAYERS"/>
+                    <Label fx:id="totalPlayersLabel" text="1 / 2"/>
+                </VBox>
             </HBox>
 
-            <VBox fx:id="roomIdContainer" alignment="CENTER">
-                <Label fx:id="roomIdTitleLabel" text="ROOM ID"/>
-                <Label fx:id="roomIdLabel"/>
-            </VBox>
+            <HBox fx:id="middlePageContainer">
+                <VBox fx:id="settingsContainer">
+                    <Label fx:id="settingsContainerTitleLabel" text="SETTINGS"/>
 
-            <VBox fx:id="roomNameContainer" alignment="CENTER">
-                <Label fx:id="roomNameTitleLabel" text="ROOM NAME"/>
-                <Label fx:id="roomNameLabel"/>
-            </VBox>
+                    <Region fx:id="sectionSpace1"/>
 
-            <VBox fx:id="totalPlayersContainer" alignment="CENTER">
-                <Label fx:id="totalPlayersTitleLabel" text="PLAYERS"/>
-                <Label fx:id="totalPlayersLabel" text="1 / 2"/>
-            </VBox>
-        </HBox>
+                    <VBox fx:id="mapContainer" alignment="CENTER">
+                        <Label fx:id="selectMapLabel" text="Select Map"/>
 
-        <HBox fx:id="middlePageContainer">
-            <VBox fx:id="settingsContainer">
-                <Label fx:id="settingsContainerTitleLabel" text="SETTINGS"/>
+                        <HBox fx:id="mapContainerInner" alignment="CENTER">
+                            <Button fx:id="leftMapBtn" text="◀" styleClass="toggle_btn" onAction="#goToLeftMap"/>
 
-                <Region fx:id="sectionSpace1"/>
+                            <Region fx:id="mapContainerSpace1"/>
 
-                <VBox fx:id="mapContainer" alignment="CENTER">
-                    <Label fx:id="selectMapLabel" text="Select Map"/>
+                            <VBox fx:id="mapBox" alignment="CENTER">
+                                <ImageView fx:id="mapImgView">
+                                    <Image url="/com/example/bombland/images/rectangle.png"/>
+                                </ImageView>
 
-                    <HBox fx:id="mapContainerInner" alignment="CENTER">
-                        <Button fx:id="leftMapBtn" text="◀" styleClass="toggle_btn" onAction="#goToLeftMap"/>
+                                <Label fx:id="mapNameLabel" text="Rectangle"/>
+                            </VBox>
 
-                        <Region fx:id="mapContainerSpace1"/>
+                            <Region fx:id="mapContainerSpace2"/>
 
-                        <VBox fx:id="mapBox" alignment="CENTER">
-                            <ImageView fx:id="mapImgView">
-                                <Image url="/com/example/bombland/images/rectangle.png"/>
-                            </ImageView>
+                            <Button fx:id="rightMapBtn" text="▶" styleClass="toggle_btn" onAction="#goToRightMap"/>
+                        </HBox>
+                    </VBox>
 
-                            <Label fx:id="mapNameLabel" text="Rectangle"/>
+                    <Region fx:id="sectionSpace2"/>
+
+                    <VBox fx:id="difficultyContainer" alignment="CENTER">
+                        <Label fx:id="selectDifficultyLabel" text="Select Difficulty"/>
+
+                        <HBox fx:id="difficultyContainerInner" alignment="CENTER">
+                            <Button fx:id="leftDifficultyBtn" text="◀" styleClass="toggle_btn" onAction="#goToLeftDifficulty"/>
+
+                            <Region fx:id="difficultyContainerSpace1"/>
+
+                            <VBox fx:id="difficultyBox" alignment="CENTER">
+                                <ImageView fx:id="difficultyImgView">
+                                    <Image url="/com/example/bombland/images/easy-difficulty.png"/>
+                                </ImageView>
+
+                                <Label fx:id="difficultyNameLabel" text="Easy"/>
+                            </VBox>
+
+                            <Region fx:id="difficultyContainerSpace2"/>
+
+                            <Button fx:id="rightDifficultyBtn" text="▶" styleClass="toggle_btn" onAction="#goToRightDifficulty"/>
+                        </HBox>
+                    </VBox>
+
+                    <Region fx:id="sectionSpace3"/>
+
+                    <VBox fx:id="buttonsContainer" alignment="CENTER">
+                        <Button fx:id="readyButton" text="READY" disable="true" onAction="#setReadyState"/>
+                        <Region fx:id="buttonSpace"/>
+                        <Button fx:id="startGameButton" text="Start Game" disable="true"/>
+                    </VBox>
+                </VBox>
+
+                <VBox fx:id="playersContainer">
+                    <Label fx:id="playersContainerTitleLabel" text="PLAYERS"/>
+
+                    <HBox fx:id="playerIconsContainer" alignment="CENTER">
+                        <VBox fx:id="player1BoxContainer" alignment="CENTER">
+                            <VBox fx:id="player1Box" alignment="CENTER">
+                                <ImageView>
+                                    <Image url="/com/example/bombland/images/profile-picture.png"/>
+                                </ImageView>
+
+                                <Label fx:id="player1NameLabel"/>
+                            </VBox>
+
+                            <Label fx:id="player1ReadyStateLabel" text="NOT READY"/>
                         </VBox>
 
-                        <Region fx:id="mapContainerSpace2"/>
+                        <Region fx:id="playerProfileSpace" visible="false" managed="false"/>
 
-                        <Button fx:id="rightMapBtn" text="▶" styleClass="toggle_btn" onAction="#goToRightMap"/>
+                        <VBox fx:id="player2BoxContainer" alignment="CENTER" visible="false" managed="false">
+                            <VBox fx:id="player2Box" alignment="CENTER">
+                                <ImageView>
+                                    <Image url="/com/example/bombland/images/profile-picture-2.png"/>
+                                </ImageView>
+
+                                <Label fx:id="player2NameLabel"/>
+                            </VBox>
+
+                            <Label fx:id="player2ReadyStateLabel" text="NOT READY"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox fx:id="utilitiesContainer" alignment="CENTER">
+                        <VBox fx:id="voiceChatBoxContainer" alignment="CENTER">
+                            <VBox fx:id="voiceChatBox" alignment="CENTER">
+                                <ImageView>
+                                    <Image url="/com/example/bombland/images/sound.png"/>
+                                </ImageView>
+
+                                <Label fx:id="voiceChatLabel" text="Voice Chat"/>
+                            </VBox>
+                        </VBox>
                     </HBox>
                 </VBox>
+            </HBox>
 
-                <Region fx:id="sectionSpace2"/>
+            <HBox fx:id="bottomPageContainer"/>
+        </VBox>
 
-                <VBox fx:id="difficultyContainer" alignment="CENTER">
-                    <Label fx:id="selectDifficultyLabel" text="Select Difficulty"/>
-
-                    <HBox fx:id="difficultyContainerInner" alignment="CENTER">
-                        <Button fx:id="leftDifficultyBtn" text="◀" styleClass="toggle_btn" onAction="#goToLeftDifficulty"/>
-
-                        <Region fx:id="difficultyContainerSpace1"/>
-
-                        <VBox fx:id="difficultyBox" alignment="CENTER">
-                            <ImageView fx:id="difficultyImgView">
-                                <Image url="/com/example/bombland/images/easy-difficulty.png"/>
-                            </ImageView>
-
-                            <Label fx:id="difficultyNameLabel" text="Easy"/>
-                        </VBox>
-
-                        <Region fx:id="difficultyContainerSpace2"/>
-
-                        <Button fx:id="rightDifficultyBtn" text="▶" styleClass="toggle_btn" onAction="#goToRightDifficulty"/>
-                    </HBox>
-                </VBox>
-
-                <Region fx:id="sectionSpace3"/>
-
-                <VBox fx:id="buttonsContainer" alignment="CENTER">
-                    <Button fx:id="readyButton" text="READY" disable="true" onAction="#setReadyState"/>
-                    <Region fx:id="buttonSpace"/>
-                    <Button fx:id="startGameButton" text="Start Game" disable="true"/>
-                </VBox>
+        <VBox fx:id="leaveRoomPopup" managed="false" visible="false">
+            <Label fx:id="leaveRoomPopupTitle" text="LEAVE ROOM"/>
+            <VBox alignment="CENTER" fx:id="leaveRoomPopupImgContainer">
+                <ImageView fx:id="leaveRoomPopupImg">
+                    <Image url="/com/example/bombland/images/exit.png"/>
+                </ImageView>
             </VBox>
 
-            <VBox fx:id="playersContainer">
-                <Label fx:id="playersContainerTitleLabel" text="PLAYERS"/>
+            <Label fx:id="leaveRoomPopupErrorMsg"/>
 
-                <HBox fx:id="playerIconsContainer" alignment="CENTER">
-                    <VBox fx:id="player1BoxContainer" alignment="CENTER">
-                        <VBox fx:id="player1Box" alignment="CENTER">
-                            <ImageView>
-                                <Image url="/com/example/bombland/images/profile-picture.png"/>
-                            </ImageView>
+            <HBox fx:id="leaveRoomPopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="leaveRoomPopupNoBtn" text="No, stay in room" onAction="#closeLeaveRoomPopup"/>
+                <Button fx:id="leaveRoomPopupYesBtn" text="Yes, leave room" onAction="#goToMainMenu"/>
+            </HBox>
+        </VBox>
 
-                            <Label fx:id="player1NameLabel"/>
-                        </VBox>
-
-                        <Label fx:id="player1ReadyStateLabel" text="NOT READY"/>
-                    </VBox>
-
-                    <Region fx:id="playerProfileSpace" visible="false" managed="false"/>
-
-                    <VBox fx:id="player2BoxContainer" alignment="CENTER" visible="false" managed="false">
-                        <VBox fx:id="player2Box" alignment="CENTER">
-                            <ImageView>
-                                <Image url="/com/example/bombland/images/profile-picture-2.png"/>
-                            </ImageView>
-
-                            <Label fx:id="player2NameLabel"/>
-                        </VBox>
-
-                        <Label fx:id="player2ReadyStateLabel" text="NOT READY"/>
-                    </VBox>
-                </HBox>
-
-                <HBox fx:id="utilitiesContainer" alignment="CENTER">
-                    <VBox fx:id="voiceChatBoxContainer" alignment="CENTER">
-                        <VBox fx:id="voiceChatBox" alignment="CENTER">
-                            <ImageView>
-                                <Image url="/com/example/bombland/images/sound.png"/>
-                            </ImageView>
-
-                            <Label fx:id="voiceChatLabel" text="Voice Chat"/>
-                        </VBox>
-                    </VBox>
-                </HBox>
+        <VBox fx:id="kickOutPlayer2Popup" managed="false" visible="false">
+            <Label fx:id="kickOutPlayer2PopupTitle" text="ROOM CLOSED"/>
+            <VBox alignment="CENTER" fx:id="kickOutPlayer2PopupImgContainer">
+                <ImageView fx:id="kickOutPlayer2PopupImg">
+                    <Image url="/com/example/bombland/images/error.png"/>
+                </ImageView>
             </VBox>
-        </HBox>
 
-        <HBox fx:id="bottomPageContainer"/>
-    </VBox>
+            <Label fx:id="kickOutPlayer2PopupErrorMsg" text="The creator of this room has left, so this room has been closed. You'll now be sent back to the main menu."/>
+
+            <HBox fx:id="kickOutPlayer2PopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="kickOutPlayer2PopupCloseButton" text="OK" onAction="#goToMainMenu"/>
+            </HBox>
+        </VBox>
+    </StackPane>
 </VBox>

@@ -99,6 +99,20 @@ public class BomblandWebSocketClient extends WebSocketClient {
       Platform.runLater(() -> {
         RoomController.getInstance().updatePlayer2SettingsUi(responseObject);
       });
+    } else if (responseObject.get("message_type").equals("LEAVE_ROOM")) {
+      String currentPlayerName = AppCache.getInstance().getPlayerName();
+      String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
+
+      if (currentPlayerName.equals(player1Name)) { // Player2 left
+        Platform.runLater(() -> {
+          RoomController.getInstance().removePlayer2FromRoom();
+        });
+
+      } else { // Player1 left
+        Platform.runLater(() -> {
+          RoomController.getInstance().kickOutPlayer2FromRoom();
+        });
+      }
     }
   }
 
@@ -232,6 +246,24 @@ public class BomblandWebSocketClient extends WebSocketClient {
       send(String.valueOf(settingsObj)); // creates a new thread
     } else {
       System.out.println("updateP2Ui(): Connection not open. Unable to send settings info.");
+    }
+  }
+
+  /**
+   * This function gets called when both Player1 and Player2 are in a room, and Player1 exits the
+   * room. By leaving the room, a message gets sent to the server to have it delete information
+   * stored about the room.
+   */
+  public void leaveRoom(String playerName) {
+    JSONObject roomInfo = new JSONObject();
+    roomInfo.put("message_type", "LEAVE_ROOM");
+    roomInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+    roomInfo.put("playerName", playerName);
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(roomInfo)); // creates a new thread
+    } else {
+      System.out.println("leaveRoom(): Connection not open. Unable to send room info.");
     }
   }
 

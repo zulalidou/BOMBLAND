@@ -299,8 +299,6 @@ public class JoinRoomController {
     );
 
 
-    closeErrorPopup1Btn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
-
     closeErrorPopup1Btn.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.31),
