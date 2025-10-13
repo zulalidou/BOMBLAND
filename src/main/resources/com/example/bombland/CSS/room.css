@@ -221,3 +221,44 @@
     -fx-text-fill: black;
     -fx-cursor: hand;
 }
+
+
+#startGamePopup {
+    -fx-background-color: black;
+    -fx-alignment: center;
+    -fx-border-color: red;
+}
+
+#startGamePopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+#startGamePopupMsg {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+#startGamePopupYesBtn {
+    -fx-text-fill: white;
+    -fx-background-color: green;
+    -fx-font-weight: bold;
+}
+
+#startGamePopupYesBtn:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+
+#startGamePopupNoBtn {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+
+#startGamePopupNoBtn:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}

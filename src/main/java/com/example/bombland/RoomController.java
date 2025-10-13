@@ -245,6 +245,30 @@ public class RoomController {
   @FXML
   Button kickOutPlayer2PopupCloseButton;
 
+  @FXML
+  VBox startGamePopup;
+
+  @FXML
+  Label startGamePopupTitle;
+
+  @FXML
+  VBox startGamePopupImgContainer;
+
+  @FXML
+  ImageView startGamePopupImg;
+
+  @FXML
+  Label startGamePopupMsg;
+
+  @FXML
+  HBox startGamePopupButtonsContainer;
+
+  @FXML
+  Button startGamePopupYesBtn;
+
+  @FXML
+  Button startGamePopupNoBtn;
+
 
   private RoomController() {}
 
@@ -1230,5 +1254,117 @@ public class RoomController {
 
     player2BoxContainer.setVisible(false);
     player2BoxContainer.setManaged(false);
+  }
+
+  /**
+   * When the START GAME button is clicked, this function displays a popup message that asks Player1
+   * if they're sure they'd like to start the game.
+   */
+  @FXML
+  void displayStartGamePopup() {
+    topPageOuterContainer.setEffect(new GaussianBlur()); // blurs room page
+    topPageOuterContainer.setMouseTransparent(true); // makes items in room page "unclickable"
+
+    startGamePopup.setManaged(true);
+    startGamePopup.setVisible(true);
+
+    startGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
+    startGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
+
+    startGamePopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    startGamePopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    startGamePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    startGamePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    startGamePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+
+    startGamePopupMsg.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    startGamePopupMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
+
+
+    startGamePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+
+    startGamePopupYesBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+    startGamePopupNoBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+  }
+
+  /**
+   * Closes the START GAME popup.
+   */
+  @FXML
+  void closeStartGamePopup() {
+    startGamePopup.setManaged(false);
+    startGamePopup.setVisible(false);
+    topPageOuterContainer.setEffect(null);
+    topPageOuterContainer.setMouseTransparent(false);
+  }
+
+  /**
+   * If the current player is Player1, a msg gets sent to Player2 about the map settings, and they
+   * get sent to the Game map. If the current player is Player2, they just get sent to the Game map.
+   */
+  @FXML
+  void startGame() {
+    System.out.println("\nstartGame()");
+
+    String currentPlayerName = AppCache.getInstance().getPlayerName();
+    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
+
+    if (currentPlayerName.equals(player1Name)) {
+      String map = mapNameLabel.getText();
+      String difficulty = difficultyNameLabel.getText();
+      AppCache.getInstance().setGameMap(map);
+      AppCache.getInstance().setGameDifficulty(difficulty);
+
+      JSONObject gameMapInfo = new JSONObject();
+      gameMapInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+      gameMapInfo.put("map", map);
+      gameMapInfo.put("difficulty", difficulty);
+
+      Main.socketClient.sendPlayer2ToGameMap(gameMapInfo);
+    }
+
+    FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/com/example/bombland/FXML/play-view.fxml")
+    );
+
+    PlayController playController = PlayController.getInstance();
+    loader.setController(playController);
+
+    try {
+      Scene scene = new Scene(loader.load());
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - RoomController.startGame(): Could not open the game map.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+    }
   }
 }

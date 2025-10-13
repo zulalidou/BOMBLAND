@@ -3,6 +3,7 @@ package com.example.bombland;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
@@ -113,6 +114,16 @@ public class BomblandWebSocketClient extends WebSocketClient {
           RoomController.getInstance().kickOutPlayer2FromRoom();
         });
       }
+    } else if (responseObject.get("message_type").equals("JOIN_GAME_MAP")) {
+      String map = responseObject.get("map").toString();
+      String difficulty = responseObject.get("difficulty").toString();
+
+      AppCache.getInstance().setGameMap(map);
+      AppCache.getInstance().setGameDifficulty(difficulty);
+
+      Platform.runLater(() -> {
+        RoomController.getInstance().startGame();
+      });
     }
   }
 
@@ -264,6 +275,20 @@ public class BomblandWebSocketClient extends WebSocketClient {
       send(String.valueOf(roomInfo)); // creates a new thread
     } else {
       System.out.println("leaveRoom(): Connection not open. Unable to send room info.");
+    }
+  }
+
+  /**
+   * Sends Player2 to the Game map.
+   */
+  @FXML
+  void sendPlayer2ToGameMap(JSONObject gameMapInfo) {
+    gameMapInfo.put("message_type", "JOIN_GAME_MAP");
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(gameMapInfo)); // creates a new thread
+    } else {
+      System.out.println("sendPlayer2ToGameMap(): Connection not open. Unable to send game map info.");
     }
   }
 

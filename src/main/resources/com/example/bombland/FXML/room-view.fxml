@@ -98,7 +98,7 @@
                     <VBox fx:id="buttonsContainer" alignment="CENTER">
                         <Button fx:id="readyButton" text="READY" disable="true" onAction="#setReadyState"/>
                         <Region fx:id="buttonSpace"/>
-                        <Button fx:id="startGameButton" text="Start Game" disable="true"/>
+                        <Button fx:id="startGameButton" text="Start Game" disable="true" onAction="#displayStartGamePopup"/>
                     </VBox>
                 </VBox>
 
@@ -178,6 +178,22 @@
 
             <HBox fx:id="kickOutPlayer2PopupButtonsContainer" alignment="CENTER">
                 <Button fx:id="kickOutPlayer2PopupCloseButton" text="OK" onAction="#goToMainMenu"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="startGamePopup" managed="false" visible="false">
+            <Label fx:id="startGamePopupTitle" text="START GAME"/>
+            <VBox alignment="CENTER" fx:id="startGamePopupImgContainer">
+                <ImageView fx:id="startGamePopupImg">
+                    <Image url="/com/example/bombland/images/error.png"/>
+                </ImageView>
+            </VBox>
+
+            <Label fx:id="startGamePopupMsg" text="Are you sure you want to start the game?"/>
+
+            <HBox fx:id="startGamePopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="startGamePopupYesBtn" text="YES" onAction="#startGame"/>
+                <Button fx:id="startGamePopupNoBtn" text="NO" onAction="#closeStartGamePopup"/>
             </HBox>
         </VBox>
     </StackPane>

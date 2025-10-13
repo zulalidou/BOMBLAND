@@ -271,6 +271,9 @@ public class MapSelectionController {
     startGame();
   }
 
+  /**
+   * Sends the user to the Game map.
+   */
   @FXML
   private void startGame() {
     FXMLLoader loader = new FXMLLoader(
@@ -286,7 +289,7 @@ public class MapSelectionController {
       Main.mainStage.show();
     } catch (IOException e) {
       System.out.println("\n====================================================================");
-      System.out.println("ERROR - startGame(): Could not open the game map.");
+      System.out.println("ERROR - MapSelectionController.startGame(): Could not open the game map.");
       System.out.println("---");
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
