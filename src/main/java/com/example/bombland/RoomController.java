@@ -290,14 +290,18 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
-    String currentPlayerName = AppCache.getInstance().getPlayerName();
-    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
-
-    if (currentPlayerName.equals(player1Name)) {
+    if (isPlayer1()) {
       displayPlayer1Layout();
     } else {
       displayPlayer2Layout();
     }
+  }
+
+  private boolean isPlayer1() {
+    String currentPlayerName = AppCache.getInstance().getPlayerName();
+    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
+
+    return currentPlayerName.equals(player1Name);
   }
 
   private void displayPlayer1Layout() {
@@ -780,10 +784,7 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    String currentPlayerName = AppCache.getInstance().getPlayerName();
-    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
-
-    if (currentPlayerName.equals(player1Name)) {
+    if (isPlayer1()) {
       leaveRoomPopupErrorMsg.setText("Are you sure you want to leave? Doing so will delete the room.");
     } else {
       leaveRoomPopupErrorMsg.setText("Are you sure you want to leave?");
@@ -1021,13 +1022,9 @@ public class RoomController {
    */
   @FXML
   private void setReadyState() {
-    String currentPlayerName = AppCache.getInstance().getPlayerName();
-    String player1 = AppCache.getInstance().getMultiplayerRoom().get("player1").toString();
-    boolean isPlayer1 = currentPlayerName.equals(player1);
-
     String playerState;
 
-    if (isPlayer1) {
+    if (isPlayer1()) {
       if (player1ReadyStateLabel.getText().equals("NOT READY")) {
         player1ReadyStateLabel.setText("READY");
         playerState = "READY";
@@ -1065,11 +1062,7 @@ public class RoomController {
    */
   @FXML
   void updateReadyState(boolean otherPlayerReady) {
-    String currentPlayerName = AppCache.getInstance().getPlayerName();
-    String player1 = AppCache.getInstance().getMultiplayerRoom().get("player1").toString();
-    boolean isPlayer1 = currentPlayerName.equals(player1);
-
-    if (isPlayer1) {
+    if (isPlayer1()) {
       if (otherPlayerReady) {
         player2ReadyStateLabel.setText("READY");
       } else {
@@ -1127,8 +1120,6 @@ public class RoomController {
     URL imageUrl;
 
     if (settingsInfo.get("setting").equals("map")) {
-      System.out.println("it's a map setting");
-
       if (settingsInfo.get("value").equals("rectangle")) {
         imageUrl = getClass().getResource("/com/example/bombland/Images/rectangle.png");
         mapNameLabel.setText("Rectangle");
@@ -1153,8 +1144,6 @@ public class RoomController {
       Image newImage = new Image(imageUrl.toString());
       mapImgView.setImage(newImage);
     } else {
-      System.out.println("it's a difficulty setting");
-
       if (settingsInfo.get("value").equals("Easy")) {
         imageUrl = getClass().getResource("/com/example/bombland/Images/easy-difficulty.png");
         difficultyNameLabel.setText("Easy");
@@ -1329,12 +1318,7 @@ public class RoomController {
    */
   @FXML
   void startGame() {
-    System.out.println("\nstartGame()");
-
-    String currentPlayerName = AppCache.getInstance().getPlayerName();
-    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
-
-    if (currentPlayerName.equals(player1Name)) {
+    if (isPlayer1()) {
       String map = mapNameLabel.getText();
       String difficulty = difficultyNameLabel.getText();
       AppCache.getInstance().setGameMap(map);
