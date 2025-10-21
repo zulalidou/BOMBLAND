@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
@@ -16,12 +17,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * This class sets up the UI for the game map.
  */
-public class GameMap {
-  private static GameMap instance;
+public class MultiplayerGameMap {
+  private static MultiplayerGameMap instance;
 
   int rows;
   int cols;
@@ -39,16 +42,16 @@ public class GameMap {
   HashMap<Integer, HashSet<Integer>> tilesEliminated;
 
 
-  private GameMap() {}
+  private MultiplayerGameMap() {}
 
   /**
    * This function creates an instance of this class.
    *
    * @return An instance of this class.
    */
-  public static GameMap getInstance() {
+  public static MultiplayerGameMap getInstance() {
     if (instance == null) {
-      instance = new GameMap();
+      instance = new MultiplayerGameMap();
     }
 
     return instance;
@@ -56,10 +59,6 @@ public class GameMap {
 
   public int getBombs() {
     return bombs;
-  }
-
-  public String getGameDifficulty() {
-    return gameDifficulty;
   }
 
   public ArrayList<TileCoordinates> getBombCoordinates() {
@@ -187,26 +186,29 @@ public class GameMap {
           Tile tileObj = gridObjects.get(new TileCoordinates(tileRow, tileCol));
 
           if (!tileObj.isFlagged()) {
-            boolean gameStarted = PlayController.getInstance().getGameStarted();
+            boolean gameStarted = MultiplayerPlayController.getInstance().getGameStarted();
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("row", tileObj.getRow());
+            dataObj.put("col", tileObj.getCol());
 
             if (!gameStarted) {
-              PlayController.getInstance().startTimer();
-              PlayController.getInstance().setGameStarted(true);
+              eliminateSurroundingTiles(tileObj);
+              generateBombCoordinates();
 
-              tileObj.setValue(Tile.TileValue.EMPTY);
-              gridObjects.put(new TileCoordinates(tileRow, tileCol), tileObj);
-
-              setupGrid(tileObj);
-            }
-
-            try {
-              handleTileClick(tileObj);
-            } catch (IOException e) {
-              System.out.println("\n====================================================================");
-              System.out.println("ERROR - buildRectangleGrid(): Could not build the rectangle grid.");
-              System.out.println("---");
-              System.out.println(e.getCause());
-              System.out.println("====================================================================\n");
+              dataObj.put("bombCoordinates", bombCoordinates);
+              Main.socketClient.sendInitialData(dataObj);
+            } else {
+              try {
+                Main.socketClient.sendTileCoordinates(dataObj);
+                handleTileClick(tileObj);
+              } catch (IOException e) {
+                System.out.println("\n====================================================================");
+                System.out.println("ERROR - buildRectangleGrid(): Could not build the rectangle grid.");
+                System.out.println("---");
+                System.out.println(e.getCause());
+                System.out.println("====================================================================\n");
+              }
             }
           }
         });
@@ -218,8 +220,8 @@ public class GameMap {
 
             if (tileObj.isCovered()) {
               AudioClip clip = new AudioClip(Objects.requireNonNull(
-                  GameMap.class.getResource("/com/example/bombland/Sounds/flag_flap.wav")
-                ).toExternalForm());
+                  MultiplayerGameMap.class.getResource("/com/example/bombland/Sounds/flag_flap.wav")
+              ).toExternalForm());
               clip.play();
 
               if (tileObj.isFlagged()) {
@@ -235,7 +237,7 @@ public class GameMap {
                 flagsSet += 1;
               }
 
-              PlayController.getInstance().setFlagsLeftLbl((bombs - flagsSet) + " flags left");
+              MultiplayerPlayController.getInstance().setFlagsLeftLbl((bombs - flagsSet) + " flags left");
             }
           }
         });
@@ -255,7 +257,7 @@ public class GameMap {
       evenTile = !evenTile;
     }
 
-    PlayController.getInstance().setGridContainer(grid);
+    MultiplayerPlayController.getInstance().setGridContainer(grid);
     grid.setGridLinesVisible(true);
   }
 
@@ -275,26 +277,29 @@ public class GameMap {
           Tile tileObj = gridObjects.get(new TileCoordinates(tileRow, tileCol));
 
           if (!tileObj.isFlagged()) {
-            boolean gameStarted = PlayController.getInstance().getGameStarted();
+            boolean gameStarted = MultiplayerPlayController.getInstance().getGameStarted();
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("row", tileObj.getRow());
+            dataObj.put("col", tileObj.getCol());
 
             if (!gameStarted) {
-              PlayController.getInstance().startTimer();
-              PlayController.getInstance().setGameStarted(true);
+              eliminateSurroundingTiles(tileObj);
+              generateBombCoordinates();
 
-              tileObj.setValue(Tile.TileValue.EMPTY);
-              gridObjects.put(new TileCoordinates(tileRow, tileCol), tileObj);
-
-              setupGrid(tileObj);
-            }
-
-            try {
-              handleTileClick(tileObj);
-            } catch (IOException e) {
-              System.out.println("\n====================================================================");
-              System.out.println("ERROR - buildOtherGrids(): Could not build the other grids.");
-              System.out.println("---");
-              System.out.println(e.getCause());
-              System.out.println("====================================================================\n");
+              dataObj.put("bombCoordinates", bombCoordinates);
+              Main.socketClient.sendInitialData(dataObj);
+            } else {
+              try {
+                Main.socketClient.sendTileCoordinates(dataObj);
+                handleTileClick(tileObj);
+              } catch (IOException e) {
+                System.out.println("\n====================================================================");
+                System.out.println("ERROR - buildOtherGrids(): Could not build the other grids.");
+                System.out.println("---");
+                System.out.println(e.getCause());
+                System.out.println("====================================================================\n");
+              }
             }
           }
         });
@@ -306,7 +311,7 @@ public class GameMap {
 
             if (tileObj.isCovered()) {
               AudioClip clip = new AudioClip(Objects.requireNonNull(
-                  GameMap.class.getResource("/com/example/bombland/Sounds/flag_flap.wav")
+                  MultiplayerGameMap.class.getResource("/com/example/bombland/Sounds/flag_flap.wav")
               ).toExternalForm());
               clip.play();
 
@@ -323,7 +328,7 @@ public class GameMap {
                 flagsSet += 1;
               }
 
-              PlayController.getInstance().setFlagsLeftLbl((bombs - flagsSet) + " flags left");
+              MultiplayerPlayController.getInstance().setFlagsLeftLbl((bombs - flagsSet) + " flags left");
             }
           }
         });
@@ -357,7 +362,7 @@ public class GameMap {
       }
     }
 
-    PlayController.getInstance().setGridContainer(grid);
+    MultiplayerPlayController.getInstance().setGridContainer(grid);
     grid.setGridLinesVisible(true);
   }
 
@@ -568,13 +573,6 @@ public class GameMap {
     }
   }
 
-  void setupGrid(Tile tileObj) {
-    eliminateSurroundingTiles(tileObj);
-    setupBombTiles();
-    setupNumberTiles(tileObj);
-    setupEmptyTiles();
-  }
-
   // This function makes sure that there are no adjacent bombs on the first tile clicked
   void eliminateSurroundingTiles(Tile tileObj) {
     int rowCount = 1;
@@ -602,7 +600,7 @@ public class GameMap {
     }
   }
 
-  void setupBombTiles() {
+  void generateBombCoordinates() {
     int bombsAssigned = 0;
 
     while (bombsAssigned < bombs) {
@@ -612,12 +610,8 @@ public class GameMap {
 
       // Checks if it's safe to place a bomb on the coordinates generated
       if (tilesEliminated.get(newRow) == null || !(tilesEliminated.get(newRow).contains(newCol))) {
-        // Set tile value to bomb
-        Tile newBombTile = gridObjects.get(new TileCoordinates(newRow, newCol));
-        newBombTile.setValue(Tile.TileValue.BOMB);
-        gridObjects.put(new TileCoordinates(newRow, newCol), newBombTile);
-
         HashSet<Integer> values;
+
         if (tilesEliminated.get(newRow) == null) {
           values = new HashSet<>();
         } else {
@@ -627,9 +621,29 @@ public class GameMap {
         values.add(newCol);
         tilesEliminated.put(newRow, values);
 
-        bombsAssigned++;
         bombCoordinates.add(new TileCoordinates(newRow, newCol));
+        bombsAssigned++;
       }
+    }
+  }
+
+  void setupBombTiles() {
+    for (TileCoordinates bombCoordinate : bombCoordinates) {
+      TileCoordinates coordinates = new TileCoordinates(bombCoordinate.getRow(), bombCoordinate.getCol());
+
+      Tile tile = gridObjects.get(coordinates);
+      tile.setValue(Tile.TileValue.BOMB);
+      gridObjects.put(coordinates, tile);
+
+      HashSet<Integer> values;
+
+      if (tilesEliminated.get(coordinates.getRow()) == null) {
+        values = new HashSet<>();
+      } else {
+        values = tilesEliminated.get(coordinates.getRow());
+      }
+
+      values.add(coordinates.getCol());
     }
   }
 
@@ -684,7 +698,7 @@ public class GameMap {
   void handleTileClick(Tile tileObj) throws IOException {
     if (tileObj.isCovered()) {
       AudioClip clip = new AudioClip(Objects.requireNonNull(
-          GameMap.class.getResource("/com/example/bombland/Sounds/tile_click.wav")
+          MultiplayerGameMap.class.getResource("/com/example/bombland/Sounds/tile_click.wav")
       ).toExternalForm());
       clip.play();
 
@@ -692,22 +706,25 @@ public class GameMap {
         traverse(tileObj.getRow(), tileObj.getCol());
 
         if (tilesUncovered + bombs == totalTiles) {
-          PlayController.getInstance().setGameLost(false);
-          PlayController.getInstance().endTimer();
-          PlayController.getInstance().gameWon();
+          MultiplayerPlayController.getInstance().setGameOver(true);
+          MultiplayerPlayController.getInstance().setPlayerDied(false);
+          MultiplayerPlayController.getInstance().endTimer();
+          MultiplayerPlayController.getInstance().gameOver();
         }
       } else if (tileObj.getValue() == Tile.TileValue.NUMBER) {
         uncoverTile(tileObj);
 
         if (tilesUncovered + bombs == totalTiles) {
-          PlayController.getInstance().setGameLost(false);
-          PlayController.getInstance().endTimer();
-          PlayController.getInstance().gameWon();
+          MultiplayerPlayController.getInstance().setGameOver(true);
+          MultiplayerPlayController.getInstance().setPlayerDied(false);
+          MultiplayerPlayController.getInstance().endTimer();
+          MultiplayerPlayController.getInstance().gameOver();
         }
       } else { // tile contains a bomb
-        PlayController.getInstance().setGameLost(true);
-        PlayController.getInstance().endTimer();
-        PlayController.getInstance().gameLost();
+        MultiplayerPlayController.getInstance().setGameOver(true);
+        MultiplayerPlayController.getInstance().setPlayerDied(true);
+        MultiplayerPlayController.getInstance().endTimer();
+        MultiplayerPlayController.getInstance().gameOver();
       }
     }
   }
@@ -733,9 +750,9 @@ public class GameMap {
   }
 
   void uncoverTile(Tile tile) {
-    if (tile.isFlagged() && !PlayController.getInstance().getGameLost()) {
+    if (tile.isFlagged() && !MultiplayerPlayController.getInstance().getGameOver()) {
       flagsSet--;
-      PlayController.getInstance().setFlagsLeftLbl((bombs - flagsSet) + " flags left");
+      MultiplayerPlayController.getInstance().setFlagsLeftLbl((bombs - flagsSet) + " flags left");
     }
 
     Button tileBtn = getTileButton(grid, tile.getRow(), tile.getCol());
@@ -755,6 +772,11 @@ public class GameMap {
 
     tile.setCovered(false);
     tilesUncovered++;
+
+    JSONObject tileInfoObj = new JSONObject();
+    tileInfoObj.put("row", tile.getRow());
+    tileInfoObj.put("col", tile.getCol());
+    Main.socketClient.sendTileCoordinates(tileInfoObj);
   }
 
   /**
@@ -812,5 +834,52 @@ public class GameMap {
    */
   public void clearGrid() {
     grid.getChildren().clear();
+  }
+
+
+  @FXML
+  void startMultiplayerGame(JSONObject firstTileObj) {
+    Tile tileObj = gridObjects.get(new TileCoordinates(firstTileObj.getInt("row"), firstTileObj.getInt("col")));
+    tileObj.setValue(Tile.TileValue.EMPTY);
+
+    tilesEliminated.clear();
+    eliminateSurroundingTiles(tileObj);
+
+
+    retrieveBombCoordinates((JSONArray) firstTileObj.get("bombCoordinates"));
+    setupBombTiles();
+    setupNumberTiles(tileObj);
+    setupEmptyTiles();
+
+
+    MultiplayerPlayController.getInstance().startTimer();
+    MultiplayerPlayController.getInstance().setGameStarted(true);
+
+    try {
+      handleTileClick(tileObj);
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - startMultiplayerGame(): Could not build the rectangle grid.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+    }
+  }
+
+  void retrieveBombCoordinates(JSONArray bombCoordinatesArr) {
+    bombCoordinates.clear();
+
+    for (int i = 0; i < bombCoordinatesArr.length(); i++) {
+      // Get the JSONObject at the current index
+      JSONObject tileObject = bombCoordinatesArr.getJSONObject(i);
+
+      // Extract the row and col values
+      int row = tileObject.getInt("row");
+      int col = tileObject.getInt("col");
+
+      // Create a new TileCoordinates object and add it to the list
+      TileCoordinates tile = new TileCoordinates(row, col);
+      bombCoordinates.add(tile);
+    }
   }
 }

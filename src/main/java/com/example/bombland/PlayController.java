@@ -30,7 +30,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
-import javafx.util.Pair;
 import org.json.JSONObject;
 
 /**
@@ -381,7 +380,8 @@ public class PlayController {
    * This function builds the layout of the game map.
    */
   public void buildGrid() {
-    gameStarted = gameLost = false;
+    gameStarted = false;
+    gameLost = false;
     gameDuration = -1;
     taskScheduler = Executors.newScheduledThreadPool(1);
     timerPaused = false;
@@ -422,12 +422,12 @@ public class PlayController {
     );
     clip.play();
 
-    ArrayList<Pair<Integer, Integer>> bombCoordinates = GameMap.getInstance().getBombCoordinates();
+    ArrayList<TileCoordinates> bombCoordinates = GameMap.getInstance().getBombCoordinates();
 
     // Uncover all bomb tiles
-    for (Pair<Integer, Integer> coords : bombCoordinates) {
+    for (TileCoordinates coords : bombCoordinates) {
       Tile tile = GameMap.getInstance()
-          .getGridObjects().get(new Pair<>(coords.getKey(), coords.getValue()));
+          .getGridObjects().get(new TileCoordinates(coords.getRow(), coords.getCol()));
       GameMap.getInstance().uncoverTile(tile);
       GameMap.getInstance().incrementTilesUncovered();
     }

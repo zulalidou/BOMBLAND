@@ -1,0 +1,76 @@
+#playPageContainerHeader {
+    /*-fx-background-color: #92FFB7;*/
+    -fx-background-color: #FF0000;
+}
+
+
+#backBtn {
+    -fx-background-color: black;
+}
+
+#backBtn:hover {
+    -fx-cursor: hand;
+}
+
+
+#totalBombsLbl, #flagsLeftLbl, #timeElapsedLbl {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+
+.tile-btn:focused {
+    -fx-background-color: transparent;
+}
+
+
+#exitPagePopup, #gameOverPopup {
+    -fx-background-color: black;
+    -fx-alignment: center;
+    -fx-border-color: red;
+}
+
+#exitPagePopupTitle, #gameOverPopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+
+#gameOverPopupTimeTaken {
+    -fx-font-weight: bold;
+    -fx-text-fill: gold;
+}
+
+
+#exitPagePopupText {
+    -fx-wrap-text: true;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-text-fill: red;
+}
+
+
+
+.playAgainBtn {
+    -fx-background-color: green;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.playAgainBtn:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+
+.mainMenuBtn {
+    -fx-background-color: #FF7C7C;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.mainMenuBtn:hover {
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}

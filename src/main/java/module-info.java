@@ -12,6 +12,7 @@ module com.example.bombland {
     requires java.sql;
   requires javafx.graphics;
   requires javafx.base;
+  requires com.fasterxml.jackson.databind;
 
   opens com.example.bombland to javafx.fxml;
     exports com.example.bombland;

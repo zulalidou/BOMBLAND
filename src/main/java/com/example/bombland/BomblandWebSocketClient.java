@@ -1,5 +1,6 @@
 package com.example.bombland;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javafx.application.Platform;
@@ -123,6 +124,45 @@ public class BomblandWebSocketClient extends WebSocketClient {
 
       Platform.runLater(() -> {
         RoomController.getInstance().startGame();
+      });
+    } else if (responseObject.get("message_type").equals("FIRST_TILE_CLICK")) {
+      JSONObject firstTileInfoObj = new JSONObject();
+      firstTileInfoObj.put("row", responseObject.getInt("row"));
+      firstTileInfoObj.put("col", responseObject.getInt("col"));
+      firstTileInfoObj.put("bombCoordinates", responseObject.get("bombCoordinates"));
+
+      Platform.runLater(() -> {
+        MultiplayerGameMap.getInstance().startMultiplayerGame(firstTileInfoObj);
+      });
+    } else if (responseObject.get("message_type").equals("TILE_CLICKED")) {
+      int row = responseObject.getInt("row");
+      int col = responseObject.getInt("col");
+      Tile tileObj = MultiplayerGameMap.getInstance().gridObjects.get(new TileCoordinates(row, col));
+
+      Platform.runLater(() -> {
+        try {
+          MultiplayerGameMap.getInstance().handleTileClick(tileObj);
+        } catch (IOException e) {
+          System.out.println("\n====================================================================");
+          System.out.println("ERROR - onMessage() - TILE_CLICKED");
+          System.out.println("---");
+          System.out.println(e.getCause());
+          System.out.println("====================================================================\n");
+        }
+      });
+    } else if (responseObject.get("message_type").equals("GAME_OVER")) {
+      String gameResult;
+
+      if (responseObject.getString("winner").equals("N/A")) {
+        gameResult = "TIE";
+      } else if (responseObject.getString("winner").equals(AppCache.getInstance().getPlayerName())) {
+        gameResult = "WON";
+      } else {
+        gameResult = "LOST";
+      }
+
+      Platform.runLater(() -> {
+        MultiplayerPlayController.getInstance().displayGameOverPopup();
       });
     }
   }
@@ -289,6 +329,65 @@ public class BomblandWebSocketClient extends WebSocketClient {
       send(String.valueOf(gameMapInfo)); // creates a new thread
     } else {
       System.out.println("sendPlayer2ToGameMap(): Connection not open. Unable to send game map info.");
+    }
+  }
+
+  /**
+   * Sends the coordinates of the first tile clicked to the server, along with the bomb coordinates
+   * generated from it.
+   */
+  @FXML
+  void sendInitialData(JSONObject initialDataObj) {
+    JSONObject firstTileInfo = new JSONObject();
+    firstTileInfo.put("message_type", "FIRST_TILE_CLICK");
+    firstTileInfo.put("row", initialDataObj.getInt("row"));
+    firstTileInfo.put("col", initialDataObj.getInt("col"));
+    firstTileInfo.put("bombCoordinates", initialDataObj.get("bombCoordinates"));
+    firstTileInfo.put("playerName", AppCache.getInstance().getPlayerName());
+    firstTileInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(firstTileInfo)); // creates a new thread
+    } else {
+      System.out.println("sendInitialData(): Connection not open. Unable to send data.");
+    }
+  }
+
+  /**
+   * Sends the tile coordinates of the tile that was clicked (along with a few other data) to the
+   * server.
+   */
+  @FXML
+  void sendTileCoordinates(JSONObject dataObj) {
+    JSONObject tileInfo = new JSONObject();
+    tileInfo.put("message_type", "TILE_CLICKED");
+    tileInfo.put("row", dataObj.getInt("row"));
+    tileInfo.put("col", dataObj.getInt("col"));
+    tileInfo.put("playerName", AppCache.getInstance().getPlayerName());
+    tileInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(tileInfo)); // creates a new thread
+    } else {
+      System.out.println("sendTileCoordinates(): Connection not open. Unable to send data.");
+    }
+  }
+
+  /**
+   * Sends info to the server about the end of a multiplayer game.
+   */
+  @FXML
+  void gameOver(boolean playerDied) {
+    JSONObject tileInfo = new JSONObject();
+    tileInfo.put("message_type", "GAME_OVER");
+    tileInfo.put("playerDied", playerDied);
+    tileInfo.put("playerName", AppCache.getInstance().getPlayerName());
+    tileInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(tileInfo)); // creates a new thread
+    } else {
+      System.out.println("gameOver(): Connection not open. Unable to send data.");
     }
   }
 

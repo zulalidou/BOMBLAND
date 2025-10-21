@@ -1333,11 +1333,11 @@ public class RoomController {
     }
 
     FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/com/example/bombland/FXML/play-view.fxml")
+        getClass().getResource("/com/example/bombland/FXML/multiplayer-play-view.fxml")
     );
 
-    PlayController playController = PlayController.getInstance();
-    loader.setController(playController);
+    MultiplayerPlayController multiplayerPlayController = MultiplayerPlayController.getInstance();
+    loader.setController(multiplayerPlayController);
 
     try {
       Scene scene = new Scene(loader.load());
