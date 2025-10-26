@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
 
 <VBox fx:id="playPageContainer" xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
     <stylesheets>
@@ -28,7 +29,17 @@
                 </HBox>
 
                 <Label fx:id="totalBombsLbl"/>
-                <Label fx:id="timeElapsedLbl"/>
+
+                <VBox fx:id="timerAndPointsContainer">
+                    <Label fx:id="timeElapsedLbl"/>
+
+                    <HBox fx:id="pointsContainer">
+                        <Label fx:id="player1PointsLbl"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="player2PointsLbl"/>
+                    </HBox>
+                </VBox>
+
                 <Label fx:id="flagsLeftLbl"/>
 
                 <VBox fx:id="emptySpace"/>
@@ -54,18 +65,68 @@
         </VBox>
 
         <VBox fx:id="gameOverPopup" managed="false" visible="false">
-            <Label fx:id="gameOverPopupTitle" text="GAME OVER"/>
+            <Label fx:id="gameOverPopupTitle"/>
             <VBox alignment="CENTER" fx:id="gameOverPopupImgContainer">
                 <ImageView fx:id="gameOverPopupImg">
                     <Image url="/com/example/bombland/images/timer.png"/>
                 </ImageView>
             </VBox>
 
-            <Label fx:id="gameOverPopupTimeTaken" text="placeholder"/>
+            <VBox fx:id="gameOverPopupRoundContainer" alignment="CENTER">
+                <Label fx:id="gameOverPopupRoundLabel" text="ROUND X"/>
+
+                <HBox fx:id="gameOverPopupPointsContainer">
+                    <Label fx:id="gameOverPopupPlayer1Points"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="gameOverPopupPlayer2Points"/>
+                </HBox>
+            </VBox>
+
+            <VBox fx:id="gameOverPopupStatsContainer" alignment="CENTER">
+                <Label fx:id="gameOverPopupStatsLabel" text="STATS"/>
+
+                <HBox fx:id="gameOverPopupNameContainer">
+                    <VBox fx:id="gameOverPopupPlayer1NameContainer" alignment="CENTER">
+                        <Label fx:id="gameOverPopupPlayer1Id" text="Player 1"/>
+                        <Label fx:id="gameOverPopupPlayer1Name"/>
+                    </VBox>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <VBox fx:id="gameOverPopupPlayer2NameContainer" alignment="CENTER">
+                        <Label fx:id="gameOverPopupPlayer2Id" text="Player 2"/>
+                        <Label fx:id="gameOverPopupPlayer2Name"/>
+                    </VBox>
+                </HBox>
+
+
+                <HBox>
+                    <Label fx:id="gameOverPopupPlayer1Wins"/>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Label fx:id="gameOverPopupTies"/>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Label fx:id="gameOverPopupPlayer2Wins"/>
+                </HBox>
+
+
+
+
+                <HBox fx:id="gameOverPopupReadyStateContainer">
+                    <Label fx:id="gameOverPopupPlayer1ReadyStatus" text="NOT READY"/>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Label fx:id="gameOverPopupPlayer2ReadyStatus" text="NOT READY"/>
+                </HBox>
+            </VBox>
 
             <HBox fx:id="gameOverPopupButtonsContainer" alignment="CENTER">
-                <Button fx:id="gameOverPopupPlayAgainBtn" styleClass="playAgainBtn" text="Play Again"/> <!--  onAction="#playAgain" -->
-                <Button fx:id="gameOverPopupMainMenuBtn" styleClass="mainMenuBtn" text="Main Menu"/> <!--  onAction="#goToMainMenu" -->
+                <Button fx:id="gameOverPopupPlayAgainBtn" styleClass="playAgainBtn" text="Play Again" onAction="#playAgain"/>
+                <Button fx:id="gameOverPopupGoToRoomBtn" styleClass="mainMenuBtn" text="Go To Room"/> <!--  onAction="#goToMainMenu" -->
             </HBox>
         </VBox>
     </StackPane>

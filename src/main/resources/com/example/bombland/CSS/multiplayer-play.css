@@ -37,11 +37,6 @@
 }
 
 
-#gameOverPopupTimeTaken {
-    -fx-font-weight: bold;
-    -fx-text-fill: gold;
-}
-
 
 #exitPagePopupText {
     -fx-wrap-text: true;
@@ -74,3 +69,95 @@
     -fx-cursor: hand;
     -fx-text-fill: red;
 }
+
+
+
+
+#gameOverPopupNameContainer {
+    /* -fx-background-color: #6FD7F7; */
+    -fx-background-color: red;
+}
+
+#gameOverPopupPlayer1NameContainer {
+    /*-fx-background-color: green;*/
+}
+
+#gameOverPopupPlayer2NameContainer {
+    /*-fx-background-color: yellow;*/
+}
+
+#gameOverPopupPlayer1Name, #gameOverPopupPlayer2Name {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#gameOverPopupPlayer1Id, #gameOverPopupPlayer2Id {
+    /*-fx-background-color: coral;*/
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+#gameOverPopupRoundContainer {
+    /*-fx-background-color: #6FD7F7;*/
+    -fx-background-color: red;
+}
+
+#gameOverPopupRoundLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#gameOverPopupPlayer1Points, #gameOverPopupPlayer2Points {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#gameOverPopupStatsContainer {
+    /*-fx-background-color: #6FD7F7;*/
+    -fx-background-color: red;
+
+}
+
+#gameOverPopupStatsLabel {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#gameOverPopupPlayer1Wins, #gameOverPopupTies, #gameOverPopupPlayer2Wins {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+
+
+#gameOverPopupReadyStateContainer {
+    -fx-background-color: red;
+}
+
+#gameOverPopupPlayer1ReadyStatus, #gameOverPopupPlayer2ReadyStatus {
+    -fx-background-color: black;
+    -fx-font-weight: bold;
+    -fx-text-fill: red;
+}
+
+
+
+
+/*
+#timerAndPointsContainer {
+    -fx-background-color: green;
+}
+
+#pointsContainer {
+    -fx-background-color: yellow;
+}
+
+#player1PointsLbl {
+    -fx-background-color: pink;
+}
+
+#player2PointsLbl {
+    -fx-background-color: coral;
+}
+*/

@@ -200,8 +200,7 @@ public class MultiplayerGameMap {
               Main.socketClient.sendInitialData(dataObj);
             } else {
               try {
-                Main.socketClient.sendTileCoordinates(dataObj);
-                handleTileClick(tileObj);
+                handleTileClick(tileObj, AppCache.getInstance().getPlayerName());
               } catch (IOException e) {
                 System.out.println("\n====================================================================");
                 System.out.println("ERROR - buildRectangleGrid(): Could not build the rectangle grid.");
@@ -291,8 +290,7 @@ public class MultiplayerGameMap {
               Main.socketClient.sendInitialData(dataObj);
             } else {
               try {
-                Main.socketClient.sendTileCoordinates(dataObj);
-                handleTileClick(tileObj);
+                handleTileClick(tileObj, AppCache.getInstance().getPlayerName());
               } catch (IOException e) {
                 System.out.println("\n====================================================================");
                 System.out.println("ERROR - buildOtherGrids(): Could not build the other grids.");
@@ -633,7 +631,7 @@ public class MultiplayerGameMap {
 
       Tile tile = gridObjects.get(coordinates);
       tile.setValue(Tile.TileValue.BOMB);
-      gridObjects.put(coordinates, tile);
+//      gridObjects.put(coordinates, tile);
 
       HashSet<Integer> values;
 
@@ -695,7 +693,7 @@ public class MultiplayerGameMap {
     }
   }
 
-  void handleTileClick(Tile tileObj) throws IOException {
+  void handleTileClick(Tile tileObj, String clicker) throws IOException {
     if (tileObj.isCovered()) {
       AudioClip clip = new AudioClip(Objects.requireNonNull(
           MultiplayerGameMap.class.getResource("/com/example/bombland/Sounds/tile_click.wav")
@@ -703,38 +701,35 @@ public class MultiplayerGameMap {
       clip.play();
 
       if (tileObj.getValue() == Tile.TileValue.EMPTY) {
-        traverse(tileObj.getRow(), tileObj.getCol());
+        traverse(tileObj.getRow(), tileObj.getCol(), clicker);
 
         if (tilesUncovered + bombs == totalTiles) {
           MultiplayerPlayController.getInstance().setGameOver(true);
           MultiplayerPlayController.getInstance().setPlayerDied(false);
-          MultiplayerPlayController.getInstance().endTimer();
-          MultiplayerPlayController.getInstance().gameOver();
+          Main.socketClient.gameOver(); // IT LOOKS LIKE IT'S SAYING THAT game isn't over (because of its argument).. make the necessary modifications
         }
       } else if (tileObj.getValue() == Tile.TileValue.NUMBER) {
-        uncoverTile(tileObj);
+        uncoverTile(tileObj, clicker);
 
         if (tilesUncovered + bombs == totalTiles) {
           MultiplayerPlayController.getInstance().setGameOver(true);
           MultiplayerPlayController.getInstance().setPlayerDied(false);
-          MultiplayerPlayController.getInstance().endTimer();
-          MultiplayerPlayController.getInstance().gameOver();
+          Main.socketClient.gameOver();
         }
       } else { // tile contains a bomb
         MultiplayerPlayController.getInstance().setGameOver(true);
         MultiplayerPlayController.getInstance().setPlayerDied(true);
-        MultiplayerPlayController.getInstance().endTimer();
-        MultiplayerPlayController.getInstance().gameOver();
+        Main.socketClient.gameOver();
       }
     }
   }
 
-  void traverse(int row, int col) {
+  void traverse(int row, int col, String clicker) {
     if (row >= 0 && row < rows && col >= 0 && col < cols) {
       Tile currentTile = gridObjects.get(new TileCoordinates(row, col));
 
       if (currentTile.isCovered() && (currentTile.getValue() == Tile.TileValue.EMPTY || currentTile.getValue() == Tile.TileValue.NUMBER)) {
-        uncoverTile(currentTile);
+        uncoverTile(currentTile, clicker);
 
         if (currentTile.getSurroundingBombs() > 0) {
           return;
@@ -742,20 +737,21 @@ public class MultiplayerGameMap {
 
         for (int i = -1; i <= 1; i++) {
           for (int j = -1; j <= 1; j++) {
-            traverse(row + i, col + j);
+            traverse(row + i, col + j, clicker);
           }
         }
       }
     }
   }
 
-  void uncoverTile(Tile tile) {
+  void uncoverTile(Tile tile, String clicker) {
     if (tile.isFlagged() && !MultiplayerPlayController.getInstance().getGameOver()) {
       flagsSet--;
       MultiplayerPlayController.getInstance().setFlagsLeftLbl((bombs - flagsSet) + " flags left");
     }
 
     Button tileBtn = getTileButton(grid, tile.getRow(), tile.getCol());
+    boolean isBombTile = false;
 
     if (tile.getValue() == Tile.TileValue.EMPTY) {
       tile.setBackgroundColor(tile.getBackgroundColor().equals(Color.orange()) ? Color.black() : Color.gray());
@@ -764,6 +760,7 @@ public class MultiplayerGameMap {
       tile.setBackgroundColor(tile.getBackgroundColor().equals(Color.orange()) ? Color.black() : Color.gray());
       displayNumberIcon(tile);
     } else { // bomb tile
+      isBombTile = true;
       tile.setBackgroundColor(Color.red());
       tileBtn.setStyle("-fx-background-color: " + tile.getBackgroundColor() + "; "
           + "-fx-background-image: url(\"/com/example/bombland/images/bomb.png\"); "
@@ -776,7 +773,10 @@ public class MultiplayerGameMap {
     JSONObject tileInfoObj = new JSONObject();
     tileInfoObj.put("row", tile.getRow());
     tileInfoObj.put("col", tile.getCol());
-    Main.socketClient.sendTileCoordinates(tileInfoObj);
+
+    if (AppCache.getInstance().getPlayerName().equals(clicker) && !isBombTile) {
+      Main.socketClient.sendTileCoordinates(tileInfoObj);
+    }
   }
 
   /**
@@ -856,7 +856,7 @@ public class MultiplayerGameMap {
     MultiplayerPlayController.getInstance().setGameStarted(true);
 
     try {
-      handleTileClick(tileObj);
+      handleTileClick(tileObj, firstTileObj.getString("playerName"));
     } catch (IOException e) {
       System.out.println("\n====================================================================");
       System.out.println("ERROR - startMultiplayerGame(): Could not build the rectangle grid.");

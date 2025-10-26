@@ -1,6 +1,7 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,6 +23,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import org.json.JSONObject;
 
 /**
  * This class sets up the UI for the game page.
@@ -42,6 +45,30 @@ public class MultiplayerPlayController {
   VBox stackpaneChild1;
 
   @FXML
+  HBox playPageContainerHeader;
+
+  @FXML
+  HBox backBtnContainer;
+
+  @FXML
+  Button backBtn;
+
+  @FXML
+  Label totalBombsLbl;
+
+  @FXML
+  Label timeElapsedLbl;
+
+  @FXML
+  Label player1PointsLbl;
+
+  @FXML
+  Label player2PointsLbl;
+
+  @FXML
+  Label flagsLeftLbl;
+
+  @FXML
   VBox emptySpace;
 
   @FXML
@@ -51,37 +78,19 @@ public class MultiplayerPlayController {
   VBox exitPagePopup;
 
   @FXML
+  Label exitPagePopupTitle;
+
+  @FXML
   VBox exitPagePopupImgContainer;
 
   @FXML
-  VBox gameOverPopup;
-
-  @FXML
-  VBox gameOverPopupImgContainer;
-
-  @FXML
-  Label totalBombsLbl;
-
-  @FXML
-  Label timeElapsedLbl;
-
-  @FXML
-  Label flagsLeftLbl;
-
-  @FXML
-  Label exitPagePopupTitle;
+  ImageView exitPagePopupImg;
 
   @FXML
   Label exitPagePopupText;
 
   @FXML
-  Label gameOverPopupTitle;
-
-  @FXML
-  Label gameOverPopupTimeTaken;
-
-  @FXML
-  Button backBtn;
+  HBox exitPagePopupButtonsContainer;
 
   @FXML
   Button exitPagePopupCancelBtn;
@@ -90,28 +99,64 @@ public class MultiplayerPlayController {
   Button exitPagePopupMainMenuBtn;
 
   @FXML
-  Button gameOverPopupPlayAgainBtn;
+  VBox gameOverPopup;
 
   @FXML
-  Button gameOverPopupMainMenuBtn;
+  Label gameOverPopupTitle;
 
   @FXML
-  HBox backBtnContainer;
+  VBox gameOverPopupImgContainer;
 
   @FXML
-  HBox exitPagePopupButtonsContainer;
+  ImageView gameOverPopupImg;
+
+  @FXML
+  Label gameOverPopupPlayer1Name;
+
+  @FXML
+  Label gameOverPopupPlayer1Id;
+
+  @FXML
+  Label gameOverPopupPlayer2Name;
+
+  @FXML
+  Label gameOverPopupPlayer2Id;
+
+  @FXML
+  Label gameOverPopupRoundLabel;
+
+  @FXML
+  Label gameOverPopupPlayer1Points;
+
+  @FXML
+  Label gameOverPopupPlayer2Points;
+
+  @FXML
+  Label gameOverPopupStatsLabel;
+
+  @FXML
+  Label gameOverPopupPlayer1Wins;
+
+  @FXML
+  Label gameOverPopupTies;
+
+  @FXML
+  Label gameOverPopupPlayer2Wins;
+
+  @FXML
+  Label gameOverPopupPlayer1ReadyStatus;
+
+  @FXML
+  Label gameOverPopupPlayer2ReadyStatus;
 
   @FXML
   HBox gameOverPopupButtonsContainer;
 
   @FXML
-  HBox playPageContainerHeader;
+  Button gameOverPopupPlayAgainBtn;
 
   @FXML
-  ImageView exitPagePopupImg;
-
-  @FXML
-  ImageView gameOverPopupImg;
+  Button gameOverPopupGoToRoomBtn;
 
 
   private MultiplayerPlayController() {}
@@ -143,6 +188,10 @@ public class MultiplayerPlayController {
 
   public void setGameOver(boolean gameOver) {
     this.gameOver = gameOver;
+  }
+
+  public boolean isPlayerDead() {
+    return playerDied;
   }
 
   public void setPlayerDied(boolean playerDied) {
@@ -283,7 +332,15 @@ public class MultiplayerPlayController {
     timeElapsedLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.035))
+            Main.mainStage.widthProperty().multiply(0.015))
+    );
+
+    player1PointsLbl.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.015))
+    );
+
+    player2PointsLbl.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.015))
     );
 
     flagsLeftLbl.styleProperty().bind(
@@ -315,6 +372,8 @@ public class MultiplayerPlayController {
     taskScheduler = Executors.newScheduledThreadPool(1);
     timerPaused = false;
     timeElapsedLbl.setText("0 seconds");
+    player1PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player1") + ": 0");
+    player2PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player2") + ": 0");
 
     MultiplayerGameMap.getInstance().buildGrid();
 
@@ -345,11 +404,8 @@ public class MultiplayerPlayController {
     }
   }
 
-  void gameOver() {
-    AudioClip clip = new AudioClip(Objects.requireNonNull(
-        getClass().getResource("/com/example/bombland/Sounds/game_won.wav")).toExternalForm()
-    );
-    clip.play();
+  void gameOver(JSONObject statsObj) {
+    endTimer();
 
     if (playerDied) {
       ArrayList<TileCoordinates> bombCoordinates = MultiplayerGameMap.getInstance().getBombCoordinates();
@@ -358,15 +414,31 @@ public class MultiplayerPlayController {
       for (TileCoordinates coords : bombCoordinates) {
         Tile tile = MultiplayerGameMap.getInstance()
             .getGridObjects().get(new TileCoordinates(coords.getRow(), coords.getCol()));
-        MultiplayerGameMap.getInstance().uncoverTile(tile);
+        MultiplayerGameMap.getInstance().uncoverTile(tile, AppCache.getInstance().getPlayerName());
         MultiplayerGameMap.getInstance().incrementTilesUncovered();
       }
     }
 
-    Main.socketClient.gameOver(playerDied);
+
+    AudioClip clip;
+
+    if (statsObj.getString("matchResult").equals("WON") || statsObj.getString("matchResult").equals("TIE")) {
+      clip = new AudioClip(Objects.requireNonNull(
+          getClass().getResource("/com/example/bombland/Sounds/game_won.wav")).toExternalForm()
+      );
+    } else {
+      clip = new AudioClip(Objects.requireNonNull(
+          getClass().getResource("/com/example/bombland/Sounds/game_lost.wav")).toExternalForm()
+      );
+    }
+
+    clip.play();
+
+
+    displayGameOverPopup(statsObj);
   }
 
-  void displayGameOverPopup() {
+  void displayGameOverPopup(JSONObject statsObj) {
     stackpaneChild1.setEffect(new GaussianBlur()); // blurs gameplay page
     stackpaneChild1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
 
@@ -389,8 +461,47 @@ public class MultiplayerPlayController {
     gameOverPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     gameOverPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
-    gameOverPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
-    gameOverPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+
+    gameOverPopupRoundLabel.setText("ROUND " + statsObj.getInt("round"));
+    gameOverPopupRoundLabel.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+
+    gameOverPopupPlayer1Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+    gameOverPopupPlayer2Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+
+
+    gameOverPopupStatsLabel.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+
+    gameOverPopupPlayer1Id.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+    gameOverPopupPlayer1Name.setText(statsObj.getString("player1Name"));
+    gameOverPopupPlayer1Name.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+
+    gameOverPopupPlayer2Id.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+    gameOverPopupPlayer2Name.setText(statsObj.getString("player2Name"));
+    gameOverPopupPlayer2Name.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+
+    gameOverPopupPlayer1Wins.setText(statsObj.getInt("player1Wins") + " WINS");
+    gameOverPopupPlayer1Wins.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+
+    gameOverPopupTies.setText(statsObj.getInt("ties") + " TIES");
+    gameOverPopupTies.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+
+    gameOverPopupPlayer2Wins.setText(statsObj.getInt("player2Wins") + " WINS");
+    gameOverPopupPlayer2Wins.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+
+
+
+    gameOverPopupPlayer1ReadyStatus.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.015))
+    );
+
+    gameOverPopupPlayer2ReadyStatus.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.015))
+    );
+
 
     VBox.setVgrow(gameOverPopupButtonsContainer, Priority.ALWAYS);
 
@@ -402,33 +513,83 @@ public class MultiplayerPlayController {
             Main.mainStage.widthProperty().multiply(0.05),
             Main.mainStage.widthProperty().multiply(0.15))
     );
-    gameOverPopupMainMenuBtn.styleProperty().bind(
+
+    gameOverPopupGoToRoomBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.015),
             Main.mainStage.widthProperty().multiply(0.05),
             Main.mainStage.widthProperty().multiply(0.15))
     );
+
+    populateGameOverPopup(statsObj);
   }
 
+  void populateGameOverPopup(JSONObject statsObj) {
+    URL imageUrl;
+
+    if (statsObj.getString("matchResult").equals("WON")) {
+      gameOverPopupTitle.setText("YOU WON");
+      imageUrl = getClass().getResource("/com/example/bombland/Images/trophy.png");
+    } else if (statsObj.getString("matchResult").equals("LOST")) {
+      gameOverPopupTitle.setText("YOU LOST");
+      imageUrl = getClass().getResource("/com/example/bombland/Images/lost.png");
+    } else {
+      gameOverPopupTitle.setText("IT'S A TIE");
+      imageUrl = getClass().getResource("/com/example/bombland/Images/tie.png");
+    }
+
+    Image newImage = new Image(imageUrl.toString());
+    gameOverPopupImg.setImage(newImage);
+
+
+    if (statsObj.getBoolean("playerDied")) {
+      if (statsObj.getString("playerName").equals(statsObj.getString("player1Name"))) {
+        gameOverPopupPlayer1Points.setText("POINTS: --");
+        gameOverPopupPlayer2Points.setText("POINTS: " + statsObj.getInt("player2Points"));
+      } else {
+        gameOverPopupPlayer1Points.setText("POINTS: " + statsObj.getInt("player1Points"));
+        gameOverPopupPlayer2Points.setText("POINTS: --");
+      }
+    } else {
+      gameOverPopupPlayer1Points.setText("POINTS: " + statsObj.getInt("player1Points"));
+      gameOverPopupPlayer2Points.setText("POINTS: " + statsObj.getInt("player2Points"));
+    }
+  }
 
   @FXML
   void playAgain() {
+    if (isPlayer1()) {
+      gameOverPopupPlayer1ReadyStatus.setText("READY");
+    } else {
+      gameOverPopupPlayer2ReadyStatus.setText("READY");
+    }
+
+    gameOverPopupPlayAgainBtn.setDisable(true);
+
+    Main.socketClient.playAgain();
+  }
+
+  void updatePlayAgainState() {
+    if (isPlayer1()) {
+      gameOverPopupPlayer2ReadyStatus.setText("READY");
+    } else {
+      gameOverPopupPlayer1ReadyStatus.setText("READY");
+    }
+  }
+
+  void buildNewMap() {
+    gameOverPopupPlayer1ReadyStatus.setText("NOT READY");
+    gameOverPopupPlayer2ReadyStatus.setText("NOT READY");
+    gameOverPopupPlayAgainBtn.setDisable(false);
+
     gameOverPopup.setManaged(false);
     gameOverPopup.setVisible(false);
 
     stackpaneChild1.setEffect(null);
     stackpaneChild1.setMouseTransparent(false); // makes items in gameplay page "clickable"
 
-    try {
-      clearGrid();
-      buildGrid();
-    } catch (Exception e) {
-      System.out.println("\n====================================================================");
-      System.out.println("ERROR - playAgain(): Could not rebuild the game map.");
-      System.out.println("---");
-      System.out.println(e.getCause());
-      System.out.println("====================================================================\n");
-    }
+    clearGrid();
+    buildGrid();
   }
 
   /**
@@ -437,5 +598,12 @@ public class MultiplayerPlayController {
   public void clearGrid() {
     MultiplayerGameMap.getInstance().clearGrid();
     gridContainer.getChildren().remove(0);
+  }
+
+  private boolean isPlayer1() {
+    String currentPlayerName = AppCache.getInstance().getPlayerName();
+    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
+
+    return currentPlayerName.equals(player1Name);
   }
 }
