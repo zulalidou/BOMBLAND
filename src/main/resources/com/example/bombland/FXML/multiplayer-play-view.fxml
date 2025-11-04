@@ -19,7 +19,7 @@
         <VBox fx:id="stackpaneChild1">
             <HBox fx:id="playPageContainerHeader">
                 <HBox fx:id="backBtnContainer" alignment="CENTER">
-                    <Button fx:id="backBtn"> <!-- onAction="#verifyExitPage" -->
+                    <Button fx:id="backBtn" onAction="#displayLeaveGamePopup">
                         <graphic>
                             <ImageView fitWidth="20" preserveRatio="true">
                                 <Image url="/com/example/bombland/images/back-button.png"/>
@@ -46,22 +46,6 @@
             </HBox>
 
             <VBox fx:id="gridContainer"/>
-        </VBox>
-
-        <VBox fx:id="exitPagePopup" managed="false" visible="false">
-            <Label fx:id="exitPagePopupTitle" text="EXIT"/>
-            <VBox alignment="CENTER" fx:id="exitPagePopupImgContainer">
-                <ImageView fx:id="exitPagePopupImg">
-                    <Image url="/com/example/bombland/images/exit.png"/>
-                </ImageView>
-            </VBox>
-
-            <Label fx:id="exitPagePopupText" text="Are you sure you want to exit?"/>
-
-            <HBox fx:id="exitPagePopupButtonsContainer" alignment="CENTER">
-                <Button fx:id="exitPagePopupCancelBtn" styleClass="playAgainBtn" text="Cancel"/> <!--  onAction="#closeExitPagePopup" -->
-                <Button fx:id="exitPagePopupMainMenuBtn" styleClass="mainMenuBtn" text="Confirm"/> <!--  onAction="#goToMainMenu" -->
-            </HBox>
         </VBox>
 
         <VBox fx:id="gameOverPopup" managed="false" visible="false">

@@ -24,27 +24,17 @@
 }
 
 
-#exitPagePopup, #gameOverPopup {
+#gameOverPopup {
     -fx-background-color: black;
     -fx-alignment: center;
     -fx-border-color: red;
 }
 
-#exitPagePopupTitle, #gameOverPopupTitle {
+#gameOverPopupTitle {
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-text-fill: red;
 }
-
-
-
-#exitPagePopupText {
-    -fx-wrap-text: true;
-    -fx-font-weight: bold;
-    -fx-text-alignment: center;
-    -fx-text-fill: red;
-}
-
 
 
 .playAgainBtn {

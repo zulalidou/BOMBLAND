@@ -76,30 +76,6 @@ public class MultiplayerPlayController {
   VBox gridContainer;
 
   @FXML
-  VBox exitPagePopup;
-
-  @FXML
-  Label exitPagePopupTitle;
-
-  @FXML
-  VBox exitPagePopupImgContainer;
-
-  @FXML
-  ImageView exitPagePopupImg;
-
-  @FXML
-  Label exitPagePopupText;
-
-  @FXML
-  HBox exitPagePopupButtonsContainer;
-
-  @FXML
-  Button exitPagePopupCancelBtn;
-
-  @FXML
-  Button exitPagePopupMainMenuBtn;
-
-  @FXML
   VBox gameOverPopup;
 
   @FXML
@@ -257,92 +233,6 @@ public class MultiplayerPlayController {
    */
   public void setGridContainer(GridPane grid) {
     gridContainer.getChildren().add(grid);
-  }
-
-  @FXML
-  private void closeExitPagePopup() {
-    exitPagePopup.setManaged(false);
-    exitPagePopup.setVisible(false);
-
-    stackpaneChild1.setEffect(null);
-    stackpaneChild1.setMouseTransparent(false); // makes items in gameplay page "clickable"
-
-    timerPaused = false;
-  }
-
-  @FXML
-  private void goToMainMenu() {
-    endTimer();
-
-    FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/com/example/bombland/FXML/main-view.fxml")
-    );
-
-    MainController mainController = MainController.getInstance();
-    loader.setController(mainController);
-
-    try {
-      Scene scene = new Scene(loader.load());
-      Main.mainStage.setScene(scene);
-      Main.mainStage.show();
-    } catch (IOException e) {
-      System.out.println("\n====================================================================");
-      System.out.println("ERROR - MultiplayerPlayController.goToMainMenu(): Could not return to the main menu page.");
-      System.out.println("---");
-      System.out.println(e.getCause());
-      System.out.println("====================================================================\n");
-    }
-  }
-
-  @FXML
-  private void verifyExitPage() {
-    if (!gameStarted) {
-      goToMainMenu();
-      return;
-    }
-
-    timerPaused = true;
-
-    stackpaneChild1.setEffect(new GaussianBlur()); // blurs gameplay page
-    stackpaneChild1.setMouseTransparent(true); // makes items in gameplay page "unclickable"
-
-    exitPagePopup.setManaged(true);
-    exitPagePopup.setVisible(true);
-
-    exitPagePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
-    exitPagePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
-
-    exitPagePopup.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.005),
-            Main.mainStage.widthProperty().multiply(0.0015),
-            Main.mainStage.widthProperty().multiply(0.01))
-    );
-
-    exitPagePopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
-
-    exitPagePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
-    exitPagePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
-    exitPagePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
-
-    exitPagePopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
-
-    VBox.setVgrow(exitPagePopupButtonsContainer, Priority.ALWAYS);
-    exitPagePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
-
-    exitPagePopupCancelBtn.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
-    );
-    exitPagePopupMainMenuBtn.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
-    );
   }
 
   /**
@@ -568,6 +458,11 @@ public class MultiplayerPlayController {
     );
 
     populateGameOverPopup(statsObj);
+
+    if (leaveGamePopup.isVisible()) {
+      gameOverPopup.setEffect(new GaussianBlur()); // blurs gameplay page
+      gameOverPopup.setMouseTransparent(true);
+    }
   }
 
   void populateGameOverPopup(JSONObject statsObj) {
@@ -658,8 +553,13 @@ public class MultiplayerPlayController {
    */
   @FXML
   private void displayLeaveGamePopup() {
-    gameOverPopup.setEffect(new GaussianBlur()); // blurs room page
-    gameOverPopup.setMouseTransparent(true); // makes items in room page "unclickable"
+    if (gameOverPopup.isVisible()) {
+      gameOverPopup.setEffect(new GaussianBlur()); // blurs gameplay page
+      gameOverPopup.setMouseTransparent(true);
+    }
+
+    stackpaneChild1.setEffect(new GaussianBlur()); // blurs room page
+    stackpaneChild1.setMouseTransparent(true); // makes items in room page "unclickable"
 
     leaveGamePopup.setManaged(true);
     leaveGamePopup.setVisible(true);
@@ -715,8 +615,14 @@ public class MultiplayerPlayController {
   private void closeLeaveGamePopup() {
     leaveGamePopup.setManaged(false);
     leaveGamePopup.setVisible(false);
-    gameOverPopup.setEffect(null);
-    gameOverPopup.setMouseTransparent(false);
+
+    if (gameOverPopup.isVisible()) {
+      gameOverPopup.setEffect(null);
+      gameOverPopup.setMouseTransparent(false);
+    } else {
+      stackpaneChild1.setEffect(null);
+      stackpaneChild1.setMouseTransparent(false);
+    }
   }
 
   /**
@@ -725,6 +631,7 @@ public class MultiplayerPlayController {
    */
   @FXML
   private void confirmToLeaveGameMap() {
+    endTimer();
     Main.socketClient.leaveGame();
   }
 
@@ -758,8 +665,18 @@ public class MultiplayerPlayController {
    * current player.
    */
   void kickPlayerOutOfGame() {
-    gameOverPopup.setEffect(new GaussianBlur()); // blurs room page
-    gameOverPopup.setMouseTransparent(true); // makes items in room page "unclickable"
+    if (gameOverPopup.isVisible()) {
+      gameOverPopup.setEffect(new GaussianBlur()); // blurs gameplay page
+      gameOverPopup.setMouseTransparent(true);
+    }
+
+    if (leaveGamePopup.isVisible()) {
+      leaveGamePopup.setEffect(new GaussianBlur()); // blurs gameplay page
+      leaveGamePopup.setMouseTransparent(true);
+    }
+
+    stackpaneChild1.setEffect(new GaussianBlur()); // blurs room page
+    stackpaneChild1.setMouseTransparent(true); // makes items in room page "unclickable"
 
     kickOutPlayer2Popup.setManaged(true);
     kickOutPlayer2Popup.setVisible(true);
