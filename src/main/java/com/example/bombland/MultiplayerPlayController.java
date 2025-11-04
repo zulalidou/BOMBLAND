@@ -23,6 +23,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.scene.text.TextAlignment;
 import org.json.JSONObject;
 
 /**
@@ -157,6 +158,48 @@ public class MultiplayerPlayController {
 
   @FXML
   Button gameOverPopupGoToRoomBtn;
+
+  @FXML
+  VBox leaveGamePopup;
+
+  @FXML
+  Label leaveGamePopupTitle;
+
+  @FXML
+  VBox leaveGamePopupImgContainer;
+
+  @FXML
+  ImageView leaveGamePopupImg;
+
+  @FXML
+  Label leaveGamePopupErrorMsg;
+
+  @FXML
+  HBox leaveGamePopupButtonsContainer;
+
+  @FXML
+  Button leaveGamePopupNoBtn;
+
+  @FXML
+  Button leaveGamePopupYesBtn;
+
+  @FXML
+  VBox kickOutPlayer2Popup;
+
+  @FXML
+  Label kickOutPlayer2PopupTitle;
+
+  @FXML
+  VBox kickOutPlayer2PopupImgContainer;
+
+  @FXML
+  ImageView kickOutPlayer2PopupImg;
+
+  @FXML
+  Label kickOutPlayer2PopupErrorMsg;
+
+  @FXML
+  Button kickOutPlayer2PopupCloseButton;
 
 
   private MultiplayerPlayController() {}
@@ -307,6 +350,9 @@ public class MultiplayerPlayController {
    */
   @FXML
   public void initialize() {
+    AppCache.getInstance().getMultiplayerRoom().put("isPlayer1InRoom", false);
+    AppCache.getInstance().getMultiplayerRoom().put("isPlayer2InRoom", false);
+
     VBox.setVgrow(playPageContainerInner, Priority.ALWAYS);
 
     playPageContainerHeader.styleProperty().bind(
@@ -372,8 +418,8 @@ public class MultiplayerPlayController {
     taskScheduler = Executors.newScheduledThreadPool(1);
     timerPaused = false;
     timeElapsedLbl.setText("0 seconds");
-    player1PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player1") + ": 0");
-    player2PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player2") + ": 0");
+    player1PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player1Name") + ": 0");
+    player2PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player2Name") + ": 0");
 
     MultiplayerGameMap.getInstance().buildGrid();
 
@@ -602,8 +648,154 @@ public class MultiplayerPlayController {
 
   private boolean isPlayer1() {
     String currentPlayerName = AppCache.getInstance().getPlayerName();
-    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
+    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1Name");
 
     return currentPlayerName.equals(player1Name);
+  }
+
+  /**
+   * This function displays a popup to ask the user if they're sure they'd like to leave the room.
+   */
+  @FXML
+  private void displayLeaveGamePopup() {
+    gameOverPopup.setEffect(new GaussianBlur()); // blurs room page
+    gameOverPopup.setMouseTransparent(true); // makes items in room page "unclickable"
+
+    leaveGamePopup.setManaged(true);
+    leaveGamePopup.setVisible(true);
+
+    leaveGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
+    leaveGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
+
+    leaveGamePopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    leaveGamePopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+
+    leaveGamePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    leaveGamePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    leaveGamePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+
+    leaveGamePopupErrorMsg.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    leaveGamePopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
+
+
+    leaveGamePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+
+    leaveGamePopupYesBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+    leaveGamePopupNoBtn.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.05),
+            Main.mainStage.widthProperty().multiply(0.15))
+    );
+  }
+
+  /**
+   * This function closes an error popup.
+   */
+  @FXML
+  private void closeLeaveGamePopup() {
+    leaveGamePopup.setManaged(false);
+    leaveGamePopup.setVisible(false);
+    gameOverPopup.setEffect(null);
+    gameOverPopup.setMouseTransparent(false);
+  }
+
+  /**
+   * When this function runs, a message is sent to the server to let it know that the current user
+   * has decided to leave the game map.
+   */
+  @FXML
+  private void confirmToLeaveGameMap() {
+    Main.socketClient.leaveGame();
+  }
+
+  /**
+   * Redirects the user to the Room page.
+   */
+  @FXML
+  void goToRoom() {
+    FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/com/example/bombland/FXML/room-view.fxml")
+    );
+
+    RoomController roomController = RoomController.getInstance();
+    loader.setController(roomController);
+
+    try {
+      Scene scene = new Scene(loader.load());
+      Main.mainStage.setScene(scene);
+      Main.mainStage.show();
+    } catch (IOException e) {
+      System.out.println("\n====================================================================");
+      System.out.println("ERROR - MultiplayerPlayController.goToRoom(): Could not go to the room page.");
+      System.out.println("---");
+      System.out.println(e.getCause());
+      System.out.println("====================================================================\n");
+    }
+  }
+
+  /**
+   * When the other player leaves the game map, this function gets called to also kick out the
+   * current player.
+   */
+  void kickPlayerOutOfGame() {
+    gameOverPopup.setEffect(new GaussianBlur()); // blurs room page
+    gameOverPopup.setMouseTransparent(true); // makes items in room page "unclickable"
+
+    kickOutPlayer2Popup.setManaged(true);
+    kickOutPlayer2Popup.setVisible(true);
+
+    kickOutPlayer2Popup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
+    kickOutPlayer2Popup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+
+    kickOutPlayer2Popup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    kickOutPlayer2PopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
+
+    kickOutPlayer2PopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
+    kickOutPlayer2PopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
+    kickOutPlayer2PopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+    kickOutPlayer2PopupErrorMsg.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
+            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    kickOutPlayer2PopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
+
+    kickOutPlayer2PopupCloseButton.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.31),
+            Main.mainStage.widthProperty().multiply(0.02),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.011))
+    );
   }
 }

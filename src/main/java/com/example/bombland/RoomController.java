@@ -147,9 +147,6 @@ public class RoomController {
   VBox buttonsContainer;
 
   @FXML
-  Button readyButton;
-
-  @FXML
   Region buttonSpace;
 
   @FXML
@@ -174,9 +171,6 @@ public class RoomController {
   Label player1NameLabel;
 
   @FXML
-  Label player1ReadyStateLabel;
-
-  @FXML
   Region playerProfileSpace;
 
   @FXML
@@ -187,9 +181,6 @@ public class RoomController {
 
   @FXML
   Label player2NameLabel;
-
-  @FXML
-  Label player2ReadyStateLabel;
 
   @FXML
   HBox utilitiesContainer;
@@ -290,21 +281,13 @@ public class RoomController {
    */
   @FXML
   public void initialize() {
-    if (isPlayer1()) {
-      displayPlayer1Layout();
-    } else {
-      displayPlayer2Layout();
-    }
+    displayUi();
   }
 
-  private boolean isPlayer1() {
-    String currentPlayerName = AppCache.getInstance().getPlayerName();
-    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
-
-    return currentPlayerName.equals(player1Name);
-  }
-
-  private void displayPlayer1Layout() {
+  /**
+   * Displays the page UI.
+   */
+  private void displayUi() {
     backBtnContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.05))
     );
@@ -416,12 +399,6 @@ public class RoomController {
 
     sectionSpace3.prefHeightProperty().bind(settingsContainer.heightProperty().multiply(0.04));
 
-
-    readyButton.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx;",
-            buttonsContainer.widthProperty().multiply(0.025),
-            buttonsContainer.widthProperty().multiply(0.01))
-    );
 
     buttonSpace.prefHeightProperty().bind(buttonsContainer.heightProperty().multiply(0.05));
 
@@ -459,16 +436,12 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    player1NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player1").toString());
+    player1NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player1Name").toString());
 
     player1NameLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.015),
             player1Box.widthProperty().multiply(1))
-    );
-
-    player1ReadyStateLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.01))
     );
 
 
@@ -498,223 +471,43 @@ public class RoomController {
     bottomPageContainer.styleProperty().bind(
         Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.09))
     );
+
+
+    if (!AppCache.getInstance().getMultiplayerRoom().getString("player2Name").equals("N/A")) {
+      if (!isPlayer1()) {
+        addPlayer2ComponentsToUi();
+      }
+
+      displayPlayer2Icon();
+    }
   }
 
-  private void displayPlayer2Layout() {
-    backBtnContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.05))
-    );
-
-    backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            backBtnContainer.widthProperty().multiply(0.2))
-    );
-
-    roomIdContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
-    );
-
-    roomIdTitleLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
-    );
-
-    roomIdLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("id").toString());
-
-    roomIdLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
-    );
-
-    roomNameContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
-    );
-
-    roomNameTitleLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
-    );
-
-    roomNameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("name").toString());
-
-    roomNameLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
-    );
-
-    totalPlayersContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
-    );
-
-    totalPlayersTitleLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.01))
-    );
-
-    totalPlayersLabel.setText("2 / 2");
-
-    totalPlayersLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
-    );
-
-
-    middlePageContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.82))
-    );
-
-
-    settingsContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", middlePageContainer.widthProperty().multiply(0.5))
-    );
-
-    settingsContainerTitleLabel.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; -fx-pref-height: %.2fpx;",
-            settingsContainer.widthProperty().multiply(1),
-            settingsContainer.widthProperty().multiply(0.051),
-            settingsContainer.heightProperty().multiply(0.07))
-    );
-
-    sectionSpace1.prefHeightProperty().bind(settingsContainer.heightProperty().multiply(0.04));
-
-    selectMapLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", mapContainer.widthProperty().multiply(0.04))
-    );
-
+  /**
+   * Displays Player2's UI components (to Player2).
+   */
+  private void addPlayer2ComponentsToUi() {
     leftMapBtn.setVisible(false);
     leftMapBtn.setManaged(false);
     rightMapBtn.setVisible(false);
     rightMapBtn.setManaged(false);
-
-
-    mapContainerSpace1.prefWidthProperty().bind(mapContainerInner.widthProperty().multiply(0.025));
-    mapContainerSpace2.prefWidthProperty().bind(mapContainerInner.widthProperty().multiply(0.025));
-
-    mapBox.styleProperty().bind(
-        Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
-                + "-fx-background-radius: %.2fpx;",
-            mapContainerInner.widthProperty().multiply(0.01),
-            mapContainerInner.widthProperty().multiply(0.25),
-            mapContainerInner.widthProperty().multiply(0.01))
-    );
-
-    mapNameLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", mapBox.widthProperty().multiply(0.125))
-    );
-
-    selectDifficultyLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", difficultyContainer.widthProperty().multiply(0.04))
-    );
 
     leftDifficultyBtn.setVisible(false);
     leftDifficultyBtn.setManaged(false);
     rightDifficultyBtn.setVisible(false);
     rightDifficultyBtn.setManaged(false);
 
-    sectionSpace2.prefHeightProperty().bind(settingsContainer.heightProperty().multiply(0.04));
-
-
-    difficultyContainerSpace1.prefWidthProperty().bind(difficultyContainerInner.widthProperty().multiply(0.025));
-    difficultyContainerSpace2.prefWidthProperty().bind(difficultyContainerInner.widthProperty().multiply(0.025));
-
-    difficultyBox.styleProperty().bind(
-        Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
-                + "-fx-background-radius: %.2fpx;",
-            difficultyContainerInner.widthProperty().multiply(0.01),
-            difficultyContainerInner.widthProperty().multiply(0.25),
-            difficultyContainerInner.widthProperty().multiply(0.01))
-    );
-
-    difficultyNameLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", difficultyBox.widthProperty().multiply(0.125))
-    );
-
-    sectionSpace3.prefHeightProperty().bind(settingsContainer.heightProperty().multiply(0.04));
-
-
-    readyButton.setDisable(false);
-
-    readyButton.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx;",
-            buttonsContainer.widthProperty().multiply(0.025),
-            buttonsContainer.widthProperty().multiply(0.01))
-    );
-
-
     buttonSpace.setVisible(false);
     buttonSpace.setManaged(false);
     startGameButton.setVisible(false);
     startGameButton.setManaged(false);
-
-
-    playersContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.5))
-    );
-
-    playersContainerTitleLabel.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; -fx-pref-height: %.2fpx;",
-            playersContainer.widthProperty().multiply(1),
-            playersContainer.widthProperty().multiply(0.051),
-            playersContainer.heightProperty().multiply(0.07))
-    );
-
-    playerIconsContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-height: %.2fpx;", playersContainer.heightProperty().multiply(0.465))
-    );
-
-    player1BoxContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; ", playersContainer.widthProperty().multiply(0.35))
-    );
-
-    player1Box.styleProperty().bind(
-        Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
-                + "-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.15),
-            Main.mainStage.widthProperty().multiply(0.01))
-    );
-
-    player1NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player1").toString());
-
-    player1NameLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            player1Box.widthProperty().multiply(1))
-    );
-
-    player1ReadyStateLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.01))
-    );
-
-    displayPlayer2Icon();
-
-
-    utilitiesContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-height: %.2fpx;", playersContainer.heightProperty().multiply(0.465))
-    );
-
-    voiceChatBoxContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", playersContainer.widthProperty().multiply(0.35))
-    );
-
-    voiceChatBox.styleProperty().bind(
-        Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
-                + "-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.01),
-            voiceChatBoxContainer.widthProperty().multiply(0.35),
-            Main.mainStage.widthProperty().multiply(0.01))
-    );
-
-    voiceChatLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            player1Box.widthProperty().multiply(1))
-    );
-
-
-    bottomPageContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.09))
-    );
   }
 
   /**
    * Displays the player icon for Player 2.
    */
-  private void displayPlayer2Icon() {
+  void displayPlayer2Icon() {
+    updateActivePlayersLabel();
+
     playerProfileSpace.setVisible(true);
     playerProfileSpace.setManaged(true);
     playerProfileSpace.styleProperty().bind(
@@ -735,17 +528,39 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    player2NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player2").toString());
+    player2NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player2Name").toString());
 
     player2NameLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.015),
             player1Box.widthProperty().multiply(1))
     );
+  }
 
-    player2ReadyStateLabel.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.01))
-    );
+  /**
+   * Updates the number of active players shown in the top right corner of the room, and determines
+   * whether to disable the startGame button (for Player1).
+   */
+  private void updateActivePlayersLabel() {
+    int activePlayers = 0;
+
+    if (AppCache.getInstance().getMultiplayerRoom().getBoolean("isPlayer1InRoom")) {
+      activePlayers++;
+    }
+
+    if (AppCache.getInstance().getMultiplayerRoom().getBoolean("isPlayer2InRoom")) {
+      activePlayers++;
+    }
+
+    totalPlayersLabel.setText(activePlayers + " / 2");
+
+    if (isPlayer1()) {
+      if (activePlayers == 1) {
+        startGameButton.setDisable(true);
+      } else {
+        startGameButton.setDisable(false);
+      }
+    }
   }
 
   /**
@@ -809,6 +624,21 @@ public class RoomController {
     );
   }
 
+  /**
+   * Determines whether the current user is Player1.
+   *
+   * @return A boolean that represents whether the current user is Player1.
+   */
+  private boolean isPlayer1() {
+    String currentPlayerName = AppCache.getInstance().getPlayerName();
+    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1Name");
+
+    return currentPlayerName.equals(player1Name);
+  }
+
+  /**
+   * Redirects the user to the Main Menu page.
+   */
   @FXML
   private void goToMainMenu() {
     String currentPlayerName = AppCache.getInstance().getPlayerName();
@@ -882,7 +712,7 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     mapImgView.setImage(newImage);
 
-    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2Name")) {
       sendNewSettingToPlayer2("map", newMap);
     }
   }
@@ -921,7 +751,7 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     mapImgView.setImage(newImage);
 
-    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2Name")) {
       sendNewSettingToPlayer2("map", newMap);
     }
   }
@@ -945,7 +775,7 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     difficultyImgView.setImage(newImage);
 
-    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2Name")) {
       sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
     }
 
@@ -965,7 +795,7 @@ public class RoomController {
       newImage = new Image(imageUrl.toString());
       mapImgView.setImage(newImage);
 
-      if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
+      if (AppCache.getInstance().getMultiplayerRoom().has("player2Name")) {
         sendNewSettingToPlayer2("map", imgName);
       }
     }
@@ -990,7 +820,7 @@ public class RoomController {
     Image newImage = new Image(imageUrl.toString());
     difficultyImgView.setImage(newImage);
 
-    if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
+    if (AppCache.getInstance().getMultiplayerRoom().has("player2Name")) {
       sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
     }
 
@@ -1010,87 +840,10 @@ public class RoomController {
       newImage = new Image(imageUrl.toString());
       mapImgView.setImage(newImage);
 
-      if (AppCache.getInstance().getMultiplayerRoom().has("player2")) {
+      if (AppCache.getInstance().getMultiplayerRoom().has("player2Name")) {
         sendNewSettingToPlayer2("map", imgName);
       }
     }
-  }
-
-  /**
-   * Whenever one player clicks the "READY/NOT READY" button, a signal gets sent to the other player
-   * (via the server) to let them know of this change.
-   */
-  @FXML
-  private void setReadyState() {
-    String playerState;
-
-    if (isPlayer1()) {
-      if (player1ReadyStateLabel.getText().equals("NOT READY")) {
-        player1ReadyStateLabel.setText("READY");
-        playerState = "READY";
-        readyButton.setText("NOT READY");
-      } else {
-        player1ReadyStateLabel.setText("NOT READY");
-        playerState = "NOT READY";
-        readyButton.setText("READY");
-      }
-
-      if (player1ReadyStateLabel.getText().equals("READY") && player2ReadyStateLabel.getText().equals("READY")) {
-        startGameButton.setDisable(false);
-      } else {
-        startGameButton.setDisable(true);
-      }
-    } else {
-      if (player2ReadyStateLabel.getText().equals("NOT READY")) {
-        player2ReadyStateLabel.setText("READY");
-        playerState = "READY";
-        readyButton.setText("NOT READY");
-      } else {
-        player2ReadyStateLabel.setText("NOT READY");
-        playerState = "NOT READY";
-        readyButton.setText("READY");
-      }
-    }
-
-    Main.socketClient.updatePlayerState(playerState);
-  }
-
-  /**
-   * This function runs when a signal is received from the other player (via the server) about
-   * a change in their READY state. It then updates the UI for the current player to reflect the
-   * updated state.
-   */
-  @FXML
-  void updateReadyState(boolean otherPlayerReady) {
-    if (isPlayer1()) {
-      if (otherPlayerReady) {
-        player2ReadyStateLabel.setText("READY");
-      } else {
-        player2ReadyStateLabel.setText("NOT READY");
-      }
-
-      if (player1ReadyStateLabel.getText().equals("READY") && player2ReadyStateLabel.getText().equals("READY")) {
-        startGameButton.setDisable(false);
-      } else {
-        startGameButton.setDisable(true);
-      }
-    } else {
-      if (otherPlayerReady) {
-        player1ReadyStateLabel.setText("READY");
-      } else {
-        player1ReadyStateLabel.setText("NOT READY");
-      }
-    }
-  }
-
-  /**
-   * When Player2 joins the room, the UI on Player1's screen updates accordingly.
-   */
-  @FXML
-  void playerJoinedRoom() {
-    totalPlayersLabel.setText("2 / 2");
-    readyButton.setDisable(false);
-    displayPlayer2Icon();
   }
 
   /**
@@ -1166,14 +919,10 @@ public class RoomController {
    */
   @FXML
   void removePlayer2FromRoom() {
-    AppCache.getInstance().getMultiplayerRoom().remove("player2");
+    AppCache.getInstance().getMultiplayerRoom().remove("player2Name");
 
     totalPlayersLabel.setText("1 / 2");
-
-    readyButton.setDisable(true);
     startGameButton.setDisable(true);
-
-    player1ReadyStateLabel.setText("NOT READY");
     removePlayer2Icon();
   }
 
@@ -1229,6 +978,9 @@ public class RoomController {
     );
   }
 
+  /**
+   * Removes Player1's icon (from the UI).
+   */
   void removePlayer1Icon() {
     player1BoxContainer.setVisible(false);
     player1BoxContainer.setManaged(false);
@@ -1237,6 +989,9 @@ public class RoomController {
     playerProfileSpace.setManaged(false);
   }
 
+  /**
+   * Removes Player2's icon (from the UI).
+   */
   void removePlayer2Icon() {
     playerProfileSpace.setVisible(false);
     playerProfileSpace.setManaged(false);

@@ -116,7 +116,6 @@
 #gameOverPopupStatsContainer {
     /*-fx-background-color: #6FD7F7;*/
     -fx-background-color: red;
-
 }
 
 #gameOverPopupStatsLabel {
@@ -142,6 +141,70 @@
 }
 
 
+#leaveGamePopup {
+    -fx-background-color: black;
+    -fx-alignment: center;
+    -fx-border-color: red;
+}
+
+#leaveGamePopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+#leaveGamePopupErrorMsg {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+#leaveGamePopupNoBtn {
+    -fx-text-fill: white;
+    -fx-background-color: green;
+    -fx-font-weight: bold;
+}
+
+#leaveGamePopupYesBtn {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+
+#leaveGamePopupNoBtn:hover, #leaveGamePopupYesBtn:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+
+
+#kickOutPlayer2Popup {
+    -fx-background-color: black;
+    -fx-alignment: center;
+    -fx-border-color: red;
+}
+
+#kickOutPlayer2PopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+#kickOutPlayer2PopupErrorMsg {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+#kickOutPlayer2PopupCloseButton {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+
+#kickOutPlayer2PopupCloseButton:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
 
 
 /*

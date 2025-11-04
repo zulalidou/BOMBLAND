@@ -96,7 +96,6 @@
                     <Region fx:id="sectionSpace3"/>
 
                     <VBox fx:id="buttonsContainer" alignment="CENTER">
-                        <Button fx:id="readyButton" text="READY" disable="true" onAction="#setReadyState"/>
                         <Region fx:id="buttonSpace"/>
                         <Button fx:id="startGameButton" text="Start Game" disable="true" onAction="#displayStartGamePopup"/>
                     </VBox>
@@ -114,8 +113,6 @@
 
                                 <Label fx:id="player1NameLabel"/>
                             </VBox>
-
-                            <Label fx:id="player1ReadyStateLabel" text="NOT READY"/>
                         </VBox>
 
                         <Region fx:id="playerProfileSpace" visible="false" managed="false"/>
@@ -128,8 +125,6 @@
 
                                 <Label fx:id="player2NameLabel"/>
                             </VBox>
-
-                            <Label fx:id="player2ReadyStateLabel" text="NOT READY"/>
                         </VBox>
                     </HBox>
 

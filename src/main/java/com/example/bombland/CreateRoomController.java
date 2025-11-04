@@ -247,7 +247,6 @@ public class CreateRoomController {
 
       try {
         Main.socketClient.createRoom(roomInfo);
-        goToRoom();
       } catch (Exception e) {
         displayErrorPopup();
       }
@@ -326,7 +325,7 @@ public class CreateRoomController {
   }
 
   @FXML
-  private void goToRoom() {
+  void goToRoom() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/room-view.fxml")
     );

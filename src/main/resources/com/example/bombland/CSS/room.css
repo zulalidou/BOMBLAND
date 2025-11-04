@@ -88,15 +88,6 @@
 }
 
 
-#readyButton {
-    -fx-background-color: black;
-    -fx-text-fill: white;
-}
-
-#readyButton:hover {
-    -fx-cursor: hand;
-    -fx-background-color: #808080;
-}
 
 #startGameButton {
     -fx-background-color: black;
@@ -128,11 +119,6 @@
 
 #player1NameLabel, #player2NameLabel {
     -fx-alignment: center;
-    -fx-text-fill: black;
-}
-
-#player1ReadyStateLabel, #player2ReadyStateLabel {
-    -fx-font-weight: bold;
     -fx-text-fill: black;
 }
 

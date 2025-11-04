@@ -67,8 +67,15 @@ public class BomblandWebSocketClient extends WebSocketClient {
     if (responseObject.get("message_type").equals("HIGH_SCORE_INFO")) {
       responseObject.remove("message_type");
       PlayController.updateAppCache(responseObject);
+    } else if (responseObject.get("message_type").equals("ROOM_CREATED")) {
+      responseObject.remove("message_type");
+      AppCache.getInstance().setMultiplayerRoom(responseObject);
+
+      Platform.runLater(() -> {
+        CreateRoomController.getInstance().goToRoom();
+      });
     } else if (responseObject.get("message_type").equals("CHECK_ROOM")) {
-      if (responseObject.get("room_exists").equals("False")) {
+      if (!responseObject.getBoolean("room_exists")) {
         JoinRoomController.getInstance().displayRoomDoesNotExistPopup();
       } else {
         responseObject.remove("room_exists");
@@ -76,26 +83,19 @@ public class BomblandWebSocketClient extends WebSocketClient {
       }
     } else if (responseObject.get("message_type").equals("JOIN_ROOM")) {
       responseObject.remove("message_type");
+
+      AppCache.getInstance().setPlayerName(responseObject.get("player2Name").toString());
       AppCache.getInstance().setMultiplayerRoom(responseObject);
-      AppCache.getInstance().setPlayerName(responseObject.get("player2").toString());
 
       Platform.runLater(() -> {
         JoinRoomController.getInstance().goToRoom();
       });
     } else if (responseObject.get("message_type").equals("PLAYER_JOINED_ROOM")) {
-      String player2 = responseObject.getString("player2");
-      JSONObject roomInfo = AppCache.getInstance().getMultiplayerRoom();
-      roomInfo.put("player2", player2);
-      AppCache.getInstance().setMultiplayerRoom(roomInfo);
+      responseObject.remove("message_type");
+      AppCache.getInstance().setMultiplayerRoom(responseObject);
 
       Platform.runLater(() -> {
-        RoomController.getInstance().playerJoinedRoom();
-      });
-    } else if (responseObject.get("message_type").equals("UPDATE_READY_STATE_UI")) {
-      boolean isReady = responseObject.get("ready").equals("True");
-
-      Platform.runLater(() -> {
-        RoomController.getInstance().updateReadyState(isReady);
+        RoomController.getInstance().displayPlayer2Icon();
       });
     } else if (responseObject.get("message_type").equals("UPDATE_SETTINGS_UI")) {
       Platform.runLater(() -> {
@@ -103,13 +103,12 @@ public class BomblandWebSocketClient extends WebSocketClient {
       });
     } else if (responseObject.get("message_type").equals("LEAVE_ROOM")) {
       String currentPlayerName = AppCache.getInstance().getPlayerName();
-      String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1");
+      String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1Name");
 
       if (currentPlayerName.equals(player1Name)) { // Player2 left
         Platform.runLater(() -> {
           RoomController.getInstance().removePlayer2FromRoom();
         });
-
       } else { // Player1 left
         Platform.runLater(() -> {
           RoomController.getInstance().kickOutPlayer2FromRoom();
@@ -134,9 +133,9 @@ public class BomblandWebSocketClient extends WebSocketClient {
 
       Platform.runLater(() -> {
         if (responseObject.has("player1Points")) {
-          MultiplayerPlayController.getInstance().player1PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player1") + ": " + responseObject.getInt("player1Points"));
+          MultiplayerPlayController.getInstance().player1PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player1Name") + ": " + responseObject.getInt("player1Points"));
         } else {
-          MultiplayerPlayController.getInstance().player2PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player2") + ": " + responseObject.getInt("player2Points"));
+          MultiplayerPlayController.getInstance().player2PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player2Name") + ": " + responseObject.getInt("player2Points"));
         }
 
         MultiplayerGameMap.getInstance().startMultiplayerGame(firstTileInfoObj);
@@ -149,9 +148,9 @@ public class BomblandWebSocketClient extends WebSocketClient {
       Platform.runLater(() -> {
         try {
           if (responseObject.has("player1Points")) {
-            MultiplayerPlayController.getInstance().player1PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player1") + ": " + responseObject.getInt("player1Points"));
+            MultiplayerPlayController.getInstance().player1PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player1Name") + ": " + responseObject.getInt("player1Points"));
           } else {
-            MultiplayerPlayController.getInstance().player2PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player2") + ": " + responseObject.getInt("player2Points"));
+            MultiplayerPlayController.getInstance().player2PointsLbl.setText(AppCache.getInstance().getMultiplayerRoom().getString("player2Name") + ": " + responseObject.getInt("player2Points"));
           }
 
           MultiplayerGameMap.getInstance().handleTileClick(tileObj, responseObject.getString("playerName"));
@@ -187,6 +186,40 @@ public class BomblandWebSocketClient extends WebSocketClient {
           MultiplayerPlayController.getInstance().updatePlayAgainState();
         }
       });
+    } else if (responseObject.get("message_type").equals("LEAVE_GAME")) {
+      responseObject.remove("message_type");
+      String quitter = responseObject.getString("playerName");
+      responseObject.remove("playerName");
+
+      AppCache.getInstance().setMultiplayerRoom(responseObject);
+
+      if (quitter.equals(AppCache.getInstance().getPlayerName())) {
+        Platform.runLater(() -> {
+          MultiplayerPlayController.getInstance().goToRoom();
+        });
+      } else {
+        if (AppCache.getInstance().getPlayerName().equals(responseObject.getString("player1Name"))) {
+          if (!responseObject.getBoolean("isPlayer1InRoom")) {
+            Platform.runLater(() -> {
+              MultiplayerPlayController.getInstance().kickPlayerOutOfGame();
+            });
+          } else {
+            Platform.runLater(() -> {
+              RoomController.getInstance().displayPlayer2Icon();
+            });
+          }
+        } else {
+          if (!responseObject.getBoolean("isPlayer2InRoom")) {
+            Platform.runLater(() -> {
+              MultiplayerPlayController.getInstance().kickPlayerOutOfGame();
+            });
+          } else {
+            Platform.runLater(() -> {
+              RoomController.getInstance().displayPlayer2Icon();
+            });
+          }
+        }
+      }
     }
   }
 
@@ -284,25 +317,6 @@ public class BomblandWebSocketClient extends WebSocketClient {
       send(String.valueOf(roomInfo)); // creates a new thread
     } else {
       System.out.println("joinRoom(): Connection not open. Unable to send room info.");
-    }
-  }
-
-  /**
-   * This function lets the server know that a player's state has been updated
-   * (in a multiplayer room).
-   *
-   * @param playerState whether the player is ready to start a (multiplayer) game.
-   */
-  public void updatePlayerState(String playerState) {
-    JSONObject playerInfo = new JSONObject();
-    playerInfo.put("message_type", "UPDATE_READY_STATE_UI");
-    playerInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
-    playerInfo.put("ready", (playerState.equals("READY") ? "True" : "False"));
-
-    if (isConnected && getConnection().isOpen()) {
-      send(String.valueOf(playerInfo)); // creates a new thread
-    } else {
-      System.out.println("updatePlayerState(): Connection not open. Unable to send player info.");
     }
   }
 
@@ -427,6 +441,24 @@ public class BomblandWebSocketClient extends WebSocketClient {
       send(String.valueOf(infoObj)); // creates a new thread
     } else {
       System.out.println("playAgain(): Connection not open. Unable to send data.");
+    }
+  }
+
+  /**
+   * At the end of a multiplayer game, when either player decides that they want to leave the game
+   * map, and they click the "Yes, leave game" button, this function runs to let the server know of
+   * this, that way the other player can be notified as well.
+   */
+  public void leaveGame() {
+    JSONObject roomInfo = new JSONObject();
+    roomInfo.put("message_type", "LEAVE_GAME");
+    roomInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+    roomInfo.put("playerName", AppCache.getInstance().getPlayerName());
+
+    if (isConnected && getConnection().isOpen()) {
+      send(String.valueOf(roomInfo)); // creates a new thread
+    } else {
+      System.out.println("leaveRoom(): Connection not open. Unable to send room info.");
     }
   }
 

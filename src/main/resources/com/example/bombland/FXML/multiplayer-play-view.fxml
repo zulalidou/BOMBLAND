@@ -99,7 +99,6 @@
                     </VBox>
                 </HBox>
 
-
                 <HBox>
                     <Label fx:id="gameOverPopupPlayer1Wins"/>
 
@@ -112,9 +111,6 @@
                     <Label fx:id="gameOverPopupPlayer2Wins"/>
                 </HBox>
 
-
-
-
                 <HBox fx:id="gameOverPopupReadyStateContainer">
                     <Label fx:id="gameOverPopupPlayer1ReadyStatus" text="NOT READY"/>
 
@@ -125,8 +121,39 @@
             </VBox>
 
             <HBox fx:id="gameOverPopupButtonsContainer" alignment="CENTER">
-                <Button fx:id="gameOverPopupPlayAgainBtn" styleClass="playAgainBtn" text="Play Again" onAction="#playAgain"/>
-                <Button fx:id="gameOverPopupGoToRoomBtn" styleClass="mainMenuBtn" text="Go To Room"/> <!--  onAction="#goToMainMenu" -->
+                <Button fx:id="gameOverPopupPlayAgainBtn" text="Play Again" styleClass="playAgainBtn" onAction="#playAgain"/>
+                <Button fx:id="gameOverPopupGoToRoomBtn" text="Go To Room" styleClass="mainMenuBtn" onAction="#displayLeaveGamePopup"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="leaveGamePopup" managed="false" visible="false">
+            <Label fx:id="leaveGamePopupTitle" text="LEAVE GAME"/>
+            <VBox alignment="CENTER" fx:id="leaveGamePopupImgContainer">
+                <ImageView fx:id="leaveGamePopupImg">
+                    <Image url="/com/example/bombland/images/exit.png"/>
+                </ImageView>
+            </VBox>
+
+            <Label fx:id="leaveGamePopupErrorMsg" text="Are you sure you want to leave? You'll be sent back to the room."/>
+
+            <HBox fx:id="leaveGamePopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="leaveGamePopupNoBtn" text="No, stay in game" styleClass="playAgainBtn" onAction="#closeLeaveGamePopup"/>
+                <Button fx:id="leaveGamePopupYesBtn" text="Yes, leave game" styleClass="mainMenuBtn" onAction="#confirmToLeaveGameMap"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="kickOutPlayer2Popup" managed="false" visible="false">
+            <Label fx:id="kickOutPlayer2PopupTitle" text="GAME MAP CLOSED"/>
+            <VBox alignment="CENTER" fx:id="kickOutPlayer2PopupImgContainer">
+                <ImageView fx:id="kickOutPlayer2PopupImg">
+                    <Image url="/com/example/bombland/images/error.png"/>
+                </ImageView>
+            </VBox>
+
+            <Label fx:id="kickOutPlayer2PopupErrorMsg" text="The other player has left, so the game map has been closed. You'll now be sent back to the room."/>
+
+            <HBox fx:id="kickOutPlayer2PopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="kickOutPlayer2PopupCloseButton" text="OK" onAction="#confirmToLeaveGameMap"/>
             </HBox>
         </VBox>
     </StackPane>
