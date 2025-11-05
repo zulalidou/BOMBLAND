@@ -3,7 +3,6 @@ package com.example.bombland;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,7 +26,6 @@ public class MainController {
 
   @FXML
   HBox logoContainer;
-
 
   @FXML
   Text logoTextBeforeO;
@@ -76,15 +74,14 @@ public class MainController {
 
     mainMenuOptionsContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.75),
-            Main.mainStage.heightProperty().multiply(0.75))
+            mainMenuPage.widthProperty().multiply(0.75),
+            mainMenuPage.heightProperty().multiply(0.75))
     );
 
-
     logoTextBeforeO.styleProperty().bind(
-        // Sets the font size to be 9% of the app window's width
-        Bindings.format("-fx-font-size: %.2fpx; -fx-font-weight: bold;",
-            Main.mainStage.widthProperty().multiply(0.045))
+        // Sets the font size to be 4.5% of the app window's width
+        Bindings.format("-fx-font-size: %.2fpx;",
+            logoContainer.widthProperty().multiply(0.045))
     );
 
     bombImgView.fitHeightProperty().bind(Bindings.min(
@@ -93,47 +90,49 @@ public class MainController {
     ));
 
     logoTextAfterO.styleProperty().bind(
-        // Sets the font size to be 9% of the app window's width
-        Bindings.format("-fx-font-size: %.2fpx; -fx-font-weight: bold;",
-            Main.mainStage.widthProperty().multiply(0.045))
+        // Sets the font size to be 4.5% of the app window's width
+        Bindings.format("-fx-font-size: %.2fpx;",
+            logoContainer.widthProperty().multiply(0.045))
     );
-
 
     playBtn.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.4),
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.1))
+            mainMenuOptionsContainer.widthProperty().multiply(0.55),
+            mainMenuOptionsContainer.widthProperty().multiply(0.04),
+            mainMenuOptionsContainer.widthProperty().multiply(0.2))
     );
 
     instructionsBtn.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.4),
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.1))
+            mainMenuOptionsContainer.widthProperty().multiply(0.55),
+            mainMenuOptionsContainer.widthProperty().multiply(0.04),
+            mainMenuOptionsContainer.widthProperty().multiply(0.2))
     );
 
     highScoresBtn.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.4),
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.1))
+            mainMenuOptionsContainer.widthProperty().multiply(0.55),
+            mainMenuOptionsContainer.widthProperty().multiply(0.04),
+            mainMenuOptionsContainer.widthProperty().multiply(0.2))
     );
 
     exitBtn.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.4),
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.1))
+            mainMenuOptionsContainer.widthProperty().multiply(0.55),
+            mainMenuOptionsContainer.widthProperty().multiply(0.04),
+            mainMenuOptionsContainer.widthProperty().multiply(0.2))
     );
   }
 
+  /**
+   * Redirects the user to the Mode Selection page.
+   */
   @FXML
-  private void openModeSelectionPage(ActionEvent event) {
+  private void openModeSelectionPage() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/mode-selection-view.fxml")
     );
@@ -154,8 +153,11 @@ public class MainController {
     }
   }
 
+  /**
+   * Redirects the user to the Instructions page.
+   */
   @FXML
-  private void openInstructionsPage(ActionEvent event) {
+  private void openInstructionsPage() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/instructions-view.fxml")
     );
@@ -176,8 +178,11 @@ public class MainController {
     }
   }
 
+  /**
+   * Redirects the user to the High Scores page.
+   */
   @FXML
-  private void openHighScoresPage(ActionEvent event) {
+  private void openHighScoresPage() {
     FXMLLoader loader = new FXMLLoader(
         getClass().getResource("/com/example/bombland/FXML/high-scores-view.fxml")
     );
@@ -198,6 +203,9 @@ public class MainController {
     }
   }
 
+  /**
+   * Closes the app.
+   */
   @FXML
   private void closeApp() {
     Platform.exit();

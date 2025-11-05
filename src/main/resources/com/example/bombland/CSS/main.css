@@ -2,7 +2,6 @@
     -fx-alignment: center;
 }
 
-
 #mainMenuOptionsContainer {
     -fx-alignment: center;
     -fx-background-color: red;
@@ -10,6 +9,10 @@
 
 #logoContainer {
     -fx-alignment: center;
+}
+
+#logoTextBeforeO, #logoTextAfterO {
+    -fx-font-weight: bold;
 }
 
 .button {
