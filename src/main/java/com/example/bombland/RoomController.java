@@ -436,6 +436,8 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
+    player1Box.getStyleClass().add("active-player-playerIconBox");
+
     player1NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player1Name").toString());
 
     player1NameLabel.styleProperty().bind(
@@ -443,6 +445,8 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.015),
             player1Box.widthProperty().multiply(1))
     );
+
+    player1NameLabel.getStyleClass().add("active-player-name");
 
 
     utilitiesContainer.styleProperty().bind(
@@ -506,7 +510,7 @@ public class RoomController {
    * Displays the player icon for Player 2.
    */
   void displayPlayer2Icon() {
-    updateActivePlayersLabel();
+    updateActivePlayersUi();
 
     playerProfileSpace.setVisible(true);
     playerProfileSpace.setManaged(true);
@@ -528,6 +532,8 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
+    player2Box.getStyleClass().add("active-player-playerIconBox");
+
     player2NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player2Name").toString());
 
     player2NameLabel.styleProperty().bind(
@@ -535,21 +541,44 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.015),
             player1Box.widthProperty().multiply(1))
     );
+
+    player2NameLabel.getStyleClass().add("active-player-name");
   }
 
   /**
-   * Updates the number of active players shown in the top right corner of the room, and determines
-   * whether to disable the startGame button (for Player1).
+   * (1) Updates the number of active players shown in the top right corner of the room.
+   * (2) If one of the players aren't in the room, their profile icon is given a black background color.
+   * (3) Determine whether to disable the startGame button (for Player1).
    */
-  private void updateActivePlayersLabel() {
+  private void updateActivePlayersUi() {
     int activePlayers = 0;
 
     if (AppCache.getInstance().getMultiplayerRoom().getBoolean("isPlayer1InRoom")) {
       activePlayers++;
+
+      player1Box.getStyleClass().remove("absent-player-playerIconBox");
+      player1Box.getStyleClass().add("active-player-playerIconBox");
+      player1NameLabel.getStyleClass().remove("absent-player-name");
+      player1NameLabel.getStyleClass().add("active-player-name");
+    } else {
+      player1Box.getStyleClass().remove("active-player-playerIconBox");
+      player1Box.getStyleClass().add("absent-player-playerIconBox");
+      player1NameLabel.getStyleClass().remove("active-player-name");
+      player1NameLabel.getStyleClass().add("absent-player-name");
     }
 
     if (AppCache.getInstance().getMultiplayerRoom().getBoolean("isPlayer2InRoom")) {
       activePlayers++;
+
+      player2Box.getStyleClass().remove("absent-player-playerIconBox");
+      player2Box.getStyleClass().add("active-player-playerIconBox");
+      player2NameLabel.getStyleClass().remove("absent-player-name");
+      player2NameLabel.getStyleClass().add("active-player-name");
+    } else {
+      player2Box.getStyleClass().remove("active-player-playerIconBox");
+      player2Box.getStyleClass().add("absent-player-playerIconBox");
+      player2NameLabel.getStyleClass().remove("active-player-name");
+      player2NameLabel.getStyleClass().add("absent-player-name");
     }
 
     totalPlayersLabel.setText(activePlayers + " / 2");
