@@ -21,7 +21,7 @@
                 <HBox fx:id="highScoresContainerLeftChild" alignment="CENTER_LEFT">
                     <Button fx:id="backBtn" onAction="#goToMainMenu">
                         <graphic>
-                            <ImageView fitWidth="20" preserveRatio="true">
+                            <ImageView fx:id="backBtnImgView">
                                 <Image url="/com/example/bombland/images/back-button.png"/>
                             </ImageView>
                         </graphic>
@@ -47,7 +47,7 @@
                     <Label fx:id="easyHighScoreTitle" text="Easy"/>
 
                     <VBox fx:id="easyHighScoresScoreContainer">
-                        <ImageView fitWidth="90" fitHeight="60" preserveRatio="true">
+                        <ImageView>
                             <Image url="/com/example/bombland/images/smiley-face.png"/>
                         </ImageView>
 
@@ -59,7 +59,7 @@
                     <Label fx:id="mediumHighScoreTitle" text="Medium"/>
 
                     <VBox fx:id="mediumHighScoresScoreContainer">
-                        <ImageView fitWidth="90" fitHeight="60" preserveRatio="true">
+                        <ImageView>
                             <Image url="/com/example/bombland/images/smiley-face.png"/>
                         </ImageView>
 
@@ -71,7 +71,7 @@
                     <Label fx:id="hardHighScoreTitle" text="Hard"/>
 
                     <VBox fx:id="hardHighScoresScoreContainer">
-                        <ImageView fitWidth="90" fitHeight="60" preserveRatio="true">
+                        <ImageView>
                             <Image url="/com/example/bombland/images/smiley-face.png"/>
                         </ImageView>
 

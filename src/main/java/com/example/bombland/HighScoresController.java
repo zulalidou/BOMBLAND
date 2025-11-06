@@ -29,67 +29,37 @@ public class HighScoresController {
   private static HighScoresController instance;
 
   @FXML
-  StackPane highScoresStackpane;
+  VBox highScoresPage;
 
   @FXML
-  VBox highScoresPage;
+  StackPane highScoresStackpane;
 
   @FXML
   VBox highScoresStackpaneChild;
 
   @FXML
-  VBox easyHighScoresColumn;
-
-  @FXML
-  VBox mediumHighScoresColumn;
-
-  @FXML
-  VBox hardHighScoresColumn;
-
-  @FXML
-  VBox easyHighScoresScoreContainer;
-
-  @FXML
-  VBox mediumHighScoresScoreContainer;
-
-  @FXML
-  VBox hardHighScoresScoreContainer;
-
-  @FXML
-  VBox databaseCommunicationErrorPopup;
-
-  @FXML
-  HBox mapSelectorContainer;
-
-  @FXML
-  HBox highScoresContainerBottom;
+  HBox highScoresContainerTop;
 
   @FXML
   HBox highScoresContainerLeftChild;
 
   @FXML
-  HBox highScoresContainerMiddleChild;
+  Button backBtn;
 
   @FXML
-  HBox highScoresContainerRightChild;
+  ImageView backBtnImgView;
+
+  @FXML
+  HBox highScoresContainerMiddleChild;
 
   @FXML
   Label highScoresPageTitle;
 
   @FXML
-  Label easyHighScoreTitle;
+  HBox highScoresContainerRightChild;
 
   @FXML
-  Label mediumHighScoreTitle;
-
-  @FXML
-  Label hardHighScoreTitle;
-
-  @FXML
-  Label databaseCommunicationErrorPopupTitle;
-
-  @FXML
-  Button backBtn;
+  HBox mapSelectorContainer;
 
   @FXML
   Button mapBtn1;
@@ -102,6 +72,42 @@ public class HighScoresController {
 
   @FXML
   Button mapBtn4;
+
+  @FXML
+  HBox highScoresContainerBottom;
+
+  @FXML
+  VBox easyHighScoresColumn;
+
+  @FXML
+  Label easyHighScoreTitle;
+
+  @FXML
+  VBox easyHighScoresScoreContainer;
+
+  @FXML
+  VBox mediumHighScoresColumn;
+
+  @FXML
+  Label mediumHighScoreTitle;
+
+  @FXML
+  VBox mediumHighScoresScoreContainer;
+
+  @FXML
+  VBox hardHighScoresColumn;
+
+  @FXML
+  Label hardHighScoreTitle;
+
+  @FXML
+  VBox hardHighScoresScoreContainer;
+
+  @FXML
+  VBox databaseCommunicationErrorPopup;
+
+  @FXML
+  Label databaseCommunicationErrorPopupTitle;
 
   @FXML
   Label databaseErrorLastSentence;
@@ -137,83 +143,82 @@ public class HighScoresController {
     populateHighScoresPage();
   }
 
+  /**
+   * Creates the High Scores page UI.
+   */
   private void createHighScoresPage() {
-    highScoresPage.styleProperty().bind(
-        Bindings.format("-fx-padding: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
+    VBox.setVgrow(highScoresStackpane, Priority.ALWAYS);
+
+    highScoresContainerLeftChild.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx;", highScoresContainerTop.widthProperty().multiply(0.33))
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-background-radius: %.2fpx;", highScoresContainerLeftChild.widthProperty().multiply(0.1))
     );
 
-
-    highScoresContainerLeftChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.39))
-    );
+    backBtnImgView.fitWidthProperty().bind(highScoresContainerLeftChild.widthProperty().multiply(0.075));
+    backBtnImgView.fitHeightProperty().bind(highScoresContainerLeftChild.heightProperty().multiply(0.4));
 
     highScoresContainerMiddleChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.39))
+        Bindings.format("-fx-pref-width: %.2fpx", highScoresContainerTop.widthProperty().multiply(0.34))
     );
 
     highScoresPageTitle.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.04))
+        Bindings.format("-fx-font-size: %.2fpx;", highScoresContainerMiddleChild.widthProperty().multiply(0.1))
     );
 
     highScoresContainerRightChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.39))
+        Bindings.format("-fx-pref-width: %.2fpx;", highScoresContainerTop.widthProperty().multiply(0.33))
     );
-
 
     mapSelectorContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-padding: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.75),
-            Main.mainStage.widthProperty().multiply(0.01))
+            highScoresStackpaneChild.widthProperty().multiply(1),
+            highScoresStackpaneChild.widthProperty().multiply(0.01))
     );
 
     mapBtn1.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
-            Main.mainStage.widthProperty().multiply(0.2425))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            mapSelectorContainer.widthProperty().multiply(0.25),
+            mapSelectorContainer.widthProperty().multiply(0.012))
     );
     mapBtn2.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
-            Main.mainStage.widthProperty().multiply(0.2425))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            mapSelectorContainer.widthProperty().multiply(0.25),
+            mapSelectorContainer.widthProperty().multiply(0.012))
     );
     mapBtn3.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
-            Main.mainStage.widthProperty().multiply(0.2425))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            mapSelectorContainer.widthProperty().multiply(0.25),
+            mapSelectorContainer.widthProperty().multiply(0.012))
     );
     mapBtn4.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: 0px;",
-            Main.mainStage.widthProperty().multiply(0.2425))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            mapSelectorContainer.widthProperty().multiply(0.25),
+            mapSelectorContainer.widthProperty().multiply(0.012))
     );
 
 
+    VBox.setVgrow(highScoresContainerBottom, Priority.ALWAYS);
+    easyHighScoresColumn.setPrefWidth(Main.mainStage.getWidth() * 0.33);
+    mediumHighScoresColumn.setPrefWidth(Main.mainStage.getWidth() * 0.34);
+    hardHighScoresColumn.setPrefWidth(Main.mainStage.getWidth() * 0.33);
+
     easyHighScoreTitle.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.3265))
+        Bindings.format("-fx-font-size: %.2fpx",
+            highScoresContainerBottom.widthProperty().multiply(0.02))
     );
 
     mediumHighScoreTitle.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.327))
+        Bindings.format("-fx-font-size: %.2fpx",
+            highScoresContainerBottom.widthProperty().multiply(0.02))
     );
 
     hardHighScoreTitle.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.3265))
+        Bindings.format("-fx-font-size: %.2fpx",
+            highScoresContainerBottom.widthProperty().multiply(0.02))
     );
-
-
-    VBox.setVgrow(highScoresStackpane, Priority.ALWAYS);
-
-    VBox.setVgrow(highScoresContainerBottom, Priority.ALWAYS);
-
-    HBox.setHgrow(easyHighScoresColumn, Priority.ALWAYS);
-    HBox.setHgrow(mediumHighScoresColumn, Priority.ALWAYS);
-    HBox.setHgrow(hardHighScoresColumn, Priority.ALWAYS);
 
     VBox.setVgrow(easyHighScoresScoreContainer, Priority.ALWAYS);
     VBox.setVgrow(mediumHighScoresScoreContainer, Priority.ALWAYS);
@@ -224,6 +229,9 @@ public class HighScoresController {
     hardHighScoresScoreContainer.spacingProperty().bind(Main.mainStage.heightProperty().multiply(0.01));
   }
 
+  /**
+   * Populates the High Scores page UI.
+   */
   private void populateHighScoresPage() {
     if (AppCache.getInstance().isGettingData()) {
       displayLoadingIcon();
@@ -253,6 +261,9 @@ public class HighScoresController {
     }
   }
 
+  /**
+   * Retrieves the high scores from DynamoDB.
+   */
   private void getHighScoresFromDynamoDb() {
     Runnable dynamoDbConnectionTask = () -> {
       if (AppCache.getInstance().getIdentityPoolId().isEmpty()) {
@@ -279,6 +290,9 @@ public class HighScoresController {
     new Thread(dynamoDbConnectionTask).start();
   }
 
+  /**
+   * Waits for the data retrieval from DynamoDB to end.
+   */
   private void waitForDataRetrieval() {
     while (AppCache.getInstance().isGettingData()) {
       // Forcing the thread to sleep for a bit in order to let it notice the
@@ -297,25 +311,29 @@ public class HighScoresController {
     }
   }
 
+  /**
+   * Displays a loading icon.
+   */
   private void displayLoadingIcon() {
-    // blurs the gameplay page
-    highScoresStackpaneChild.setEffect(new GaussianBlur());
-
-    // makes items in the high scores page "unclickable"
-    highScoresStackpaneChild.setMouseTransparent(true);
-
+    highScoresStackpaneChild.setEffect(new GaussianBlur()); // blurs the gameplay page
+    highScoresStackpaneChild.setMouseTransparent(true); // makes items in the high scores page "unclickable"
     loadingIcon.setManaged(true);
     loadingIcon.setVisible(true);
   }
 
+  /**
+   * Hides the loading icon.
+   */
   private void hideLoadingIcon() {
-    highScoresStackpaneChild.setEffect(null);
+    highScoresStackpaneChild.setEffect(null); // un-blurs the gameplay page
     highScoresStackpaneChild.setMouseTransparent(false); // makes items in gameplay page "clickable"
-
     loadingIcon.setManaged(false);
     loadingIcon.setVisible(false);
   }
 
+  /**
+   * Redirects the user to the Main Menu page.
+   */
   @FXML
   private void goToMainMenu() {
     AppCache.getInstance().setMapOfHighScoresBeingShown("");
@@ -339,6 +357,9 @@ public class HighScoresController {
     }
   }
 
+  /**
+   * Displays the high scores from the Rectangle map.
+   */
   @FXML
   private void showRectangleMapHighScores() {
     if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Rectangle")) {
@@ -353,6 +374,9 @@ public class HighScoresController {
     displayScores("Hard", "Rectangle", hardHighScoresScoreContainer);
   }
 
+  /**
+   * Displays the high scores from the Bomb map.
+   */
   @FXML
   private void showBombMapHighScores() {
     if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Bomb")) {
@@ -368,6 +392,9 @@ public class HighScoresController {
     displayScores("Hard", "Bomb", hardHighScoresScoreContainer);
   }
 
+  /**
+   * Displays the high scores from the Face map.
+   */
   @FXML
   private void showFaceMapHighScores() {
     if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Face")) {
@@ -383,6 +410,9 @@ public class HighScoresController {
     displayScores("Hard", "Face", hardHighScoresScoreContainer);
   }
 
+  /**
+   * Displays the high scores from the Flower map.
+   */
   @FXML
   private void showFlowerMapHighScores() {
     if (AppCache.getInstance().getMapOfHighScoresBeingShown().equals("Flower")) {
@@ -398,6 +428,9 @@ public class HighScoresController {
     displayScores("Hard", "Flower", hardHighScoresScoreContainer);
   }
 
+  /**
+   * Updates the page UI whenever one of the map buttons gets clicked.
+   */
   private void selectMapButton(String map) {
     switch (map) {
       case "Rectangle" -> {
@@ -439,6 +472,9 @@ public class HighScoresController {
     }
   }
 
+  /**
+   * Updates the UI to show that a map button has been deselected.
+   */
   private void deselectMapButton(Button button) {
     if (button.getStyleClass().contains("mapBtn_selected")) {
       button.getStyleClass().remove("mapBtn_selected");
@@ -446,18 +482,35 @@ public class HighScoresController {
     }
   }
 
+  /**
+   * If there are scores that need to be displayed for a specific map at a specific difficulty,
+   * it's done so. Otherwise, a placeholder is displayed to let the user know that there are no high
+   * scores for the specified map and difficulty.
+   *
+   * @param difficulty The difficulty of the game.
+   * @param map The game map.
+   * @param container The container that'll show the high scores (if they exist).
+   */
   private void displayScores(String difficulty, String map, VBox container) {
     container.getChildren().clear();
 
     ArrayList<JSONObject> highScores = getMapScores(difficulty, map);
 
-    if (!highScores.isEmpty()) {
-      addScoresToScreen(highScores, container);
-    } else {
+    if (highScores.isEmpty()) {
       displayPlaceholder(container);
+    } else {
+      addScoresToScreen(highScores, container);
     }
   }
 
+  /**
+   * Retrieves the high scores of a specified difficulty on a specified map.
+   *
+   * @param difficulty The difficulty of the game when the high score was set.
+   * @param map The game map when the high score was set.
+   * @return A list of JSONObjects that contains info about the high scores from
+   *         the specified difficulty and map.
+   */
   private ArrayList<JSONObject> getMapScores(String difficulty, String map) {
     final ArrayList<JSONObject> allHighScores = AppCache.getInstance().getHighScores(difficulty);
     ArrayList<JSONObject> mapHighScores = new ArrayList<>();
@@ -471,6 +524,12 @@ public class HighScoresController {
     return mapHighScores;
   }
 
+  /**
+   * Places high scores into a container for them to eventually be displayed.
+   *
+   * @param scores A list of JSONObjects, where each object represents a high score.
+   * @param scoresContainer The container that'll store the high scores.
+   */
   private void addScoresToScreen(ArrayList<JSONObject> scores, VBox scoresContainer) {
     for (JSONObject score : scores) {
       Label scoreBox = new Label(score.getString("name") + ", " + score.getLong("score"));
@@ -478,30 +537,37 @@ public class HighScoresController {
 
       scoreBox.styleProperty().bind(
           Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; "
-              + "-fx-spacing: %.2fpx; -fx-padding: %.2fpx;",
-              Main.mainStage.widthProperty().multiply(0.014),
-              Main.mainStage.widthProperty().multiply(0.01),
-              Main.mainStage.widthProperty().multiply(0.001),
-              Main.mainStage.widthProperty().multiply(0.005))
+              + "-fx-padding: %.2fpx;",
+              scoresContainer.widthProperty().multiply(0.04),
+              scoresContainer.widthProperty().multiply(0.025),
+              scoresContainer.widthProperty().multiply(0.012))
       );
 
       scoresContainer.getChildren().add(scoreBox);
     }
   }
 
+  /**
+   * A placeholder to be shown if there are no high scores for a specific map at a specific
+   * difficulty.
+   *
+   * @param scoresContainer The container that'll store and display the placeholder.
+   */
   private void displayPlaceholder(VBox scoresContainer) {
     Image img = new Image(Objects.requireNonNull(
         getClass().getResourceAsStream("/com/example/bombland/Images/smiley-face.png"))
     );
+
     ImageView imgView = new ImageView();
     imgView.setImage(img);
-    imgView.setFitWidth(90);
-    imgView.setFitHeight(60);
+    imgView.fitWidthProperty().bind(easyHighScoresScoreContainer.widthProperty().multiply(0.25));
+    imgView.fitHeightProperty().bind(easyHighScoresScoreContainer.heightProperty().multiply(0.25));
     imgView.setPreserveRatio(true);
+
     scoresContainer.getChildren().add(imgView);
 
     Label noActivityLabel = new Label("No activity yet!");
-    noActivityLabel.getStyleClass().add("highScores_activityLabel");
+    noActivityLabel.getStyleClass().add("highScoresActivityLabel");
     scoresContainer.getChildren().add(noActivityLabel);
   }
 
@@ -515,8 +581,8 @@ public class HighScoresController {
     databaseCommunicationErrorPopup.setManaged(true);
     databaseCommunicationErrorPopup.setVisible(true);
 
-    databaseCommunicationErrorPopup.setMaxWidth(Main.mainStage.getWidth() * 0.33);
-    databaseCommunicationErrorPopup.setMaxHeight(Main.mainStage.getHeight() * 0.40);
+    databaseCommunicationErrorPopup.setMaxWidth(highScoresPage.getWidth() * 0.4);
+    databaseCommunicationErrorPopup.setMaxHeight(highScoresPage.getHeight() * 0.4);
 
     databaseCommunicationErrorPopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -528,8 +594,8 @@ public class HighScoresController {
 
     databaseCommunicationErrorPopupTitle.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.02),
-            Main.mainStage.widthProperty().multiply(0.33))
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.07),
+            databaseCommunicationErrorPopup.widthProperty().multiply(1))
     );
 
 
@@ -541,31 +607,26 @@ public class HighScoresController {
       // Use an instanceof check for safety
       if (node instanceof Label) {
         Label label = (Label) node;
-
+        label.setWrapText(true);
         label.styleProperty().bind(
             Bindings.format("-fx-font-size: %.2fpx;",
-                Main.mainStage.widthProperty().multiply(0.01))
+                databaseCommunicationErrorPopup.widthProperty().multiply(0.03))
         );
       }
     }
 
-
     databaseErrorLastSentence.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-text-fill: red; -fx-padding: %.2fpx 0 %.2fpx 0",
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.01))
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0",
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.03),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.01),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.01))
     );
 
-
-    closeDatabaseErrorPopupBtn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
-
     closeDatabaseErrorPopupBtn.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.31),
-            Main.mainStage.widthProperty().multiply(0.02),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.011))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            databaseCommunicationErrorPopup.widthProperty().multiply(1),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.01),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.0275))
     );
   }
 
@@ -575,7 +636,6 @@ public class HighScoresController {
   public void closeDatabaseErrorPopup() {
     databaseCommunicationErrorPopup.setManaged(false);
     databaseCommunicationErrorPopup.setVisible(false);
-
     highScoresStackpaneChild.setEffect(null);
     highScoresStackpaneChild.setMouseTransparent(false);
   }

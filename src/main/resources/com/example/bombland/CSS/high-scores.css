@@ -29,15 +29,14 @@
 .mapBtn_unselected {
     -fx-background-color: red;
     -fx-font-weight: bold;
-    -fx-font-size: 130%;
     -fx-border-color: black;
     -fx-background-insets: 0, 0; /* removes the button's "push down" effect */
+    -fx-text-fill: black;
 }
 
 .mapBtn_selected {
     -fx-background-color: black;
     -fx-font-weight: bold;
-    -fx-font-size: 130%;
     -fx-border-color: red;
     -fx-text-fill: red;
 }
@@ -68,7 +67,7 @@
 .highScoresActivityLabel {
     -fx-text-fill: red;
     -fx-font-weight: bold;
-    -fx-font-size: 150%;
+    -fx-font-size: 250%;
 }
 
 
@@ -95,6 +94,10 @@
 
 .databaseErrorText {
     -fx-wrap-text: true;
+    -fx-text-fill: red;
+}
+
+#databaseErrorLastSentence {
     -fx-text-fill: red;
 }
 
