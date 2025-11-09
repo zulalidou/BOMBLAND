@@ -20,7 +20,6 @@
     -fx-text-fill: red;
 }
 
-
 #instructionsScrollPane {
     -fx-border-color: black;
 }
@@ -31,12 +30,10 @@
     -fx-background-color: transparent;
 }
 
-
 #section1TitleLbl {
     -fx-font-weight: bold;
     -fx-text-fill: red;
 }
-
 
 .instructions-img-text {
     -fx-wrap-text: true;
@@ -46,4 +43,5 @@
 .text {
     -fx-wrap-text: true;
     -fx-font-size: 200%;
+    -fx-text-fill: black;
 }
