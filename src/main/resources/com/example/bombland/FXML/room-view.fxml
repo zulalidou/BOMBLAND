@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<VBox xmlns:fx="http://javafx.com/fxml">
+<VBox fx:id="page" xmlns:fx="http://javafx.com/fxml">
     <stylesheets>
         <URL value="@../CSS/room.css"/>
     </stylesheets>
@@ -178,9 +178,10 @@
 
         <VBox fx:id="startGamePopup" managed="false" visible="false">
             <Label fx:id="startGamePopupTitle" text="START GAME"/>
-            <VBox alignment="CENTER" fx:id="startGamePopupImgContainer">
+
+            <VBox fx:id="startGamePopupImgContainer" alignment="CENTER" >
                 <ImageView fx:id="startGamePopupImg">
-                    <Image url="/com/example/bombland/images/error.png"/>
+                    <Image url="/com/example/bombland/images/bomb.png"/>
                 </ImageView>
             </VBox>
 

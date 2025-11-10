@@ -1025,7 +1025,7 @@ public class RoomController {
     startGamePopup.setVisible(true);
 
     startGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
-    startGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
+    startGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.45);
 
     startGamePopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -1041,7 +1041,6 @@ public class RoomController {
     startGamePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     startGamePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
-
     startGamePopupMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
             Main.mainStage.widthProperty().multiply(0.015),
@@ -1051,20 +1050,19 @@ public class RoomController {
 
     startGamePopupMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
 
-
     startGamePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
 
     startGamePopupYesBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.0125),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            startGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            startGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            startGamePopupButtonsContainer.widthProperty().multiply(0.45))
     );
     startGamePopupNoBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.0125),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            startGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            startGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            startGamePopupButtonsContainer.widthProperty().multiply(0.45))
     );
   }
 

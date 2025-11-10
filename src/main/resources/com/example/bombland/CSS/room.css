@@ -102,7 +102,7 @@
 }
 
 #playerIconsContainer {
-    -fx-border-color: transparent transparent black transparent;
+    /*-fx-border-color: transparent transparent black transparent;*/
 }
 
 #player1NameLabel, #player2NameLabel {
@@ -223,6 +223,12 @@
 }
 
 #startGamePopupMsg {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+#startGamePopupButtonsContainer {
     -fx-wrap-text: true;
     -fx-text-fill: red;
     -fx-font-weight: bold;
