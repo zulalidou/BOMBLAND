@@ -19,7 +19,7 @@
                 <HBox fx:id="createRoomPageContainerTopLeftChild" alignment="CENTER_LEFT">
                     <Button fx:id="backBtn" onAction="#goToMultiplayerSelection">
                         <graphic>
-                            <ImageView fitWidth="20" preserveRatio="true">
+                            <ImageView fx:id="backBtnImgView">
                                 <Image url="/com/example/bombland/images/back-button.png"/>
                             </ImageView>
                         </graphic>
@@ -34,33 +34,31 @@
             </HBox>
 
             <VBox fx:id="createRoomPageContainerBottom" alignment="CENTER">
-                <VBox fx:id="roomNameContainer" alignment="CENTER">
+                <VBox fx:id="roomNameContainer" alignment="BOTTOM_CENTER">
                     <Label fx:id="roomNameText" text="Room Name"/>
 
-                    <HBox alignment="CENTER" fx:id="roomNameHbox">
+                    <HBox fx:id="roomNameHbox" alignment="CENTER" >
                         <TextField fx:id="roomNameTextField"/>
                     </HBox>
 
                     <Label fx:id="roomNameError" text="Please enter a room name" visible="false"/>
                 </VBox>
 
-                <Region VBox.vgrow="ALWAYS"/>
-
-                <VBox fx:id="playerNameContainer" alignment="CENTER">
+                <VBox fx:id="playerNameContainer" alignment="TOP_CENTER">
                     <Label fx:id="playerNameText" text="Pick a username"/>
 
-                    <HBox alignment="CENTER" fx:id="playerNameHbox">
+                    <HBox fx:id="playerNameHbox" alignment="CENTER" >
                         <TextField fx:id="playerNameTextField" disable="true"/>
                     </HBox>
 
-                    <Region fx:id="space"/>
+                    <Label/>
+                </VBox>
 
+                <VBox fx:id="changePlayerNameContainer" alignment="TOP_CENTER">
                     <Button fx:id="changePlayerNameBtn" text="Change name" onAction="#setPlayerName"/>
                 </VBox>
 
-                <Region VBox.vgrow="ALWAYS"/>
-
-                <VBox alignment="CENTER">
+                <VBox fx:id="createRoomBtnContainer" alignment="CENTER">
                     <Button fx:id="createRoomBtn" text="Create Room" onAction="#createRoom"/>
                 </VBox>
             </VBox>

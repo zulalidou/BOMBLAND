@@ -10,7 +10,6 @@
     -fx-alignment: center;
 }
 
-
 #backBtn {
     -fx-background-color: black;
 }
@@ -19,12 +18,10 @@
     -fx-cursor: hand;
 }
 
-
 #pageTitle {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
-
 
 #roomIdTextField {
     -fx-border-color: black;
@@ -57,7 +54,6 @@
     -fx-text-fill: black;
 }
 
-
 #changePlayerNameBtn {
     -fx-background-color: black;
     -fx-text-fill: white;
@@ -68,7 +64,6 @@
     -fx-text-fill: red;
 }
 
-
 #joinRoomBtn {
     -fx-background-color: black;
     -fx-text-fill: white;
@@ -78,7 +73,6 @@
     -fx-cursor: hand;
     -fx-text-fill: red;
 }
-
 
 #errorPopup1, #errorPopup2 {
     -fx-background-color: black;
@@ -100,6 +94,10 @@
     -fx-text-fill: red;
     -fx-alignment: center;
     -fx-font-weight: bold;
+}
+
+#errorLastSentence2 {
+    -fx-text-fill: red;
 }
 
 #closeErrorPopup1Btn, #closeErrorPopup2Btn {

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -18,31 +19,34 @@ public class MultiplayerSelectionController {
   private static MultiplayerSelectionController instance;
 
   @FXML
-  Button backBtn;
-
-  @FXML
   VBox multiplayerSelectionPage;
 
   @FXML
   VBox multiplayerSelectionPageContainer;
 
   @FXML
-  VBox multiplayerSelectionPageContainerBottom;
-
-  @FXML
-  VBox multiplayerSelectionPageContainerBottomInner;
-
-  @FXML
   HBox multiplayerSelectionPageContainerTopLeftChild;
+
+  @FXML
+  Button backBtn;
+
+  @FXML
+  ImageView backBtnImgView;
 
   @FXML
   HBox multiplayerSelectionPageContainerTopMiddleChild;
 
   @FXML
+  Label multiplayerSelectionPageTitle;
+
+  @FXML
   HBox multiplayerSelectionPageContainerTopRightChild;
 
   @FXML
-  Label multiplayerSelectionPageTitle;
+  VBox multiplayerSelectionPageContainerBottom;
+
+  @FXML
+  VBox multiplayerSelectionPageContainerBottomInner;
 
   @FXML
   Button createRoomBtn;
@@ -75,7 +79,6 @@ public class MultiplayerSelectionController {
     // from having the same width as its parent container (multiplayerSelectionPage)
     multiplayerSelectionPage.setFillWidth(false);
 
-
     multiplayerSelectionPageContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.75),
@@ -89,10 +92,11 @@ public class MultiplayerSelectionController {
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.05)
-        )
+        Bindings.format("-fx-background-radius: %.2fpx;", Main.mainStage.widthProperty().multiply(0.1))
     );
+
+    backBtnImgView.fitWidthProperty().bind(multiplayerSelectionPageContainerTopLeftChild.widthProperty().multiply(0.235));
+    backBtnImgView.fitHeightProperty().bind(multiplayerSelectionPageContainerTopLeftChild.heightProperty().multiply(0.4));
 
     multiplayerSelectionPageContainerTopMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.6))
@@ -105,7 +109,6 @@ public class MultiplayerSelectionController {
     multiplayerSelectionPageContainerTopRightChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
     );
-
 
     VBox.setVgrow(multiplayerSelectionPageContainerBottom, Priority.ALWAYS);
 
@@ -131,6 +134,9 @@ public class MultiplayerSelectionController {
     );
   }
 
+  /**
+   * Redirects the user back to the Mode Selection page.
+   */
   @FXML
   private void goToModeSelection() {
     FXMLLoader loader = new FXMLLoader(
@@ -153,6 +159,9 @@ public class MultiplayerSelectionController {
     }
   }
 
+  /**
+   * Sends the user to the Create A Room page.
+   */
   @FXML
   private void goToCreateRoom() {
     FXMLLoader loader = new FXMLLoader(
@@ -175,6 +184,9 @@ public class MultiplayerSelectionController {
     }
   }
 
+  /**
+   * Sends the user to the Join A Room page.
+   */
   @FXML
   private void goToJoinRoom() {
     FXMLLoader loader = new FXMLLoader(

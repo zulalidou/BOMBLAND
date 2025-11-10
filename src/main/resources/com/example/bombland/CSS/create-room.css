@@ -2,15 +2,35 @@
     -fx-alignment: center;
 }
 
-
 #createRoomPageContainer {
     -fx-background-color: red;
 }
 
+/*
+#createRoomPageContainerTop {
+    -fx-background-color: green;
+}
+
+#roomNameContainer {
+    -fx-background-color: yellow;
+}
+
+#playerNameContainer {
+    -fx-background-color: blue;
+}
+
+#changePlayerNameContainer {
+    -fx-background-color: white;
+}
+
+#createRoomBtnContainer {
+    -fx-background-color: purple;
+}
+*/
+
 #createRoomPageContainerTopMiddleChild {
     -fx-alignment: center;
 }
-
 
 #backBtn {
     -fx-background-color: black;
@@ -20,12 +40,10 @@
     -fx-cursor: hand;
 }
 
-
 #createRoomPageTitle {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
-
 
 #roomNameTextField {
     -fx-border-color: black;
@@ -58,7 +76,6 @@
     -fx-text-fill: black;
 }
 
-
 #changePlayerNameBtn {
     -fx-background-color: black;
     -fx-text-fill: white;
@@ -69,7 +86,6 @@
     -fx-text-fill: red;
 }
 
-
 #createRoomBtn {
     -fx-background-color: black;
     -fx-text-fill: white;
@@ -79,7 +95,6 @@
     -fx-cursor: hand;
     -fx-text-fill: red;
 }
-
 
 #errorPopup {
     -fx-background-color: black;

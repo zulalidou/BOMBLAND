@@ -6,7 +6,6 @@
     -fx-cursor: hand;
 }
 
-
 #highScoresContainerTop {
     -fx-border-color: black;
 }
@@ -20,7 +19,6 @@
     -fx-font-weight: bold;
     -fx-text-fill: red;
 }
-
 
 #mapSelectorContainer {
     -fx-background-color: black;
@@ -41,11 +39,9 @@
     -fx-text-fill: red;
 }
 
-
 #easyHighScoresColumn, #mediumHighScoresColumn, #hardHighScoresColumn {
     -fx-border-color: black;
 }
-
 
 #easyHighScoreTitle, #mediumHighScoreTitle, #hardHighScoreTitle {
     -fx-background-color: black;
@@ -63,13 +59,11 @@
     -fx-alignment: center;
 }
 
-
 .highScoresActivityLabel {
     -fx-text-fill: red;
     -fx-font-weight: bold;
     -fx-font-size: 250%;
 }
-
 
 .highScoreLabel {
     -fx-background-color: black;
@@ -79,7 +73,6 @@
     /* -fx-pref-width: 150px;  there should be a max-width, in case the player enters a really long name */
     -fx-text-alignment: center;
 }
-
 
 #databaseCommunicationErrorPopup {
     -fx-background-color: black;

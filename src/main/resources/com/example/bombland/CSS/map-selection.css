@@ -2,7 +2,6 @@
     -fx-alignment: center;
 }
 
-
 #mapSelectionPageContainer {
     -fx-background-color: red;
 }
@@ -10,7 +9,6 @@
 #mapSelectionPageContainerTopMiddleChild {
     -fx-alignment: center;
 }
-
 
 #backBtn {
     -fx-background-color: black;
@@ -20,12 +18,10 @@
     -fx-cursor: hand;
 }
 
-
 #mapSelectionPageTitle {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
-
 
 #rectangleMapSelectorContainer,
 #bombMapSelectorContainer,
@@ -44,4 +40,5 @@
 
 .mapNameLabel {
     -fx-font-weight: bold;
+    -fx-text-fill: black;
 }

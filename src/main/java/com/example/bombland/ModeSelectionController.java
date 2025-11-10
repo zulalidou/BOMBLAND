@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -18,31 +19,34 @@ public class ModeSelectionController {
   private static ModeSelectionController instance;
 
   @FXML
-  Button backBtn;
-
-  @FXML
   VBox modeSelectionPage;
 
   @FXML
   VBox modeSelectionPageContainer;
 
   @FXML
-  VBox modeSelectionPageContainerBottom;
-
-  @FXML
-  VBox modeSelectionPageContainerBottomInner;
-
-  @FXML
   HBox modeSelectionPageContainerTopLeftChild;
+  
+  @FXML
+  Button backBtn;
+
+  @FXML
+  ImageView backBtnImgView;
 
   @FXML
   HBox modeSelectionPageContainerTopMiddleChild;
 
   @FXML
+  Label modeSelectionPageTitle;
+
+  @FXML
   HBox modeSelectionPageContainerTopRightChild;
 
   @FXML
-  Label modeSelectionPageTitle;
+  VBox modeSelectionPageContainerBottom;
+
+  @FXML
+  VBox modeSelectionPageContainerBottomInner;
 
   @FXML
   Button singlePlayerBtn;
@@ -75,7 +79,6 @@ public class ModeSelectionController {
     // from having the same width as its parent container (modeSelectionPage)
     modeSelectionPage.setFillWidth(false);
 
-
     modeSelectionPageContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.75),
@@ -85,17 +88,18 @@ public class ModeSelectionController {
     );
 
     modeSelectionPageContainerTopLeftChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.33))
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.05)
-        )
+        Bindings.format("-fx-background-radius: %.2fpx;", modeSelectionPageContainerTopLeftChild.widthProperty().multiply(0.1))
     );
 
+    backBtnImgView.fitWidthProperty().bind(modeSelectionPageContainerTopLeftChild.widthProperty().multiply(0.1));
+    backBtnImgView.fitHeightProperty().bind(modeSelectionPageContainerTopLeftChild.heightProperty().multiply(0.4));
+
     modeSelectionPageContainerTopMiddleChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.6))
+        Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.34))
     );
 
     modeSelectionPageTitle.styleProperty().bind(
@@ -103,9 +107,8 @@ public class ModeSelectionController {
     );
 
     modeSelectionPageContainerTopRightChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.3))
     );
-
 
     VBox.setVgrow(modeSelectionPageContainerBottom, Priority.ALWAYS);
 
@@ -131,6 +134,9 @@ public class ModeSelectionController {
     );
   }
 
+  /**
+   * Redirects the user to the Main Menu page.
+   */
   @FXML
   private void goToMainMenu() {
     FXMLLoader loader = new FXMLLoader(
@@ -153,6 +159,9 @@ public class ModeSelectionController {
     }
   }
 
+  /**
+   * Sends the user to the Difficulty selection page.
+   */
   @FXML
   private void pickSinglePlayer() {
     FXMLLoader loader = new FXMLLoader(
@@ -175,6 +184,9 @@ public class ModeSelectionController {
     }
   }
 
+  /**
+   * Sends the user to the Multiplayer selection page.
+   */
   @FXML
   private void pickMultiplayer() {
     FXMLLoader loader = new FXMLLoader(

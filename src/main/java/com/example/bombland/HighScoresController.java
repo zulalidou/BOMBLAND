@@ -149,6 +149,8 @@ public class HighScoresController {
   private void createHighScoresPage() {
     VBox.setVgrow(highScoresStackpane, Priority.ALWAYS);
 
+    highScoresContainerTop.setPrefHeight(Main.mainStage.getHeight() * 0.1);
+
     highScoresContainerLeftChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", highScoresContainerTop.widthProperty().multiply(0.33))
     );

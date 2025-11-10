@@ -21,64 +21,67 @@ public class MapSelectionController {
   private static MapSelectionController instance;
 
   @FXML
-  Button backBtn;
-
-  @FXML
   VBox mapSelectionPage;
 
   @FXML
   VBox mapSelectionPageContainer;
 
   @FXML
-  VBox mapSelectionPageContainerBottom;
-
-  @FXML
-  VBox rectangleMapSelectorContainer;
-
-  @FXML
-  VBox bombMapSelectorContainer;
-
-  @FXML
-  VBox faceMapSelectorContainer;
-
-  @FXML
-  VBox flowerMapSelectorContainer;
-
-  @FXML
   HBox mapSelectionPageContainerTopLeftChild;
+
+  @FXML
+  Button backBtn;
+
+  @FXML
+  ImageView backBtnImgView;
 
   @FXML
   HBox mapSelectionPageContainerTopMiddleChild;
 
   @FXML
+  Label mapSelectionPageTitle;
+
+  @FXML
   HBox mapSelectionPageContainerTopRightChild;
+
+  @FXML
+  VBox mapSelectionPageContainerBottom;
 
   @FXML
   HBox upperMapsContainer;
 
   @FXML
-  HBox lowerMapsContainer;
-
-  @FXML
-  Label mapSelectionPageTitle;
+  VBox rectangleMapSelectorContainer;
 
   @FXML
   Label rectangleMapSelectorName;
 
   @FXML
+  VBox bombMapSelectorContainer;
+
+  @FXML
   Label bombMapSelectorName;
 
   @FXML
-  Label faceMapSelectorName;
+  HBox lowerMapsContainer;
 
   @FXML
-  Label flowerMapSelectorName;
+  VBox faceMapSelectorContainer;
+
+  @FXML
+  ImageView faceMapImgView;
 
   @FXML
   Image faceMapImg;
 
   @FXML
-  ImageView faceMapImgView;
+  Label faceMapSelectorName;
+
+  @FXML
+  VBox flowerMapSelectorContainer;
+
+  @FXML
+  Label flowerMapSelectorName;
 
 
   private MapSelectionController() {}
@@ -113,16 +116,18 @@ public class MapSelectionController {
     );
 
     mapSelectionPageContainerTopLeftChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.33))
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-background-radius: %.2fpx;", Main.mainStage.widthProperty().multiply(0.1))
     );
 
+    backBtnImgView.fitWidthProperty().bind(mapSelectionPageContainerTopLeftChild.widthProperty().multiply(0.1));
+    backBtnImgView.fitHeightProperty().bind(mapSelectionPageContainerTopLeftChild.heightProperty().multiply(0.4));
+
     mapSelectionPageContainerTopMiddleChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.6))
+        Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.34))
     );
 
     mapSelectionPageTitle.styleProperty().bind(
@@ -130,15 +135,13 @@ public class MapSelectionController {
     );
 
     mapSelectionPageContainerTopRightChild.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
+        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.33))
     );
 
     mapSelectionPageContainerBottom.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.55))
     );
-
-
 
     rectangleMapSelectorContainer.styleProperty().bind(
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
@@ -152,7 +155,6 @@ public class MapSelectionController {
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
     );
 
-
     bombMapSelectorContainer.styleProperty().bind(
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
@@ -164,7 +166,6 @@ public class MapSelectionController {
     bombMapSelectorName.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
     );
-
 
     faceMapSelectorContainer.styleProperty().bind(
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
@@ -190,7 +191,6 @@ public class MapSelectionController {
       faceMapImgView.setImage(faceMapImg);
     }
 
-
     flowerMapSelectorContainer.styleProperty().bind(
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
             + "-fx-background-radius: %.2fpx;",
@@ -202,7 +202,6 @@ public class MapSelectionController {
     flowerMapSelectorName.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
     );
-
 
     mapSelectionPageContainer.setFillWidth(false);
     upperMapsContainer.setFillHeight(false);
@@ -218,13 +217,14 @@ public class MapSelectionController {
             Main.mainStage.widthProperty().multiply(0.0075))
     );
 
-
     VBox.setVgrow(mapSelectionPageContainerBottom, Priority.ALWAYS);
     VBox.setVgrow(upperMapsContainer, Priority.ALWAYS);
     VBox.setVgrow(lowerMapsContainer, Priority.ALWAYS);
   }
 
-
+  /**
+   * Redirects the user back to the Difficulty Selection page.
+   */
   @FXML
   private void goToDifficultySelection() {
     FXMLLoader loader = new FXMLLoader(
@@ -247,24 +247,36 @@ public class MapSelectionController {
     }
   }
 
+  /**
+   * The user picked the "Rectangle" Map.
+   */
   @FXML
   private void pickRectangleMap() {
     AppCache.getInstance().setGameMap("Rectangle");
     startGame();
   }
 
+  /**
+   * The user picked the "Bomb" Map.
+   */
   @FXML
   private void pickBombMap() {
     AppCache.getInstance().setGameMap("Bomb");
     startGame();
   }
 
+  /**
+   * The user picked the "Face" Map.
+   */
   @FXML
   private void pickFaceMap() {
     AppCache.getInstance().setGameMap("Face");
     startGame();
   }
 
+  /**
+   * The user picked the "Flower" Map.
+   */
   @FXML
   private void pickFlowerMap() {
     AppCache.getInstance().setGameMap("Flower");

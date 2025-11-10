@@ -2,7 +2,6 @@
     -fx-alignment: center;
 }
 
-
 #difficultySelectionPageContainer {
     -fx-background-color: red;
 }
@@ -10,7 +9,6 @@
 #difficultySelectionPageContainerTopMiddleChild {
     -fx-alignment: center;
 }
-
 
 #backBtn {
     -fx-background-color: black;
@@ -20,12 +18,10 @@
     -fx-cursor: hand;
 }
 
-
 #difficultySelectionPageTitle {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
-
 
 #difficultySelectionPageContainerBottomInner .button {
     -fx-background-color: black;

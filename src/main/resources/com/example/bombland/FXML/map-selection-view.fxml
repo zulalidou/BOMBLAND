@@ -16,7 +16,7 @@
             <HBox fx:id="mapSelectionPageContainerTopLeftChild" alignment="CENTER_LEFT">
                 <Button fx:id="backBtn" onAction="#goToDifficultySelection">
                     <graphic>
-                        <ImageView fitWidth="20" preserveRatio="true">
+                        <ImageView fx:id="backBtnImgView">
                             <Image url="/com/example/bombland/images/back-button.png"/>
                         </ImageView>
                     </graphic>

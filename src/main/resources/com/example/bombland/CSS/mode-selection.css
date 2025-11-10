@@ -2,7 +2,6 @@
     -fx-alignment: center;
 }
 
-
 #modeSelectionPageContainer {
     -fx-background-color: red;
 }
@@ -10,7 +9,6 @@
 #modeSelectionPageContainerTopMiddleChild {
     -fx-alignment: center;
 }
-
 
 #backBtn {
     -fx-background-color: black;
@@ -20,12 +18,10 @@
     -fx-cursor: hand;
 }
 
-
 #modeSelectionPageTitle {
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
-
 
 #modeSelectionPageContainerBottomInner .button {
     -fx-background-color: black;

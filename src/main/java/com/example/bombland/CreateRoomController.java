@@ -12,9 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.json.JSONObject;
 
@@ -25,28 +24,34 @@ public class CreateRoomController {
   private static CreateRoomController instance;
 
   @FXML
-  Button backBtn;
-
-  @FXML
   VBox createRoomPage;
 
   @FXML
   VBox createRoomPageContainer;
 
   @FXML
-  VBox createRoomPageContainerBottom;
+  HBox createRoomPageContainerTop;
 
   @FXML
   HBox createRoomPageContainerTopLeftChild;
 
   @FXML
+  Button backBtn;
+
+  @FXML
+  ImageView backBtnImgView;
+
+  @FXML
   HBox createRoomPageContainerTopMiddleChild;
+
+  @FXML
+  Label createRoomPageTitle;
 
   @FXML
   HBox createRoomPageContainerTopRightChild;
 
   @FXML
-  Label createRoomPageTitle;
+  VBox roomNameContainer;
 
   @FXML
   Label roomNameText;
@@ -58,16 +63,22 @@ public class CreateRoomController {
   Label roomNameError;
 
   @FXML
+  VBox playerNameContainer;
+
+  @FXML
   Label playerNameText;
 
   @FXML
   TextField playerNameTextField;
 
   @FXML
-  Region space;
+  VBox changePlayerNameContainer;
 
   @FXML
   Button changePlayerNameBtn;
+
+  @FXML
+  VBox createRoomBtnContainer;
 
   @FXML
   Button createRoomBtn;
@@ -109,7 +120,6 @@ public class CreateRoomController {
     // from having the same width as its parent container (createRoomPage)
     createRoomPage.setFillWidth(false);
 
-
     createRoomPageContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.75),
@@ -118,88 +128,97 @@ public class CreateRoomController {
         )
     );
 
+    createRoomPageContainerTop.styleProperty().bind(
+        Bindings.format("-fx-pref-height: %.2fpx;",
+            createRoomPageContainer.heightProperty().multiply(0.15))
+    );
+
     createRoomPageContainerTopLeftChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.05)
-        )
+        Bindings.format("-fx-background-radius: %.2fpx;", Main.mainStage.widthProperty().multiply(0.1))
     );
+
+    backBtnImgView.fitWidthProperty().bind(createRoomPageContainerTopLeftChild.widthProperty().multiply(0.235));
+    backBtnImgView.fitHeightProperty().bind(createRoomPageContainerTopLeftChild.heightProperty().multiply(0.4));
 
     createRoomPageContainerTopMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.6))
     );
 
     createRoomPageTitle.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.04))
+        Bindings.format("-fx-font-size: %.2fpx;", createRoomPageContainerTop.widthProperty().multiply(0.05))
     );
 
     createRoomPageContainerTopRightChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.2))
     );
 
-
-    VBox.setVgrow(createRoomPageContainerBottom, Priority.ALWAYS);
-
-
-    roomNameTextField.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.015))
+    roomNameContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-height: %.2fpx;",
+            createRoomPageContainer.heightProperty().multiply(0.25))
     );
 
     roomNameText.styleProperty().bind(
-        Bindings.format(
-            "-fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.03)
-        )
+        Bindings.format("-fx-font-size: %.2fpx;", roomNameContainer.widthProperty().multiply(0.03))
     );
 
+    roomNameTextField.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-font-size: %.2fpx;",
+            roomNameContainer.widthProperty().multiply(0.5),
+            roomNameContainer.widthProperty().multiply(0.04),
+            roomNameContainer.widthProperty().multiply(0.02))
+    );
+
+    playerNameContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-height: %.2fpx;",
+            createRoomPageContainer.heightProperty().multiply(0.25))
+    );
 
     playerNameText.styleProperty().bind(
-        Bindings.format(
-            "-fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.03)
-        )
+        Bindings.format("-fx-font-size: %.2fpx;", playerNameContainer.widthProperty().multiply(0.03))
     );
 
     playerNameTextField.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.03),
-            Main.mainStage.widthProperty().multiply(0.015))
+            playerNameContainer.widthProperty().multiply(0.5),
+            playerNameContainer.widthProperty().multiply(0.04),
+            playerNameContainer.widthProperty().multiply(0.02))
     );
 
     setPlayerName();
 
-    space.styleProperty().bind(
-        Bindings.format(
-            "-fx-pref-height: %.2fpx",
-            Main.mainStage.widthProperty().multiply(0.01)
-        )
+    changePlayerNameContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-height: %.2fpx;",
+            createRoomPageContainer.heightProperty().multiply(0.15))
     );
 
     changePlayerNameBtn.styleProperty().bind(
         Bindings.format(
             "-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.05)
-        )
+            changePlayerNameContainer.widthProperty().multiply(0.015),
+            changePlayerNameContainer.widthProperty().multiply(0.05))
+    );
+
+    createRoomBtnContainer.styleProperty().bind(
+        Bindings.format("-fx-pref-height: %.2fpx;",
+            createRoomPageContainer.heightProperty().multiply(0.2))
     );
 
     createRoomBtn.styleProperty().bind(
         Bindings.format(
             "-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx; -fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.4),
-            Main.mainStage.widthProperty().multiply(0.02),
-            Main.mainStage.widthProperty().multiply(0.1)
-        )
+            createRoomBtnContainer.widthProperty().multiply(0.4),
+            createRoomBtnContainer.widthProperty().multiply(0.025),
+            createRoomBtnContainer.widthProperty().multiply(0.1))
     );
   }
 
+  /**
+   * Redirects the user back to the Multiplayer Selection page.
+   */
   @FXML
   private void goToMultiplayerSelection() {
     FXMLLoader loader = new FXMLLoader(
@@ -222,6 +241,9 @@ public class CreateRoomController {
     }
   }
 
+  /**
+   * Sets the player's username in the text box.
+   */
   @FXML
   private void setPlayerName() {
     String firstHalf = Usernames.getFirstHalfOfName();
@@ -229,6 +251,9 @@ public class CreateRoomController {
     playerNameTextField.setText(firstHalf + "-" + secondHalf);
   }
 
+  /**
+   * Attempts to create a multiplayer room.
+   */
   @FXML
   private void createRoom() {
     if (roomNameTextField.getText().isBlank()) {
@@ -253,6 +278,9 @@ public class CreateRoomController {
     }
   }
 
+  /**
+   * Displays an error if something went wrong when trying to create a multiplayer room.
+   */
   @FXML
   private void displayErrorPopup() {
     createRoomPageContainer.setEffect(new GaussianBlur());
@@ -295,14 +323,12 @@ public class CreateRoomController {
       }
     }
 
-
     errorLastSentence.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-text-fill: red; -fx-padding: %.2fpx 0 %.2fpx 0",
             Main.mainStage.widthProperty().multiply(0.01),
             Main.mainStage.widthProperty().multiply(0.01),
             Main.mainStage.widthProperty().multiply(0.01))
     );
-
 
     closeErrorPopupBtn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
 
@@ -315,6 +341,9 @@ public class CreateRoomController {
     );
   }
 
+  /**
+   * Closes the error popup.
+   */
   @FXML
   private void closeErrorPopup() {
     errorPopup.setManaged(false);
@@ -324,6 +353,9 @@ public class CreateRoomController {
     createRoomPageContainer.setMouseTransparent(false);
   }
 
+  /**
+   * Sends the user to the multiplayer room.
+   */
   @FXML
   void goToRoom() {
     FXMLLoader loader = new FXMLLoader(

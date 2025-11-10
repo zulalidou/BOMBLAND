@@ -19,7 +19,7 @@
                 <HBox fx:id="pageContainerTopLeftChild" alignment="CENTER_LEFT">
                     <Button fx:id="backBtn" onAction="#goToMultiplayerSelection">
                         <graphic>
-                            <ImageView fitWidth="20" preserveRatio="true">
+                            <ImageView fx:id="backBtnImgView">
                                 <Image url="/com/example/bombland/images/back-button.png"/>
                             </ImageView>
                         </graphic>
@@ -33,44 +33,38 @@
                 <HBox fx:id="pageContainerTopRightChild" />
             </HBox>
 
-
-
             <VBox fx:id="pageContainerBottom" alignment="CENTER">
-                <VBox fx:id="roomIdContainer" alignment="CENTER">
+                <VBox fx:id="roomIdContainer" alignment="BOTTOM_CENTER">
                     <Label fx:id="roomIdText" text="Room ID"/>
 
-                    <HBox alignment="CENTER" fx:id="roomIdHbox">
+                    <HBox fx:id="roomIdHbox" alignment="CENTER" >
                         <TextField fx:id="roomIdTextField"/>
                     </HBox>
 
                     <Label fx:id="roomIdError" text="Please enter a room ID" visible="false"/>
                 </VBox>
 
-                <Region VBox.vgrow="ALWAYS"/>
-
-                <VBox fx:id="playerNameContainer" alignment="CENTER">
+                <VBox fx:id="playerNameContainer" alignment="TOP_CENTER">
                     <Label fx:id="playerNameText" text="Pick a username"/>
 
-                    <HBox alignment="CENTER" fx:id="playerNameHbox">
+                    <HBox fx:id="playerNameHbox" alignment="CENTER" >
                         <TextField fx:id="playerNameTextField" disable="true"/>
                     </HBox>
 
-                    <Region fx:id="space"/>
+                    <Label/>
+                </VBox>
 
+                <VBox fx:id="changePlayerNameContainer" alignment="TOP_CENTER">
                     <Button fx:id="changePlayerNameBtn" text="Change name" onAction="#setPlayerName"/>
                 </VBox>
 
-                <Region VBox.vgrow="ALWAYS"/>
-
-                <VBox alignment="CENTER">
+                <VBox fx:id="joinRoomBtnContainer" alignment="CENTER">
                     <Button fx:id="joinRoomBtn" text="Join Room" onAction="#joinRoom"/>
                 </VBox>
             </VBox>
         </VBox>
 
-
-
-        <VBox fx:id="errorPopup1" managed="false" visible="false">
+        <VBox fx:id="errorPopup1" managed="false" visible="false" alignment="CENTER">
             <Label fx:id="errorPopupTitle1" text="AN ERROR HAS OCCURRED"/>
 
             <VBox alignment="CENTER">
