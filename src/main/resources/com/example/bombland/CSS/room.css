@@ -10,7 +10,6 @@
     -fx-cursor: hand;
 }
 
-
 #roomIdTitleLabel, #roomIdLabel {
     -fx-font-weight: bold;
     -fx-text-fill: black;
@@ -26,7 +25,6 @@
     -fx-text-fill: black;
 }
 
-
 #settingsContainer {
     -fx-border-color: black;
 }
@@ -36,7 +34,6 @@
     -fx-alignment: center;
     -fx-text-fill: black;
 }
-
 
 #selectMapLabel {
     -fx-font-weight: bold;
@@ -57,7 +54,6 @@
     -fx-text-fill: black;
 }
 
-
 #selectDifficultyLabel {
     -fx-font-weight: bold;
     -fx-text-fill: black;
@@ -77,7 +73,6 @@
     -fx-text-fill: black;
 }
 
-
 .toggle_btn {
     -fx-background-color: orange;
 }
@@ -87,8 +82,6 @@
     -fx-background-color: #FFC755;
 }
 
-
-
 #startGameButton {
     -fx-background-color: black;
     -fx-text-fill: white;
@@ -97,7 +90,6 @@
 #startGameButton:hover {
     -fx-cursor: hand;
 }
-
 
 #playersContainer {
     -fx-border-color: black;
@@ -116,11 +108,14 @@
 #player1NameLabel, #player2NameLabel {
     -fx-alignment: center;
     -fx-font-weight: bold;
+    -fx-text-fill: white;
 }
 
-
-.active-player-playerIconBox {
-    -fx-background-color: gold;
+.active-player1-playerIconBox {
+    -fx-background-color: blue;
+}
+.active-player2-playerIconBox {
+    -fx-background-color: green;
 }
 .absent-player-playerIconBox {
     -fx-background-color: black;
@@ -132,7 +127,6 @@
 .absent-player-name {
     -fx-text-fill: white;
 }
-
 
 #voiceChatBox {
     -fx-background-color: #4682B4;
@@ -148,11 +142,9 @@
     -fx-text-fill: white;
 }
 
-
 #bottomPageContainer {
     -fx-background-color: red;
 }
-
 
 #leaveRoomPopup {
     -fx-background-color: black;
@@ -189,7 +181,6 @@
     -fx-cursor: hand;
 }
 
-
 #kickOutPlayer2Popup {
     -fx-background-color: black;
     -fx-alignment: center;
@@ -218,7 +209,6 @@
     -fx-text-fill: black;
     -fx-cursor: hand;
 }
-
 
 #startGamePopup {
     -fx-background-color: black;

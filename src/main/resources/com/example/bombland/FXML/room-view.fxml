@@ -129,15 +129,15 @@
                     </HBox>
 
                     <HBox fx:id="utilitiesContainer" alignment="CENTER">
-                        <VBox fx:id="voiceChatBoxContainer" alignment="CENTER">
-                            <VBox fx:id="voiceChatBox" alignment="CENTER">
-                                <ImageView>
-                                    <Image url="/com/example/bombland/images/sound.png"/>
-                                </ImageView>
+<!--                        <VBox fx:id="voiceChatBoxContainer" alignment="CENTER">-->
+<!--                            <VBox fx:id="voiceChatBox" alignment="CENTER">-->
+<!--                                <ImageView>-->
+<!--                                    <Image url="/com/example/bombland/images/sound.png"/>-->
+<!--                                </ImageView>-->
 
-                                <Label fx:id="voiceChatLabel" text="Voice Chat"/>
-                            </VBox>
-                        </VBox>
+<!--                                <Label fx:id="voiceChatLabel" text="Voice Chat"/>-->
+<!--                            </VBox>-->
+<!--                        </VBox>-->
                     </HBox>
                 </VBox>
             </HBox>

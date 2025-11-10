@@ -631,7 +631,6 @@ public class MultiplayerGameMap {
 
       Tile tile = gridObjects.get(coordinates);
       tile.setValue(Tile.TileValue.BOMB);
-//      gridObjects.put(coordinates, tile);
 
       HashSet<Integer> values;
 
@@ -754,10 +753,10 @@ public class MultiplayerGameMap {
     boolean isBombTile = false;
 
     if (tile.getValue() == Tile.TileValue.EMPTY) {
-      tile.setBackgroundColor(tile.getBackgroundColor().equals(Color.orange()) ? Color.black() : Color.gray());
+      tile.setBackgroundColor(currentUserClickedTile(clicker) ? getCurrentPlayerColor() : getOtherPlayerColor());
       tileBtn.setStyle("-fx-background-color: " + tile.getBackgroundColor() + ";");
     } else if (tile.getValue() == Tile.TileValue.NUMBER) {
-      tile.setBackgroundColor(tile.getBackgroundColor().equals(Color.orange()) ? Color.black() : Color.gray());
+      tile.setBackgroundColor(currentUserClickedTile(clicker) ? getCurrentPlayerColor() : getOtherPlayerColor());
       displayNumberIcon(tile);
     } else { // bomb tile
       isBombTile = true;
@@ -881,5 +880,52 @@ public class MultiplayerGameMap {
       TileCoordinates tile = new TileCoordinates(row, col);
       bombCoordinates.add(tile);
     }
+  }
+
+  /**
+   * Determines whether the current user is the one that clicked a tile.
+   *
+   * @return A boolean that represents whether the current user is the one that clicked a tile.
+   */
+  private boolean currentUserClickedTile(String clicker) {
+    return clicker.equals(AppCache.getInstance().getPlayerName());
+  }
+
+  /**
+   * Determines whether the current user is Player1.
+   *
+   * @return A boolean that represents whether the current user is Player1.
+   */
+  private boolean isPlayer1() {
+    String currentPlayerName = AppCache.getInstance().getPlayerName();
+    String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1Name");
+
+    return currentPlayerName.equals(player1Name);
+  }
+
+  /**
+   * Retrieves the color associated with the current player.
+   *
+   * @return The color associated with the current player.
+   */
+  private String getCurrentPlayerColor() {
+    if (isPlayer1()) {
+      return Color.player1Color();
+    }
+
+    return Color.player2Color();
+  }
+
+  /**
+   * Retrieves the color associated with the other player.
+   *
+   * @return The color associated with the other player.
+   */
+  private String getOtherPlayerColor() {
+    if (isPlayer1()) {
+      return Color.player2Color();
+    }
+
+    return Color.player1Color();
   }
 }

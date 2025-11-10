@@ -185,14 +185,14 @@ public class RoomController {
   @FXML
   HBox utilitiesContainer;
 
-  @FXML
-  VBox voiceChatBoxContainer;
-
-  @FXML
-  VBox voiceChatBox;
-
-  @FXML
-  Label voiceChatLabel;
+//  @FXML
+//  VBox voiceChatBoxContainer;
+//
+//  @FXML
+//  VBox voiceChatBox;
+//
+//  @FXML
+//  Label voiceChatLabel;
 
   @FXML
   HBox bottomPageContainer;
@@ -337,11 +337,9 @@ public class RoomController {
         Bindings.format("-fx-font-size: %.2fpx;", topPageContainer.widthProperty().multiply(0.02))
     );
 
-
     middlePageContainer.styleProperty().bind(
         Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.82))
     );
-
 
     settingsContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", middlePageContainer.widthProperty().multiply(0.5))
@@ -381,7 +379,6 @@ public class RoomController {
 
     sectionSpace2.prefHeightProperty().bind(settingsContainer.heightProperty().multiply(0.04));
 
-
     difficultyContainerSpace1.prefWidthProperty().bind(difficultyContainerInner.widthProperty().multiply(0.025));
     difficultyContainerSpace2.prefWidthProperty().bind(difficultyContainerInner.widthProperty().multiply(0.025));
 
@@ -407,7 +404,6 @@ public class RoomController {
             buttonsContainer.widthProperty().multiply(0.05),
             buttonsContainer.widthProperty().multiply(0.01))
     );
-
 
     playersContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.5))
@@ -436,7 +432,7 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    player1Box.getStyleClass().add("active-player-playerIconBox");
+    player1Box.getStyleClass().add("active-player1-playerIconBox");
 
     player1NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player1Name").toString());
 
@@ -446,13 +442,11 @@ public class RoomController {
             player1Box.widthProperty().multiply(1))
     );
 
-    player1NameLabel.getStyleClass().add("active-player-name");
-
-
     utilitiesContainer.styleProperty().bind(
         Bindings.format("-fx-pref-height: %.2fpx;", playersContainer.heightProperty().multiply(0.465))
     );
 
+    /*
     voiceChatBoxContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", playersContainer.widthProperty().multiply(0.35))
     );
@@ -470,12 +464,11 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.015),
             player1Box.widthProperty().multiply(1))
     );
-
+    */
 
     bottomPageContainer.styleProperty().bind(
         Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.09))
     );
-
 
     if (!AppCache.getInstance().getMultiplayerRoom().getString("player2Name").equals("N/A")) {
       if (!isPlayer1()) {
@@ -532,7 +525,7 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    player2Box.getStyleClass().add("active-player-playerIconBox");
+    player2Box.getStyleClass().add("active-player2-playerIconBox");
 
     player2NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player2Name").toString());
 
@@ -541,8 +534,6 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.015),
             player1Box.widthProperty().multiply(1))
     );
-
-    player2NameLabel.getStyleClass().add("active-player-name");
   }
 
   /**
@@ -557,28 +548,20 @@ public class RoomController {
       activePlayers++;
 
       player1Box.getStyleClass().remove("absent-player-playerIconBox");
-      player1Box.getStyleClass().add("active-player-playerIconBox");
-      player1NameLabel.getStyleClass().remove("absent-player-name");
-      player1NameLabel.getStyleClass().add("active-player-name");
+      player1Box.getStyleClass().add("active-player1-playerIconBox");
     } else {
-      player1Box.getStyleClass().remove("active-player-playerIconBox");
+      player1Box.getStyleClass().remove("active-player1-playerIconBox");
       player1Box.getStyleClass().add("absent-player-playerIconBox");
-      player1NameLabel.getStyleClass().remove("active-player-name");
-      player1NameLabel.getStyleClass().add("absent-player-name");
     }
 
     if (AppCache.getInstance().getMultiplayerRoom().getBoolean("isPlayer2InRoom")) {
       activePlayers++;
 
       player2Box.getStyleClass().remove("absent-player-playerIconBox");
-      player2Box.getStyleClass().add("active-player-playerIconBox");
-      player2NameLabel.getStyleClass().remove("absent-player-name");
-      player2NameLabel.getStyleClass().add("active-player-name");
+      player2Box.getStyleClass().add("active-player2-playerIconBox");
     } else {
-      player2Box.getStyleClass().remove("active-player-playerIconBox");
+      player2Box.getStyleClass().remove("active-player2-playerIconBox");
       player2Box.getStyleClass().add("absent-player-playerIconBox");
-      player2NameLabel.getStyleClass().remove("active-player-name");
-      player2NameLabel.getStyleClass().add("absent-player-name");
     }
 
     totalPlayersLabel.setText(activePlayers + " / 2");

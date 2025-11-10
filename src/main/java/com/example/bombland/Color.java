@@ -27,4 +27,14 @@ public class Color {
   static String white() {
     return "#FFFFFF";
   }
+
+  static String player1Color() {
+    // light blue
+    return "#ADD8E6";
+  }
+
+  static String player2Color() {
+    // light green
+    return "#90EE90";
+  }
 }
