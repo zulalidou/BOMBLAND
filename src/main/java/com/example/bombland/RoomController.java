@@ -1015,8 +1015,8 @@ public class RoomController {
     startGamePopup.setManaged(true);
     startGamePopup.setVisible(true);
 
-    startGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
-    startGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
+    startGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
+    startGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
 
     startGamePopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -1045,13 +1045,13 @@ public class RoomController {
 
     startGamePopupYesBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            startGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            startGamePopupButtonsContainer.widthProperty().multiply(0.03),
             startGamePopupButtonsContainer.widthProperty().multiply(0.05),
             startGamePopupButtonsContainer.widthProperty().multiply(0.45))
     );
     startGamePopupNoBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            startGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            startGamePopupButtonsContainer.widthProperty().multiply(0.03),
             startGamePopupButtonsContainer.widthProperty().multiply(0.05),
             startGamePopupButtonsContainer.widthProperty().multiply(0.45))
     );
