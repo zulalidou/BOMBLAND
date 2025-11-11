@@ -18,7 +18,7 @@
                 <HBox fx:id="backBtnContainer" alignment="CENTER">
                     <Button fx:id="backBtn" onAction="#displayLeaveRoomPopup">
                         <graphic>
-                            <ImageView fitWidth="20" preserveRatio="true">
+                            <ImageView fx:id="backBtnImgView">
                                 <Image url="/com/example/bombland/images/back-button.png"/>
                             </ImageView>
                         </graphic>

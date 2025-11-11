@@ -39,6 +39,9 @@ public class RoomController {
   Button backBtn;
 
   @FXML
+  ImageView backBtnImgView;
+
+  @FXML
   VBox roomIdContainer;
 
   @FXML
@@ -290,9 +293,11 @@ public class RoomController {
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            backBtnContainer.widthProperty().multiply(0.2))
+        Bindings.format("-fx-background-radius: %.2fpx;", backBtnContainer.widthProperty().multiply(0.3))
     );
+
+    backBtnImgView.fitWidthProperty().bind(backBtnContainer.widthProperty().multiply(0.45));
+    backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.5));
 
     roomIdContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
@@ -584,7 +589,7 @@ public class RoomController {
     leaveRoomPopup.setVisible(true);
 
     leaveRoomPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
-    leaveRoomPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
+    leaveRoomPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
 
     leaveRoomPopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -619,13 +624,13 @@ public class RoomController {
 
     leaveRoomPopupYesBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.04),
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.03),
             leaveRoomPopupButtonsContainer.widthProperty().multiply(0.05),
             leaveRoomPopupButtonsContainer.widthProperty().multiply(0.45))
     );
     leaveRoomPopupNoBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.04),
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.03),
             leaveRoomPopupButtonsContainer.widthProperty().multiply(0.05),
             leaveRoomPopupButtonsContainer.widthProperty().multiply(0.45))
     );
