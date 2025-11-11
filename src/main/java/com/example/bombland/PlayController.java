@@ -315,8 +315,8 @@ public class PlayController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-
     VBox.setVgrow(exitPagePopupButtonsContainer, Priority.ALWAYS);
+
     exitPagePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
 
     exitPagePopupCancelBtn.styleProperty().bind(
@@ -325,6 +325,7 @@ public class PlayController {
             exitPagePopupButtonsContainer.widthProperty().multiply(0.05),
             exitPagePopupButtonsContainer.widthProperty().multiply(0.45))
     );
+
     exitPagePopupMainMenuBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
             exitPagePopupButtonsContainer.widthProperty().multiply(0.04),
@@ -453,7 +454,8 @@ public class PlayController {
     gameLostPopup.setVisible(true);
 
     gameLostPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
-    gameLostPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    gameLostPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.35);
+
     gameLostPopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
@@ -477,15 +479,16 @@ public class PlayController {
 
     gameLostPopupPlayAgainBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            gameLostPopupButtonsContainer.widthProperty().multiply(0.04),
+            gameLostPopupButtonsContainer.widthProperty().multiply(0.05),
+            gameLostPopupButtonsContainer.widthProperty().multiply(0.45))
     );
+
     gameLostPopupMainMenuBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            gameLostPopupButtonsContainer.widthProperty().multiply(0.04),
+            gameLostPopupButtonsContainer.widthProperty().multiply(0.05),
+            gameLostPopupButtonsContainer.widthProperty().multiply(0.45))
     );
   }
 

@@ -23,8 +23,8 @@ public class BomblandWebSocketClient extends WebSocketClient {
    * @throws URISyntaxException is thrown if the URI passed is not valid.
    */
   public BomblandWebSocketClient() throws URISyntaxException {
-    super(new URI("wss://bombland-server.onrender.com/websocket/establish-server-connection"));
-//    super(new URI("ws://localhost:8080/websocket/establish-server-connection"));
+//    super(new URI("wss://bombland-server.onrender.com/websocket/establish-server-connection"));
+    super(new URI("ws://localhost:8080/websocket/establish-server-connection"));
   }
 
   /**
