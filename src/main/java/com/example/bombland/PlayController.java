@@ -617,8 +617,8 @@ public class PlayController {
     databaseCommunicationErrorPopup.setManaged(true);
     databaseCommunicationErrorPopup.setVisible(true);
 
-    databaseCommunicationErrorPopup.setMaxWidth(Main.mainStage.getWidth() * 0.33);
-    databaseCommunicationErrorPopup.setMaxHeight(Main.mainStage.getHeight() * 0.40);
+    databaseCommunicationErrorPopup.setMaxWidth(Main.mainStage.getWidth() * 0.4);
+    databaseCommunicationErrorPopup.setMaxHeight(Main.mainStage.getHeight() * 0.4);
 
     databaseCommunicationErrorPopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -630,8 +630,8 @@ public class PlayController {
 
     databaseCommunicationErrorPopupTitle.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.02),
-            Main.mainStage.widthProperty().multiply(0.33))
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.07),
+            databaseCommunicationErrorPopup.widthProperty().multiply(1))
     );
 
 
@@ -643,31 +643,26 @@ public class PlayController {
       // Use an instanceof check for safety
       if (node instanceof Label) {
         Label label = (Label) node;
-
+        label.setWrapText(true);
         label.styleProperty().bind(
             Bindings.format("-fx-font-size: %.2fpx;",
-                Main.mainStage.widthProperty().multiply(0.01))
+                databaseCommunicationErrorPopup.widthProperty().multiply(0.03))
         );
       }
     }
 
-
     databaseErrorLastSentence.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0",
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.01))
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.03),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.01),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.01))
     );
 
-
-    closeDatabaseErrorPopupBtn.setMaxWidth(Main.mainStage.getWidth() * 0.31);
-
     closeDatabaseErrorPopupBtn.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.31),
-            Main.mainStage.widthProperty().multiply(0.02),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.011))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            databaseCommunicationErrorPopup.widthProperty().multiply(1),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.01),
+            databaseCommunicationErrorPopup.widthProperty().multiply(0.0275))
     );
   }
 
@@ -677,7 +672,6 @@ public class PlayController {
   public void closeDatabaseErrorPopup() {
     databaseCommunicationErrorPopup.setManaged(false);
     databaseCommunicationErrorPopup.setVisible(false);
-
     gameWonPopup.setEffect(null);
     gameWonPopup.setMouseTransparent(false);
   }
