@@ -730,7 +730,7 @@ public class PlayController {
     gameWonPopup.setVisible(true);
 
     gameWonPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
-    gameWonPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    gameWonPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.35);
     gameWonPopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
@@ -754,15 +754,15 @@ public class PlayController {
 
     gameWonPopupPlayAgainBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            gameWonPopupButtonsContainer.widthProperty().multiply(0.04),
+            gameWonPopupButtonsContainer.widthProperty().multiply(0.05),
+            gameWonPopupButtonsContainer.widthProperty().multiply(0.45))
     );
     gameWonPopupMainMenuBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            gameWonPopupButtonsContainer.widthProperty().multiply(0.04),
+            gameWonPopupButtonsContainer.widthProperty().multiply(0.05),
+            gameWonPopupButtonsContainer.widthProperty().multiply(0.45))
     );
   }
 
