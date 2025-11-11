@@ -586,7 +586,7 @@ public class RoomController {
     leaveRoomPopup.setManaged(true);
     leaveRoomPopup.setVisible(true);
 
-    leaveRoomPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
+    leaveRoomPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
     leaveRoomPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
 
     leaveRoomPopup.styleProperty().bind(
@@ -603,10 +603,9 @@ public class RoomController {
     leaveRoomPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     leaveRoomPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
-
     leaveRoomPopupErrorMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
-            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.0125),
             Main.mainStage.widthProperty().multiply(0.01),
             Main.mainStage.widthProperty().multiply(0.01))
     );
@@ -619,20 +618,19 @@ public class RoomController {
 
     leaveRoomPopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
 
-
     leaveRoomPopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
 
     leaveRoomPopupYesBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.0125),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.04),
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.05),
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.45))
     );
     leaveRoomPopupNoBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.0125),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.04),
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.05),
+            leaveRoomPopupButtonsContainer.widthProperty().multiply(0.45))
     );
   }
 
@@ -1025,7 +1023,7 @@ public class RoomController {
     startGamePopup.setVisible(true);
 
     startGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
-    startGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.45);
+    startGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
 
     startGamePopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",

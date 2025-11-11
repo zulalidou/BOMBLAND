@@ -147,6 +147,7 @@
 
         <VBox fx:id="leaveRoomPopup" managed="false" visible="false">
             <Label fx:id="leaveRoomPopupTitle" text="LEAVE ROOM"/>
+
             <VBox alignment="CENTER" fx:id="leaveRoomPopupImgContainer">
                 <ImageView fx:id="leaveRoomPopupImg">
                     <Image url="/com/example/bombland/images/exit.png"/>
@@ -163,6 +164,7 @@
 
         <VBox fx:id="kickOutPlayer2Popup" managed="false" visible="false">
             <Label fx:id="kickOutPlayer2PopupTitle" text="ROOM CLOSED"/>
+
             <VBox alignment="CENTER" fx:id="kickOutPlayer2PopupImgContainer">
                 <ImageView fx:id="kickOutPlayer2PopupImg">
                     <Image url="/com/example/bombland/images/error.png"/>
