@@ -171,7 +171,7 @@
                 </ImageView>
             </VBox>
 
-            <Label fx:id="kickOutPlayer2PopupErrorMsg" text="The creator of this room has left, so this room has been closed. You'll now be sent back to the main menu."/>
+            <Label fx:id="kickOutPlayer2PopupErrorMsg" text="The creator of this room has left, so this room has been closed."/>
 
             <HBox fx:id="kickOutPlayer2PopupButtonsContainer" alignment="CENTER">
                 <Button fx:id="kickOutPlayer2PopupCloseButton" text="OK" onAction="#goToMainMenu"/>

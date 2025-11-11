@@ -24,6 +24,9 @@ public class RoomController {
   private static RoomController instance;
 
   @FXML
+  VBox page;
+
+  @FXML
   VBox topPageOuterContainer;
 
   @FXML
@@ -223,12 +226,6 @@ public class RoomController {
 
   @FXML
   Label kickOutPlayer2PopupTitle;
-
-  @FXML
-  VBox kickOutPlayer2PopupImgContainer;
-
-  @FXML
-  ImageView kickOutPlayer2PopupImg;
 
   @FXML
   Label kickOutPlayer2PopupErrorMsg;
@@ -952,8 +949,8 @@ public class RoomController {
     kickOutPlayer2Popup.setManaged(true);
     kickOutPlayer2Popup.setVisible(true);
 
-    kickOutPlayer2Popup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
-    kickOutPlayer2Popup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    kickOutPlayer2Popup.setMaxWidth(page.widthProperty().get() * 0.4);
+    kickOutPlayer2Popup.setMaxHeight(page.heightProperty().get() * 0.3);
 
     kickOutPlayer2Popup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -963,28 +960,24 @@ public class RoomController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    kickOutPlayer2PopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
-
-    kickOutPlayer2PopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
-    kickOutPlayer2PopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
-    kickOutPlayer2PopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
-
-    kickOutPlayer2PopupErrorMsg.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.01),
+    kickOutPlayer2PopupTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            kickOutPlayer2Popup.widthProperty().multiply(0.07),
             kickOutPlayer2Popup.widthProperty().multiply(1))
     );
 
-    kickOutPlayer2PopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
+    kickOutPlayer2PopupErrorMsg.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
+            kickOutPlayer2Popup.widthProperty().multiply(0.03),
+            kickOutPlayer2Popup.widthProperty().multiply(0.01),
+            kickOutPlayer2Popup.widthProperty().multiply(0.01))
+    );
 
     kickOutPlayer2PopupCloseButton.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.31),
-            Main.mainStage.widthProperty().multiply(0.02),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.011))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            kickOutPlayer2Popup.widthProperty().multiply(1),
+            kickOutPlayer2Popup.widthProperty().multiply(0.01),
+            kickOutPlayer2Popup.widthProperty().multiply(0.0275))
     );
   }
 

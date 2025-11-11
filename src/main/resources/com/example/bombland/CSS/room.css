@@ -196,6 +196,7 @@
 #kickOutPlayer2PopupErrorMsg {
     -fx-wrap-text: true;
     -fx-text-fill: red;
+    -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
