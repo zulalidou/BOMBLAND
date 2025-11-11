@@ -21,7 +21,7 @@
                 <HBox fx:id="backBtnContainer" alignment="CENTER">
                     <Button fx:id="backBtn" onAction="#verifyExitPage">
                         <graphic>
-                            <ImageView fitWidth="20" preserveRatio="true">
+                            <ImageView fx:id="backBtnImgView">
                                 <Image url="/com/example/bombland/images/back-button.png"/>
                             </ImageView>
                         </graphic>
@@ -40,7 +40,7 @@
 
         <VBox fx:id="exitPagePopup" managed="false" visible="false">
             <Label fx:id="exitPagePopupTitle" text="EXIT"/>
-            <VBox alignment="CENTER" fx:id="exitPagePopupImgContainer">
+            <VBox fx:id="exitPagePopupImgContainer" alignment="CENTER" >
                 <ImageView fx:id="exitPagePopupImg">
                     <Image url="/com/example/bombland/images/exit.png"/>
                 </ImageView>
@@ -56,7 +56,7 @@
 
         <VBox fx:id="gameLostPopup" managed="false" visible="false">
             <Label fx:id="gameLostPopupTitle" text="GAME OVER"/>
-            <VBox alignment="CENTER" fx:id="gameLostPopupImgContainer">
+            <VBox fx:id="gameLostPopupImgContainer" alignment="CENTER" >
                 <ImageView fx:id="gameLostPopupImg">
                     <Image url="/com/example/bombland/images/timer.png"/>
                 </ImageView>
@@ -72,7 +72,7 @@
 
         <VBox fx:id="gameWonPopup" managed="false" visible="false">
             <Label fx:id="gameWonPopupTitle" text="CONGRATS"/>
-            <VBox alignment="CENTER" fx:id="gameWonPopupImgContainer">
+            <VBox fx:id="gameWonPopupImgContainer" alignment="CENTER" >
                 <ImageView fx:id="gameWonPopupImg">
                     <Image url="/com/example/bombland/images/timer.png"/>
                 </ImageView>
@@ -88,7 +88,7 @@
 
         <VBox fx:id="newRecordPopup" managed="false" visible="false">
             <Label fx:id="newRecordPopupTitle" text="NEW RECORD"/>
-            <VBox alignment="CENTER" fx:id="newRecordPopupImgContainer">
+            <VBox fx:id="newRecordPopupImgContainer" alignment="CENTER">
                 <ImageView fx:id="newRecordPopupImg">
                     <Image url="/com/example/bombland/images/trophy.png"/>
                 </ImageView>

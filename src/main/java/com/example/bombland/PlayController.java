@@ -51,37 +51,16 @@ public class PlayController {
   VBox stackpaneChild1;
 
   @FXML
-  VBox emptySpace;
+  HBox playPageContainerHeader;
 
   @FXML
-  VBox gridContainer;
+  HBox backBtnContainer;
 
   @FXML
-  VBox exitPagePopup;
+  Button backBtn;
 
   @FXML
-  VBox exitPagePopupImgContainer;
-
-  @FXML
-  VBox gameLostPopup;
-
-  @FXML
-  VBox gameLostPopupImgContainer;
-
-  @FXML
-  VBox gameWonPopup;
-
-  @FXML
-  VBox gameWonPopupImgContainer;
-
-  @FXML
-  VBox newRecordPopup;
-
-  @FXML
-  VBox newRecordPopupImgContainer;
-
-  @FXML
-  VBox databaseCommunicationErrorPopup;
+  ImageView backBtnImgView;
 
   @FXML
   Label totalBombsLbl;
@@ -93,40 +72,28 @@ public class PlayController {
   Label flagsLeftLbl;
 
   @FXML
+  VBox emptySpace;
+
+  @FXML
+  VBox gridContainer;
+
+  @FXML
+  VBox exitPagePopup;
+
+  @FXML
   Label exitPagePopupTitle;
+
+  @FXML
+  VBox exitPagePopupImgContainer;
+
+  @FXML
+  ImageView exitPagePopupImg;
 
   @FXML
   Label exitPagePopupText;
 
   @FXML
-  Label gameLostPopupTitle;
-
-  @FXML
-  Label gameLostPopupTimeTaken;
-
-  @FXML
-  Label gameWonPopupTitle;
-
-  @FXML
-  Label gameWonPopupTimeTaken;
-
-  @FXML
-  Label newRecordPopupTitle;
-
-  @FXML
-  Label newRecordPopupTimeTaken;
-
-  @FXML
-  Label newRecordPopupText;
-
-  @FXML
-  Label playerNameError;
-
-  @FXML
-  Label databaseCommunicationErrorPopupTitle;
-
-  @FXML
-  Button backBtn;
+  HBox exitPagePopupButtonsContainer;
 
   @FXML
   Button exitPagePopupCancelBtn;
@@ -135,10 +102,46 @@ public class PlayController {
   Button exitPagePopupMainMenuBtn;
 
   @FXML
+  VBox gameLostPopup;
+
+  @FXML
+  Label gameLostPopupTitle;
+
+  @FXML
+  VBox gameLostPopupImgContainer;
+
+  @FXML
+  ImageView gameLostPopupImg;
+
+  @FXML
+  Label gameLostPopupTimeTaken;
+
+  @FXML
+  HBox gameLostPopupButtonsContainer;
+
+  @FXML
   Button gameLostPopupPlayAgainBtn;
 
   @FXML
   Button gameLostPopupMainMenuBtn;
+
+  @FXML
+  VBox gameWonPopup;
+
+  @FXML
+  Label gameWonPopupTitle;
+
+  @FXML
+  VBox gameWonPopupImgContainer;
+
+  @FXML
+  ImageView gameWonPopupImg;
+
+  @FXML
+  Label gameWonPopupTimeTaken;
+
+  @FXML
+  HBox gameWonPopupButtonsContainer;
 
   @FXML
   Button gameWonPopupPlayAgainBtn;
@@ -147,40 +150,40 @@ public class PlayController {
   Button gameWonPopupMainMenuBtn;
 
   @FXML
-  Button newRecordPopupPlayAgainBtn;
+  VBox newRecordPopup;
 
   @FXML
-  HBox backBtnContainer;
+  Label newRecordPopupTitle;
 
   @FXML
-  HBox exitPagePopupButtonsContainer;
+  VBox newRecordPopupImgContainer;
 
   @FXML
-  HBox gameLostPopupButtonsContainer;
+  ImageView newRecordPopupImg;
 
   @FXML
-  HBox gameWonPopupButtonsContainer;
+  Label newRecordPopupTimeTaken;
 
   @FXML
-  HBox newRecordPopupButtonsContainer;
-
-  @FXML
-  HBox playPageContainerHeader;
+  Label newRecordPopupText;
 
   @FXML
   TextField playerNameTextField;
 
   @FXML
-  ImageView exitPagePopupImg;
+  Label playerNameError;
 
   @FXML
-  ImageView gameLostPopupImg;
+  HBox newRecordPopupButtonsContainer;
 
   @FXML
-  ImageView gameWonPopupImg;
+  Button newRecordPopupPlayAgainBtn;
 
   @FXML
-  ImageView newRecordPopupImg;
+  VBox databaseCommunicationErrorPopup;
+
+  @FXML
+  Label databaseCommunicationErrorPopupTitle;
 
   @FXML
   Label databaseErrorLastSentence;
@@ -289,7 +292,7 @@ public class PlayController {
     exitPagePopup.setVisible(true);
 
     exitPagePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
-    exitPagePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    exitPagePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.35);
 
     exitPagePopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -305,22 +308,28 @@ public class PlayController {
     exitPagePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     exitPagePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
-    exitPagePopupText.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
+    exitPagePopupText.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
+            Main.mainStage.widthProperty().multiply(0.0145),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
 
     VBox.setVgrow(exitPagePopupButtonsContainer, Priority.ALWAYS);
     exitPagePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
 
     exitPagePopupCancelBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            exitPagePopupButtonsContainer.widthProperty().multiply(0.04),
+            exitPagePopupButtonsContainer.widthProperty().multiply(0.05),
+            exitPagePopupButtonsContainer.widthProperty().multiply(0.45))
     );
     exitPagePopupMainMenuBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            exitPagePopupButtonsContainer.widthProperty().multiply(0.04),
+            exitPagePopupButtonsContainer.widthProperty().multiply(0.05),
+            exitPagePopupButtonsContainer.widthProperty().multiply(0.45))
     );
   }
 
@@ -332,18 +341,19 @@ public class PlayController {
     VBox.setVgrow(playPageContainerInner, Priority.ALWAYS);
 
     playPageContainerHeader.styleProperty().bind(
-        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.05))
+        Bindings.format("-fx-pref-height: %.2fpx;", stackpaneChild1.heightProperty().multiply(0.05))
     );
 
     backBtnContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-pref-width: %.2fpx;", playPageContainerHeader.widthProperty().multiply(0.05))
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-background-radius: %.2fpx;", backBtnContainer.widthProperty().multiply(0.35))
     );
 
+    backBtnImgView.fitWidthProperty().bind(backBtnContainer.widthProperty().multiply(0.5));
+    backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.45));
 
     totalBombsLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",

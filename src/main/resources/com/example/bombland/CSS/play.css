@@ -3,7 +3,6 @@
     -fx-background-color: #FF0000;
 }
 
-
 #backBtn {
     -fx-background-color: black;
 }
@@ -12,17 +11,15 @@
     -fx-cursor: hand;
 }
 
-
-#totalBombsLbl, #flagsLeftLbl, #timeElapsedLbl {
+#totalBombsLbl, #timeElapsedLbl, #flagsLeftLbl {
     -fx-alignment: center;
     -fx-font-weight: bold;
+    -fx-text-fill: black;
 }
-
 
 .tile-btn:focused {
     -fx-background-color: transparent;
 }
-
 
 #exitPagePopup, #gameLostPopup, #gameWonPopup, #newRecordPopup {
     -fx-background-color: black;
@@ -36,12 +33,10 @@
     -fx-text-fill: red;
 }
 
-
 #gameLostPopupTimeTaken, #gameWonPopupTimeTaken, #newRecordPopupTimeTaken {
     -fx-font-weight: bold;
     -fx-text-fill: gold;
 }
-
 
 #exitPagePopupText, #newRecordPopupText {
     -fx-wrap-text: true;
@@ -49,8 +44,6 @@
     -fx-text-alignment: center;
     -fx-text-fill: red;
 }
-
-
 
 #playerInfoHbox {
     -fx-alignment: center;
@@ -74,8 +67,6 @@
     -fx-font-weight: bold;
 }
 
-
-
 .playAgainBtn {
     -fx-background-color: green;
     -fx-text-fill: white;
@@ -87,7 +78,6 @@
     -fx-text-fill: red;
 }
 
-
 .mainMenuBtn {
     -fx-background-color: #FF7C7C;
     -fx-text-fill: white;
@@ -98,7 +88,6 @@
     -fx-cursor: hand;
     -fx-text-fill: red;
 }
-
 
 #databaseCommunicationErrorPopup {
     -fx-background-color: black;
