@@ -245,10 +245,8 @@ public class PlayController {
   private void closeExitPagePopup() {
     exitPagePopup.setManaged(false);
     exitPagePopup.setVisible(false);
-
     stackpaneChild1.setEffect(null);
     stackpaneChild1.setMouseTransparent(false); // makes items in gameplay page "clickable"
-
     timerPaused = false;
   }
 
@@ -342,7 +340,7 @@ public class PlayController {
     VBox.setVgrow(playPageContainerInner, Priority.ALWAYS);
 
     playPageContainerHeader.styleProperty().bind(
-        Bindings.format("-fx-pref-height: %.2fpx;", stackpaneChild1.heightProperty().multiply(0.05))
+        Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.05))
     );
 
     backBtnContainer.styleProperty().bind(
@@ -354,35 +352,33 @@ public class PlayController {
     );
 
     backBtnImgView.fitWidthProperty().bind(backBtnContainer.widthProperty().multiply(0.5));
-    backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.45));
+    backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.55));
 
     totalBombsLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.035))
+            playPageContainerHeader.widthProperty().multiply(0.3),
+            playPageContainerHeader.widthProperty().multiply(0.0225))
     );
 
     timeElapsedLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.035))
+            playPageContainerHeader.widthProperty().multiply(0.3),
+            playPageContainerHeader.widthProperty().multiply(0.0225))
     );
 
     flagsLeftLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.035))
+            playPageContainerHeader.widthProperty().multiply(0.3),
+            playPageContainerHeader.widthProperty().multiply(0.0225))
     );
 
     emptySpace.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-pref-width: %.2fpx;", playPageContainerHeader.widthProperty().multiply(0.05))
     );
-
 
     gridContainer.styleProperty().bind(
         Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.95))
     );
-
 
     buildGrid();
   }
