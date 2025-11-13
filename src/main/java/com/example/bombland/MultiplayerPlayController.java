@@ -85,9 +85,6 @@ public class MultiplayerPlayController {
   Label gameOverPopupTitle;
 
   @FXML
-  VBox gameOverPopupImgContainer;
-
-  @FXML
   ImageView gameOverPopupImg;
 
   @FXML
@@ -376,7 +373,6 @@ public class MultiplayerPlayController {
 
     clip.play();
 
-
     displayGameOverPopup(statsObj);
   }
 
@@ -398,12 +394,6 @@ public class MultiplayerPlayController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    gameOverPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
-
-    gameOverPopupImgContainer.setStyle("-fx-pref-height: " + (gameOverPopup.getHeight() * 0.7) + "px;");
-    gameOverPopupImg.setFitWidth(gameOverPopupImgContainer.getWidth() * 0.7);
-    gameOverPopupImg.setFitHeight(gameOverPopupImgContainer.getWidth() * 0.7);
-
     gameOverPopupRoundContainer.styleProperty().bind(
         Bindings.format("-fx-padding: 0 %.2fpx 0 %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
@@ -412,9 +402,6 @@ public class MultiplayerPlayController {
 
     gameOverPopupRoundLabel.setText("ROUND " + statsObj.getInt("round"));
     gameOverPopupRoundLabel.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
-
-    gameOverPopupPlayer1Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
-    gameOverPopupPlayer2Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
 
     gameOverPopupStatsContainer.styleProperty().bind(
         Bindings.format("-fx-padding: 0 %.2fpx %.2fpx %.2fpx;",
@@ -502,9 +489,10 @@ public class MultiplayerPlayController {
       imageUrl = getClass().getResource("/com/example/bombland/Images/tie.png");
     }
 
+    gameOverPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
+
     Image newImage = new Image(imageUrl.toString());
     gameOverPopupImg.setImage(newImage);
-
 
     if (statsObj.getBoolean("playerDied")) {
       if (statsObj.getString("playerName").equals(statsObj.getString("player1Name"))) {
@@ -518,6 +506,9 @@ public class MultiplayerPlayController {
       gameOverPopupPlayer1Points.setText("POINTS: " + statsObj.getInt("player1Points"));
       gameOverPopupPlayer2Points.setText("POINTS: " + statsObj.getInt("player2Points"));
     }
+
+    gameOverPopupPlayer1Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+    gameOverPopupPlayer2Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
   }
 
   @FXML
