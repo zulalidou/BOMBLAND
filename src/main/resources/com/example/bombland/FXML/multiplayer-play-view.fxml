@@ -110,7 +110,7 @@
                 </ImageView>
             </VBox>
 
-            <Label fx:id="leaveGamePopupErrorMsg" text="Are you sure you want to leave? You'll be sent back to the room."/>
+            <Label fx:id="leaveGamePopupErrorMsg" text="Are you sure you want to leave?"/>
 
             <HBox fx:id="leaveGamePopupButtonsContainer" alignment="CENTER">
                 <Button fx:id="leaveGamePopupNoBtn" text="No, stay in game" styleClass="playAgainBtn" onAction="#closeLeaveGamePopup"/>

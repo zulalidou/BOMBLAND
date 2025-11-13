@@ -570,8 +570,8 @@ public class MultiplayerPlayController {
     leaveGamePopup.setManaged(true);
     leaveGamePopup.setVisible(true);
 
-    leaveGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
-    leaveGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.475);
+    leaveGamePopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
+    leaveGamePopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
 
     leaveGamePopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -587,7 +587,6 @@ public class MultiplayerPlayController {
     leaveGamePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     leaveGamePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
-
     leaveGamePopupErrorMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
             Main.mainStage.widthProperty().multiply(0.015),
@@ -595,22 +594,20 @@ public class MultiplayerPlayController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    leaveGamePopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
-
-
     leaveGamePopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
 
     leaveGamePopupYesBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.0125),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            leaveGamePopupButtonsContainer.widthProperty().multiply(0.04),
+            leaveGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            leaveGamePopupButtonsContainer.widthProperty().multiply(0.45))
     );
+
     leaveGamePopupNoBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.0125),
-            Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            leaveGamePopupButtonsContainer.widthProperty().multiply(0.04),
+            leaveGamePopupButtonsContainer.widthProperty().multiply(0.05),
+            leaveGamePopupButtonsContainer.widthProperty().multiply(0.45))
     );
   }
 
