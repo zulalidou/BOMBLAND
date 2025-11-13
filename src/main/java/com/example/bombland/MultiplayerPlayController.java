@@ -55,6 +55,9 @@ public class MultiplayerPlayController {
   Button backBtn;
 
   @FXML
+  ImageView backBtnImgView;
+
+  @FXML
   Label totalBombsLbl;
 
   @FXML
@@ -88,18 +91,6 @@ public class MultiplayerPlayController {
   ImageView gameOverPopupImg;
 
   @FXML
-  Label gameOverPopupPlayer1Name;
-
-  @FXML
-  Label gameOverPopupPlayer1Id;
-
-  @FXML
-  Label gameOverPopupPlayer2Name;
-
-  @FXML
-  Label gameOverPopupPlayer2Id;
-
-  @FXML
   Label gameOverPopupRoundLabel;
 
   @FXML
@@ -110,6 +101,18 @@ public class MultiplayerPlayController {
 
   @FXML
   Label gameOverPopupStatsLabel;
+
+  @FXML
+  Label gameOverPopupPlayer1Id;
+
+  @FXML
+  Label gameOverPopupPlayer1Name;
+
+  @FXML
+  Label gameOverPopupPlayer2Id;
+
+  @FXML
+  Label gameOverPopupPlayer2Name;
 
   @FXML
   Label gameOverPopupPlayer1Wins;
@@ -250,50 +253,53 @@ public class MultiplayerPlayController {
     );
 
     backBtnContainer.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-pref-width: %.2fpx;", playPageContainerHeader.widthProperty().multiply(0.05))
     );
 
     backBtn.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-background-radius: %.2fpx;", backBtnContainer.widthProperty().multiply(0.35))
     );
 
+    backBtnImgView.fitWidthProperty().bind(backBtnContainer.widthProperty().multiply(0.5));
+    backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.55));
 
     totalBombsLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.035))
+            playPageContainerHeader.widthProperty().multiply(0.18),
+            playPageContainerHeader.widthProperty().multiply(0.0225))
+    );
+
+    player1PointsLbl.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            playPageContainerHeader.widthProperty().multiply(0.18),
+            playPageContainerHeader.widthProperty().multiply(0.018))
     );
 
     timeElapsedLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.015))
-    );
-
-    player1PointsLbl.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.015))
+            playPageContainerHeader.widthProperty().multiply(0.18),
+            playPageContainerHeader.widthProperty().multiply(0.0225))
     );
 
     player2PointsLbl.styleProperty().bind(
-        Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.015))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
+            playPageContainerHeader.widthProperty().multiply(0.18),
+            playPageContainerHeader.widthProperty().multiply(0.018))
     );
 
     flagsLeftLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.3),
-            Main.mainStage.widthProperty().multiply(0.035))
+            playPageContainerHeader.widthProperty().multiply(0.18),
+            playPageContainerHeader.widthProperty().multiply(0.0225))
     );
 
     emptySpace.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx;", Main.mainStage.widthProperty().multiply(0.05))
+        Bindings.format("-fx-pref-width: %.2fpx;", playPageContainerHeader.widthProperty().multiply(0.05))
     );
-
 
     gridContainer.styleProperty().bind(
         Bindings.format("-fx-pref-height: %.2fpx;", Main.mainStage.heightProperty().multiply(0.95))
     );
-
 
     buildGrid();
   }

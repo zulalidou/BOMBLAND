@@ -21,7 +21,7 @@
                 <HBox fx:id="backBtnContainer" alignment="CENTER">
                     <Button fx:id="backBtn" onAction="#displayLeaveGamePopup">
                         <graphic>
-                            <ImageView fitWidth="20" preserveRatio="true">
+                            <ImageView fx:id="backBtnImgView">
                                 <Image url="/com/example/bombland/images/back-button.png"/>
                             </ImageView>
                         </graphic>
@@ -29,17 +29,9 @@
                 </HBox>
 
                 <Label fx:id="totalBombsLbl"/>
-
-                <VBox fx:id="timerAndPointsContainer">
-                    <Label fx:id="timeElapsedLbl"/>
-
-                    <HBox fx:id="pointsContainer">
-                        <Label fx:id="player1PointsLbl"/>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="player2PointsLbl"/>
-                    </HBox>
-                </VBox>
-
+                <Label fx:id="player1PointsLbl"/>
+                <Label fx:id="timeElapsedLbl"/>
+                <Label fx:id="player2PointsLbl"/>
                 <Label fx:id="flagsLeftLbl"/>
 
                 <VBox fx:id="emptySpace"/>
@@ -50,7 +42,7 @@
 
         <VBox fx:id="gameOverPopup" managed="false" visible="false">
             <Label fx:id="gameOverPopupTitle"/>
-            <VBox alignment="CENTER" fx:id="gameOverPopupImgContainer">
+            <VBox fx:id="gameOverPopupImgContainer" alignment="CENTER">
                 <ImageView fx:id="gameOverPopupImg">
                     <Image url="/com/example/bombland/images/timer.png"/>
                 </ImageView>
@@ -112,7 +104,7 @@
 
         <VBox fx:id="leaveGamePopup" managed="false" visible="false">
             <Label fx:id="leaveGamePopupTitle" text="LEAVE GAME"/>
-            <VBox alignment="CENTER" fx:id="leaveGamePopupImgContainer">
+            <VBox fx:id="leaveGamePopupImgContainer" alignment="CENTER">
                 <ImageView fx:id="leaveGamePopupImg">
                     <Image url="/com/example/bombland/images/exit.png"/>
                 </ImageView>
@@ -128,7 +120,7 @@
 
         <VBox fx:id="kickOutPlayer2Popup" managed="false" visible="false">
             <Label fx:id="kickOutPlayer2PopupTitle" text="GAME MAP CLOSED"/>
-            <VBox alignment="CENTER" fx:id="kickOutPlayer2PopupImgContainer">
+            <VBox fx:id="kickOutPlayer2PopupImgContainer" alignment="CENTER">
                 <ImageView fx:id="kickOutPlayer2PopupImg">
                     <Image url="/com/example/bombland/images/error.png"/>
                 </ImageView>

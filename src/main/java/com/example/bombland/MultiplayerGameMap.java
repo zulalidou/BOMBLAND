@@ -139,7 +139,6 @@ public class MultiplayerGameMap {
     flagsSet = 0;
     totalTiles = 0;
 
-
     grid = new GridPane();
     VBox.setVgrow(grid, Priority.ALWAYS);
     HBox.setHgrow(grid, Priority.ALWAYS);
@@ -155,7 +154,6 @@ public class MultiplayerGameMap {
       rowConstraints.setPercentHeight(100.0 / rows);
       grid.getRowConstraints().add(rowConstraints);
     }
-
 
     gridObjects = new HashMap<>();
     tilesEliminated = new HashMap<>();

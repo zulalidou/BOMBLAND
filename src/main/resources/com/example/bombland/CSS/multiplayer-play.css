@@ -3,7 +3,6 @@
     -fx-background-color: #FF0000;
 }
 
-
 #backBtn {
     -fx-background-color: black;
 }
@@ -12,17 +11,27 @@
     -fx-cursor: hand;
 }
 
-
 #totalBombsLbl, #flagsLeftLbl, #timeElapsedLbl {
     -fx-alignment: center;
     -fx-font-weight: bold;
+    -fx-text-fill: black;
 }
 
+#player1PointsLbl, #player2PointsLbl {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ADD8E6;
+}
+
+#player2PointsLbl {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-text-fill: #90EE90;
+}
 
 .tile-btn:focused {
     -fx-background-color: transparent;
 }
-
 
 #gameOverPopup {
     -fx-background-color: black;
@@ -36,7 +45,6 @@
     -fx-text-fill: red;
 }
 
-
 .playAgainBtn {
     -fx-background-color: green;
     -fx-text-fill: white;
@@ -48,7 +56,6 @@
     -fx-text-fill: red;
 }
 
-
 .mainMenuBtn {
     -fx-background-color: #FF7C7C;
     -fx-text-fill: white;
@@ -59,9 +66,6 @@
     -fx-cursor: hand;
     -fx-text-fill: red;
 }
-
-
-
 
 #gameOverPopupNameContainer {
     /* -fx-background-color: #6FD7F7; */
@@ -86,7 +90,6 @@
     -fx-font-weight: bold;
     -fx-text-fill: black;
 }
-
 
 #gameOverPopupRoundContainer {
     /*-fx-background-color: #6FD7F7;*/
@@ -118,8 +121,6 @@
     -fx-text-fill: black;
 }
 
-
-
 #gameOverPopupReadyStateContainer {
     -fx-background-color: red;
 }
@@ -129,7 +130,6 @@
     -fx-font-weight: bold;
     -fx-text-fill: red;
 }
-
 
 #leaveGamePopup {
     -fx-background-color: black;
@@ -166,7 +166,6 @@
     -fx-cursor: hand;
 }
 
-
 #kickOutPlayer2Popup {
     -fx-background-color: black;
     -fx-alignment: center;
@@ -195,22 +194,3 @@
     -fx-text-fill: black;
     -fx-cursor: hand;
 }
-
-
-/*
-#timerAndPointsContainer {
-    -fx-background-color: green;
-}
-
-#pointsContainer {
-    -fx-background-color: yellow;
-}
-
-#player1PointsLbl {
-    -fx-background-color: pink;
-}
-
-#player2PointsLbl {
-    -fx-background-color: coral;
-}
-*/
