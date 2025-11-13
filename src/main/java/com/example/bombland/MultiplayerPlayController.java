@@ -684,8 +684,8 @@ public class MultiplayerPlayController {
     kickOutPlayer2Popup.setManaged(true);
     kickOutPlayer2Popup.setVisible(true);
 
-    kickOutPlayer2Popup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.33);
-    kickOutPlayer2Popup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+    kickOutPlayer2Popup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
+    kickOutPlayer2Popup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.33);
 
     kickOutPlayer2Popup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
@@ -697,25 +697,24 @@ public class MultiplayerPlayController {
 
     kickOutPlayer2PopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
 
-    kickOutPlayer2PopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
-    kickOutPlayer2PopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
-    kickOutPlayer2PopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+    kickOutPlayer2PopupImgContainer.setStyle("-fx-pref-height: " + (kickOutPlayer2Popup.getHeight() * 0.7) + "px;");
+    kickOutPlayer2PopupImg.setFitWidth(kickOutPlayer2PopupImgContainer.getWidth() * 0.7);
+    kickOutPlayer2PopupImg.setFitHeight(kickOutPlayer2PopupImgContainer.getWidth() * 0.7);
 
     kickOutPlayer2PopupErrorMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
-            Main.mainStage.widthProperty().multiply(0.015),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.01))
+            kickOutPlayer2Popup.widthProperty().multiply(0.03),
+            kickOutPlayer2Popup.widthProperty().multiply(0.01),
+            kickOutPlayer2Popup.widthProperty().multiply(0.01))
     );
 
     kickOutPlayer2PopupErrorMsg.setTextAlignment(TextAlignment.CENTER); // Center each line of text
 
     kickOutPlayer2PopupCloseButton.styleProperty().bind(
-        Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.31),
-            Main.mainStage.widthProperty().multiply(0.02),
-            Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.011))
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            kickOutPlayer2Popup.widthProperty().multiply(1),
+            kickOutPlayer2Popup.widthProperty().multiply(0.01),
+            kickOutPlayer2Popup.widthProperty().multiply(0.025))
     );
   }
 }
