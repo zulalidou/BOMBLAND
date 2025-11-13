@@ -33,7 +33,6 @@
                 <Label fx:id="timeElapsedLbl"/>
                 <Label fx:id="player2PointsLbl"/>
                 <Label fx:id="flagsLeftLbl"/>
-
                 <VBox fx:id="emptySpace"/>
             </HBox>
 
@@ -42,6 +41,7 @@
 
         <VBox fx:id="gameOverPopup" managed="false" visible="false">
             <Label fx:id="gameOverPopupTitle"/>
+
             <VBox fx:id="gameOverPopupImgContainer" alignment="CENTER">
                 <ImageView fx:id="gameOverPopupImg">
                     <Image url="/com/example/bombland/images/timer.png"/>
@@ -62,48 +62,36 @@
                 <Label fx:id="gameOverPopupStatsLabel" text="STATS"/>
 
                 <HBox fx:id="gameOverPopupNameContainer">
-                    <VBox fx:id="gameOverPopupPlayer1NameContainer" alignment="CENTER">
-                        <Label fx:id="gameOverPopupPlayer1Id" text="Player 1"/>
-                        <Label fx:id="gameOverPopupPlayer1Name"/>
-                    </VBox>
-
+                    <Label fx:id="gameOverPopupPlayer1Name"/>
                     <Region HBox.hgrow="ALWAYS"/>
-
-                    <VBox fx:id="gameOverPopupPlayer2NameContainer" alignment="CENTER">
-                        <Label fx:id="gameOverPopupPlayer2Id" text="Player 2"/>
-                        <Label fx:id="gameOverPopupPlayer2Name"/>
-                    </VBox>
+                    <Label fx:id="gameOverPopupPlayer2Name"/>
                 </HBox>
 
                 <HBox>
                     <Label fx:id="gameOverPopupPlayer1Wins"/>
-
                     <Region HBox.hgrow="ALWAYS"/>
-
                     <Label fx:id="gameOverPopupTies"/>
-
                     <Region HBox.hgrow="ALWAYS"/>
-
                     <Label fx:id="gameOverPopupPlayer2Wins"/>
                 </HBox>
 
                 <HBox fx:id="gameOverPopupReadyStateContainer">
                     <Label fx:id="gameOverPopupPlayer1ReadyStatus" text="NOT READY"/>
-
                     <Region HBox.hgrow="ALWAYS"/>
-
                     <Label fx:id="gameOverPopupPlayer2ReadyStatus" text="NOT READY"/>
                 </HBox>
             </VBox>
 
             <HBox fx:id="gameOverPopupButtonsContainer" alignment="CENTER">
                 <Button fx:id="gameOverPopupPlayAgainBtn" text="Play Again" styleClass="playAgainBtn" onAction="#playAgain"/>
+                <Region HBox.hgrow="ALWAYS"/>
                 <Button fx:id="gameOverPopupGoToRoomBtn" text="Go To Room" styleClass="mainMenuBtn" onAction="#displayLeaveGamePopup"/>
             </HBox>
         </VBox>
 
         <VBox fx:id="leaveGamePopup" managed="false" visible="false">
             <Label fx:id="leaveGamePopupTitle" text="LEAVE GAME"/>
+
             <VBox fx:id="leaveGamePopupImgContainer" alignment="CENTER">
                 <ImageView fx:id="leaveGamePopupImg">
                     <Image url="/com/example/bombland/images/exit.png"/>
@@ -120,6 +108,7 @@
 
         <VBox fx:id="kickOutPlayer2Popup" managed="false" visible="false">
             <Label fx:id="kickOutPlayer2PopupTitle" text="GAME MAP CLOSED"/>
+
             <VBox fx:id="kickOutPlayer2PopupImgContainer" alignment="CENTER">
                 <ImageView fx:id="kickOutPlayer2PopupImg">
                     <Image url="/com/example/bombland/images/error.png"/>

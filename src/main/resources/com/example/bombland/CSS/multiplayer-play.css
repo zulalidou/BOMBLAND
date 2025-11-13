@@ -67,68 +67,66 @@
     -fx-text-fill: red;
 }
 
-#gameOverPopupNameContainer {
-    /* -fx-background-color: #6FD7F7; */
-    -fx-background-color: red;
-}
-
-#gameOverPopupPlayer1NameContainer {
-    /*-fx-background-color: green;*/
-}
-
-#gameOverPopupPlayer2NameContainer {
-    /*-fx-background-color: yellow;*/
-}
-
-#gameOverPopupPlayer1Name, #gameOverPopupPlayer2Name {
+#gameOverPopupPlayer1Name {
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    -fx-text-fill: #ADD8E6;
+}
+
+#gameOverPopupPlayer2Name {
+    -fx-font-weight: bold;
+    -fx-text-fill: #90EE90;
 }
 
 #gameOverPopupPlayer1Id, #gameOverPopupPlayer2Id {
-    /*-fx-background-color: coral;*/
     -fx-font-weight: bold;
     -fx-text-fill: black;
-}
-
-#gameOverPopupRoundContainer {
-    /*-fx-background-color: #6FD7F7;*/
-    -fx-background-color: red;
 }
 
 #gameOverPopupRoundLabel {
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    -fx-text-fill: red;
 }
 
-#gameOverPopupPlayer1Points, #gameOverPopupPlayer2Points {
+#gameOverPopupPlayer1Points {
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    -fx-text-fill: #ADD8E6;
 }
 
-#gameOverPopupStatsContainer {
-    /*-fx-background-color: #6FD7F7;*/
-    -fx-background-color: red;
+#gameOverPopupPlayer2Points {
+    -fx-font-weight: bold;
+    -fx-text-fill: #90EE90;
 }
 
 #gameOverPopupStatsLabel {
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    -fx-text-fill: red;
 }
 
-#gameOverPopupPlayer1Wins, #gameOverPopupTies, #gameOverPopupPlayer2Wins {
+#gameOverPopupPlayer1Wins {
     -fx-font-weight: bold;
-    -fx-text-fill: black;
+    -fx-text-fill: #ADD8E6;
 }
 
-#gameOverPopupReadyStateContainer {
-    -fx-background-color: red;
-}
-
-#gameOverPopupPlayer1ReadyStatus, #gameOverPopupPlayer2ReadyStatus {
-    -fx-background-color: black;
+#gameOverPopupTies {
     -fx-font-weight: bold;
     -fx-text-fill: red;
+}
+
+#gameOverPopupPlayer2Wins {
+    -fx-font-weight: bold;
+    -fx-text-fill: #90EE90;
+}
+
+#gameOverPopupPlayer1ReadyStatus {
+    -fx-background-color: #ADD8E6;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#gameOverPopupPlayer2ReadyStatus {
+    -fx-background-color: #90EE90;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
 }
 
 #leaveGamePopup {

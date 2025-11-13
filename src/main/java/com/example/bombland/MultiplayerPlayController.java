@@ -91,6 +91,9 @@ public class MultiplayerPlayController {
   ImageView gameOverPopupImg;
 
   @FXML
+  VBox gameOverPopupRoundContainer;
+
+  @FXML
   Label gameOverPopupRoundLabel;
 
   @FXML
@@ -100,16 +103,13 @@ public class MultiplayerPlayController {
   Label gameOverPopupPlayer2Points;
 
   @FXML
+  VBox gameOverPopupStatsContainer;
+
+  @FXML
   Label gameOverPopupStatsLabel;
 
   @FXML
-  Label gameOverPopupPlayer1Id;
-
-  @FXML
   Label gameOverPopupPlayer1Name;
-
-  @FXML
-  Label gameOverPopupPlayer2Id;
 
   @FXML
   Label gameOverPopupPlayer2Name;
@@ -389,6 +389,7 @@ public class MultiplayerPlayController {
 
     gameOverPopup.setMaxWidth(Main.mainStage.widthProperty().get() * 0.4);
     gameOverPopup.setMaxHeight(Main.mainStage.heightProperty().get() * 0.4);
+
     gameOverPopup.styleProperty().bind(
         Bindings.format("-fx-background-radius: %.2fpx; -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
@@ -397,12 +398,17 @@ public class MultiplayerPlayController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
-    gameOverPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
+    gameOverPopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
 
-    gameOverPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
-    gameOverPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
-    gameOverPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+    gameOverPopupImgContainer.setStyle("-fx-pref-height: " + (gameOverPopup.getHeight() * 0.7) + "px;");
+    gameOverPopupImg.setFitWidth(gameOverPopupImgContainer.getWidth() * 0.7);
+    gameOverPopupImg.setFitHeight(gameOverPopupImgContainer.getWidth() * 0.7);
 
+    gameOverPopupRoundContainer.styleProperty().bind(
+        Bindings.format("-fx-padding: 0 %.2fpx 0 %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
 
     gameOverPopupRoundLabel.setText("ROUND " + statsObj.getInt("round"));
     gameOverPopupRoundLabel.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
@@ -410,16 +416,20 @@ public class MultiplayerPlayController {
     gameOverPopupPlayer1Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
     gameOverPopupPlayer2Points.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
 
+    gameOverPopupStatsContainer.styleProperty().bind(
+        Bindings.format("-fx-padding: 0 %.2fpx %.2fpx %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
 
     gameOverPopupStatsLabel.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
-    gameOverPopupPlayer1Id.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
     gameOverPopupPlayer1Name.setText(statsObj.getString("player1Name"));
-    gameOverPopupPlayer1Name.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+    gameOverPopupPlayer1Name.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
-    gameOverPopupPlayer2Id.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
     gameOverPopupPlayer2Name.setText(statsObj.getString("player2Name"));
-    gameOverPopupPlayer2Name.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
+    gameOverPopupPlayer2Name.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
     gameOverPopupPlayer1Wins.setText(statsObj.getInt("player1Wins") + " WINS");
     gameOverPopupPlayer1Wins.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
@@ -430,37 +440,44 @@ public class MultiplayerPlayController {
     gameOverPopupPlayer2Wins.setText(statsObj.getInt("player2Wins") + " WINS");
     gameOverPopupPlayer2Wins.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.015) + "px;");
 
-
-
     gameOverPopupPlayer1ReadyStatus.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-font-size: %.2fpx; -fx-padding: %.2fpx %.2fpx %.2fpx %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.015))
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.0025),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0025),
+            Main.mainStage.widthProperty().multiply(0.005))
     );
 
     gameOverPopupPlayer2ReadyStatus.styleProperty().bind(
-        Bindings.format("-fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+        Bindings.format("-fx-background-radius: %.2fpx; -fx-font-size: %.2fpx; -fx-padding: %.2fpx %.2fpx %.2fpx %.2fpx;",
             Main.mainStage.widthProperty().multiply(0.01),
-            Main.mainStage.widthProperty().multiply(0.015))
+            Main.mainStage.widthProperty().multiply(0.0125),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.005))
     );
 
-
-    VBox.setVgrow(gameOverPopupButtonsContainer, Priority.ALWAYS);
-
-    gameOverPopupButtonsContainer.setSpacing(Main.mainStage.getWidth() * 0.05);
+    gameOverPopupButtonsContainer.styleProperty().bind(
+        Bindings.format("-fx-padding: %.2fpx 0 %.2fpx 0;",
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.005))
+    );
 
     gameOverPopupPlayAgainBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.0125),
             Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            Main.mainStage.widthProperty().multiply(0.175))
     );
 
     gameOverPopupGoToRoomBtn.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-background-radius: %.2fpx; -fx-pref-width: %.2fpx;",
-            Main.mainStage.widthProperty().multiply(0.015),
+            Main.mainStage.widthProperty().multiply(0.0125),
             Main.mainStage.widthProperty().multiply(0.05),
-            Main.mainStage.widthProperty().multiply(0.15))
+            Main.mainStage.widthProperty().multiply(0.175))
     );
 
     populateGameOverPopup(statsObj);
@@ -491,11 +508,11 @@ public class MultiplayerPlayController {
 
     if (statsObj.getBoolean("playerDied")) {
       if (statsObj.getString("playerName").equals(statsObj.getString("player1Name"))) {
-        gameOverPopupPlayer1Points.setText("POINTS: --");
+        gameOverPopupPlayer1Points.setText("POINTS: X");
         gameOverPopupPlayer2Points.setText("POINTS: " + statsObj.getInt("player2Points"));
       } else {
         gameOverPopupPlayer1Points.setText("POINTS: " + statsObj.getInt("player1Points"));
-        gameOverPopupPlayer2Points.setText("POINTS: --");
+        gameOverPopupPlayer2Points.setText("POINTS: X");
       }
     } else {
       gameOverPopupPlayer1Points.setText("POINTS: " + statsObj.getInt("player1Points"));
