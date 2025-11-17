@@ -192,3 +192,33 @@
     -fx-text-fill: black;
     -fx-cursor: hand;
 }
+
+#player2DisconnectedPopup {
+    -fx-background-color: black;
+    -fx-alignment: center;
+    -fx-border-color: red;
+}
+
+#player2DisconnectedPopupTitle {
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-fill: red;
+}
+
+#player2DisconnectedPopupErrorMsg {
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#player2DisconnectedPopupCloseButton {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+    -fx-font-weight: bold;
+}
+
+#player2DisconnectedPopupCloseButton:hover {
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}

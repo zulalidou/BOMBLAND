@@ -791,7 +791,6 @@ public class RoomController {
       sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
     }
 
-
     if (mapNameLabel.getText().equals("Face")) {
       String imgName;
 
@@ -835,7 +834,6 @@ public class RoomController {
     if (AppCache.getInstance().getMultiplayerRoom().has("player2Name")) {
       sendNewSettingToPlayer2("difficulty", difficultyNameLabel.getText());
     }
-
 
     if (mapNameLabel.getText().equals("Face")) {
       String imgName;
@@ -931,8 +929,8 @@ public class RoomController {
    */
   @FXML
   void removePlayer2FromRoom() {
-    AppCache.getInstance().getMultiplayerRoom().remove("player2Name");
-
+    AppCache.getInstance().getMultiplayerRoom().put("player2Name", "N/A");
+    AppCache.getInstance().getMultiplayerRoom().put("isPlayer2InRoom", false);
     totalPlayersLabel.setText("1 / 2");
     startGameButton.setDisable(true);
     removePlayer2Icon();
@@ -940,7 +938,7 @@ public class RoomController {
 
   /**
    * This function displays a message to Player2 to let them know that they're being kicked out of
-   * the room because Player1 exited the room.
+   * the room because Player1 exited the room or disconnected from the server.
    */
   @FXML
   void kickOutPlayer2FromRoom() {
@@ -992,7 +990,6 @@ public class RoomController {
   void removePlayer1Icon() {
     player1BoxContainer.setVisible(false);
     player1BoxContainer.setManaged(false);
-
     playerProfileSpace.setVisible(false);
     playerProfileSpace.setManaged(false);
   }
@@ -1003,7 +1000,6 @@ public class RoomController {
   void removePlayer2Icon() {
     playerProfileSpace.setVisible(false);
     playerProfileSpace.setManaged(false);
-
     player2BoxContainer.setVisible(false);
     player2BoxContainer.setManaged(false);
   }

@@ -220,6 +220,36 @@ public class BomblandWebSocketClient extends WebSocketClient {
           }
         }
       }
+    } else if (responseObject.get("message_type").equals("SERVER_CONNECTION_CLOSED")) {
+      if (AppCache.getInstance().getMultiplayerRoom() != null) {
+        String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1Name");
+        boolean isPlayer1InRoomOldValue = AppCache.getInstance().getMultiplayerRoom().getBoolean("isPlayer1InRoom");
+
+        if (responseObject.getBoolean("roomStillExists")) {
+          responseObject.remove("message_type");
+          responseObject.remove("roomStillExists");
+          AppCache.getInstance().setMultiplayerRoom(responseObject);
+        }
+
+        if (AppCache.getInstance().getPlayerName().equals(player1Name)) {
+          if (isPlayer1InRoomOldValue) {
+            // Player1 & Player2 are in the room, and Player2 disconnected
+            Platform.runLater(() -> {
+              RoomController.getInstance().removePlayer2FromRoom();
+            });
+          } else {
+            // Player1 & Player2 are in the middle of a game, and Player2 disconnected
+            Platform.runLater(() -> {
+              MultiplayerPlayController.getInstance().displayPlayer2DisconnectedPopup();
+            });
+          }
+        } else {
+          // Player1 & Player2 are either in the room or in the middle of a game, and Player1 disconnected
+          Platform.runLater(() -> {
+            RoomController.getInstance().kickOutPlayer2FromRoom();
+          });
+        }
+      }
     }
   }
 
@@ -345,7 +375,7 @@ public class BomblandWebSocketClient extends WebSocketClient {
   public void leaveRoom(String playerName) {
     JSONObject roomInfo = new JSONObject();
     roomInfo.put("message_type", "LEAVE_ROOM");
-    roomInfo.put("roomId", AppCache.getInstance().getMultiplayerRoom().get("id"));
+    roomInfo.put("id", AppCache.getInstance().getMultiplayerRoom().get("id"));
     roomInfo.put("playerName", playerName);
 
     if (isConnected && getConnection().isOpen()) {

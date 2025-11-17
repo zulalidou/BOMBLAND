@@ -329,7 +329,6 @@ public class MultiplayerGameMap {
           }
         });
 
-
         Tile tileObj = new Tile();
         tileObj.setRow(row);
         tileObj.setCol(col);
@@ -703,7 +702,7 @@ public class MultiplayerGameMap {
         if (tilesUncovered + bombs == totalTiles) {
           MultiplayerPlayController.getInstance().setGameOver(true);
           MultiplayerPlayController.getInstance().setPlayerDied(false);
-          Main.socketClient.gameOver(); // IT LOOKS LIKE IT'S SAYING THAT game isn't over (because of its argument).. make the necessary modifications
+          Main.socketClient.gameOver();
         }
       } else if (tileObj.getValue() == Tile.TileValue.NUMBER) {
         uncoverTile(tileObj, clicker);
@@ -842,12 +841,10 @@ public class MultiplayerGameMap {
     tilesEliminated.clear();
     eliminateSurroundingTiles(tileObj);
 
-
     retrieveBombCoordinates((JSONArray) firstTileObj.get("bombCoordinates"));
     setupBombTiles();
     setupNumberTiles(tileObj);
     setupEmptyTiles();
-
 
     MultiplayerPlayController.getInstance().startTimer();
     MultiplayerPlayController.getInstance().setGameStarted(true);
@@ -897,7 +894,6 @@ public class MultiplayerGameMap {
   private boolean isPlayer1() {
     String currentPlayerName = AppCache.getInstance().getPlayerName();
     String player1Name = AppCache.getInstance().getMultiplayerRoom().getString("player1Name");
-
     return currentPlayerName.equals(player1Name);
   }
 

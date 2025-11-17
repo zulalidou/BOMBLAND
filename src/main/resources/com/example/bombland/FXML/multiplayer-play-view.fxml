@@ -121,5 +121,21 @@
                 <Button fx:id="kickOutPlayer2PopupCloseButton" text="OK" onAction="#confirmToLeaveGameMap"/>
             </HBox>
         </VBox>
+
+        <VBox fx:id="player2DisconnectedPopup" managed="false" visible="false">
+            <Label fx:id="player2DisconnectedPopupTitle" text="OPPONENT DISCONNECTED"/>
+
+            <VBox alignment="CENTER" fx:id="player2DisconnectedPopupImgContainer">
+                <ImageView fx:id="player2DisconnectedPopupImg">
+                    <Image url="/com/example/bombland/images/error.png"/>
+                </ImageView>
+            </VBox>
+
+            <Label fx:id="player2DisconnectedPopupErrorMsg" text="Player2 disconnected from the server, so the game has ended."/>
+
+            <HBox fx:id="player2DisconnectedPopupButtonsContainer" alignment="CENTER">
+                <Button fx:id="player2DisconnectedPopupCloseButton" text="OK" onAction="#goToRoom"/>
+            </HBox>
+        </VBox>
     </StackPane>
 </VBox>

@@ -38,6 +38,8 @@ public class MultiplayerPlayController {
   private ScheduledExecutorService  taskScheduler;
   private boolean timerPaused;
 
+  @FXML
+  VBox playPageContainer;
 
   @FXML
   StackPane playPageContainerInner;
@@ -176,6 +178,18 @@ public class MultiplayerPlayController {
 
   @FXML
   Button kickOutPlayer2PopupCloseButton;
+
+  @FXML
+  VBox player2DisconnectedPopup;
+
+  @FXML
+  Label player2DisconnectedPopupTitle;
+
+  @FXML
+  Label player2DisconnectedPopupErrorMsg;
+
+  @FXML
+  Button player2DisconnectedPopupCloseButton;
 
 
   private MultiplayerPlayController() {}
@@ -357,7 +371,6 @@ public class MultiplayerPlayController {
         MultiplayerGameMap.getInstance().incrementTilesUncovered();
       }
     }
-
 
     AudioClip clip;
 
@@ -723,6 +736,52 @@ public class MultiplayerPlayController {
             kickOutPlayer2Popup.widthProperty().multiply(1),
             kickOutPlayer2Popup.widthProperty().multiply(0.01),
             kickOutPlayer2Popup.widthProperty().multiply(0.025))
+    );
+  }
+
+  /**
+   * This function displays a message to player1 to let them know that they're being kicked out of
+   * the game map because the player2 disconnected from the server.
+   */
+  @FXML
+  void displayPlayer2DisconnectedPopup() {
+    endTimer();
+
+    stackpaneChild1.setEffect(new GaussianBlur()); // blurs game map page
+    stackpaneChild1.setMouseTransparent(true); // makes items in game map page "unclickable"
+
+    player2DisconnectedPopup.setManaged(true);
+    player2DisconnectedPopup.setVisible(true);
+
+    player2DisconnectedPopup.setMaxWidth(playPageContainer.widthProperty().get() * 0.4);
+    player2DisconnectedPopup.setMaxHeight(playPageContainer.heightProperty().get() * 0.3);
+
+    player2DisconnectedPopup.styleProperty().bind(
+        Bindings.format("-fx-background-radius: %.2fpx;  -fx-border-radius: %.2fpx; -fx-border-width: %.2fpx; -fx-padding: %.2fpx;",
+            Main.mainStage.widthProperty().multiply(0.01),
+            Main.mainStage.widthProperty().multiply(0.005),
+            Main.mainStage.widthProperty().multiply(0.0015),
+            Main.mainStage.widthProperty().multiply(0.01))
+    );
+
+    player2DisconnectedPopupTitle.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-pref-width: %.2fpx;",
+            player2DisconnectedPopup.widthProperty().multiply(0.07),
+            player2DisconnectedPopup.widthProperty().multiply(1))
+    );
+
+    player2DisconnectedPopupErrorMsg.styleProperty().bind(
+        Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
+            player2DisconnectedPopup.widthProperty().multiply(0.03),
+            player2DisconnectedPopup.widthProperty().multiply(0.01),
+            player2DisconnectedPopup.widthProperty().multiply(0.01))
+    );
+
+    player2DisconnectedPopupCloseButton.styleProperty().bind(
+        Bindings.format("-fx-pref-width: %.2fpx; -fx-background-radius: %.2fpx; -fx-font-size: %.2fpx;",
+            player2DisconnectedPopup.widthProperty().multiply(1),
+            player2DisconnectedPopup.widthProperty().multiply(0.01),
+            player2DisconnectedPopup.widthProperty().multiply(0.0275))
     );
   }
 }
