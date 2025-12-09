@@ -1,6 +1,7 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Set;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -89,6 +91,9 @@ public class JoinRoomController {
   Label errorPopupTitle1;
 
   @FXML
+  ImageView error1ImgView;
+
+  @FXML
   Label errorLastSentence1;
 
   @FXML
@@ -99,6 +104,9 @@ public class JoinRoomController {
 
   @FXML
   Label errorPopupTitle2;
+
+  @FXML
+  ImageView error2ImgView;
 
   @FXML
   Label errorLastSentence2;
@@ -154,6 +162,11 @@ public class JoinRoomController {
 
     backBtnImgView.fitWidthProperty().bind(pageContainerTopLeftChild.widthProperty().multiply(0.235));
     backBtnImgView.fitHeightProperty().bind(pageContainerTopLeftChild.heightProperty().multiply(0.4));
+
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
 
     pageContainerTopMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.6))
@@ -317,6 +330,11 @@ public class JoinRoomController {
             errorPopup1.widthProperty().multiply(1))
     );
 
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    error1ImgView.setImage(errorImg);
+
     errorLastSentence1.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
             errorPopup1.widthProperty().multiply(0.03),
@@ -371,6 +389,10 @@ public class JoinRoomController {
             errorPopup2.widthProperty().multiply(1))
     );
 
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    error2ImgView.setImage(errorImg);
 
     // Find all nodes with the "databaseErrorText" style class
     Set<Node> foundNodes = errorPopup2.lookupAll(".errorText");

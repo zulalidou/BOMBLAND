@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.Region?>
@@ -21,9 +20,7 @@
                 <HBox fx:id="backBtnContainer" alignment="CENTER">
                     <Button fx:id="backBtn" onAction="#displayLeaveGamePopup">
                         <graphic>
-                            <ImageView fx:id="backBtnImgView">
-                                <Image url="/com/example/bombland/images/back-button.png"/>
-                            </ImageView>
+                            <ImageView fx:id="backBtnImgView"/>
                         </graphic>
                     </Button>
                 </HBox>
@@ -43,9 +40,7 @@
             <Label fx:id="gameOverPopupTitle"/>
 
             <VBox fx:id="gameOverPopupImgContainer" alignment="CENTER">
-                <ImageView fx:id="gameOverPopupImg">
-                    <Image url="/com/example/bombland/images/timer.png"/>
-                </ImageView>
+                <ImageView fx:id="gameOverPopupImg"/>
             </VBox>
 
             <VBox fx:id="gameOverPopupRoundContainer" alignment="CENTER">
@@ -93,9 +88,7 @@
             <Label fx:id="leaveGamePopupTitle" text="LEAVE GAME"/>
 
             <VBox fx:id="leaveGamePopupImgContainer" alignment="CENTER">
-                <ImageView fx:id="leaveGamePopupImg">
-                    <Image url="/com/example/bombland/images/exit.png"/>
-                </ImageView>
+                <ImageView fx:id="leaveGamePopupImg"/>
             </VBox>
 
             <Label fx:id="leaveGamePopupErrorMsg" text="Are you sure you want to leave?"/>
@@ -110,9 +103,7 @@
             <Label fx:id="kickOutPlayer2PopupTitle" text="GAME MAP CLOSED"/>
 
             <VBox fx:id="kickOutPlayer2PopupImgContainer" alignment="CENTER">
-                <ImageView fx:id="kickOutPlayer2PopupImg">
-                    <Image url="/com/example/bombland/images/error.png"/>
-                </ImageView>
+                <ImageView fx:id="kickOutPlayer2PopupImg"/>
             </VBox>
 
             <Label fx:id="kickOutPlayer2PopupErrorMsg" text="The other player has left, so the game map has been closed."/>
@@ -126,9 +117,7 @@
             <Label fx:id="player2DisconnectedPopupTitle" text="OPPONENT DISCONNECTED"/>
 
             <VBox alignment="CENTER" fx:id="player2DisconnectedPopupImgContainer">
-                <ImageView fx:id="player2DisconnectedPopupImg">
-                    <Image url="/com/example/bombland/images/error.png"/>
-                </ImageView>
+                <ImageView fx:id="player2DisconnectedPopupImg"/>
             </VBox>
 
             <Label fx:id="player2DisconnectedPopupErrorMsg" text="Player2 disconnected from the server, so the game has ended."/>

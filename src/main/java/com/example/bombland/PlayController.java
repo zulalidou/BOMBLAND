@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -186,6 +187,9 @@ public class PlayController {
   Label databaseCommunicationErrorPopupTitle;
 
   @FXML
+  ImageView databaseErrorImgView;
+
+  @FXML
   Label databaseErrorLastSentence;
 
   @FXML
@@ -306,6 +310,11 @@ public class PlayController {
     exitPagePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     exitPagePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
+    Image exitImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/exit.png"))
+    );
+    exitPagePopupImg.setImage(exitImg);
+
     exitPagePopupText.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
             Main.mainStage.widthProperty().multiply(0.0145),
@@ -353,6 +362,11 @@ public class PlayController {
 
     backBtnImgView.fitWidthProperty().bind(backBtnContainer.widthProperty().multiply(0.5));
     backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.55));
+
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
 
     totalBombsLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
@@ -466,6 +480,11 @@ public class PlayController {
     gameLostPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     gameLostPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
 
+    Image timerImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/timer.png"))
+    );
+    gameLostPopupImg.setImage(timerImg);
+
     gameLostPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
     gameLostPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
 
@@ -526,6 +545,11 @@ public class PlayController {
     newRecordPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
     newRecordPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     newRecordPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+    Image trophyImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/trophy.png"))
+    );
+    newRecordPopupImg.setImage(trophyImg);
 
     newRecordPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
     newRecordPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");
@@ -630,6 +654,10 @@ public class PlayController {
             databaseCommunicationErrorPopup.widthProperty().multiply(1))
     );
 
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    databaseErrorImgView.setImage(errorImg);
 
     // Find all nodes with the "databaseErrorText" style class
     Set<Node> foundNodes = databaseCommunicationErrorPopup.lookupAll(".databaseErrorText");
@@ -734,6 +762,11 @@ public class PlayController {
     gameWonPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
     gameWonPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     gameWonPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+    Image timerImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/timer.png"))
+    );
+    gameWonPopupImg.setImage(timerImg);
 
     gameWonPopupTimeTaken.setText(gameDuration + " second" + ((gameDuration > 1) ? "s" : ""));
     gameWonPopupTimeTaken.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.02) + "px;");

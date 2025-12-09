@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 
 <VBox fx:id="mapSelectionPage" xmlns:fx="http://javafx.com/fxml">
     <stylesheets>
@@ -16,9 +15,7 @@
             <HBox fx:id="mapSelectionPageContainerTopLeftChild" alignment="CENTER_LEFT">
                 <Button fx:id="backBtn" onAction="#goToDifficultySelection">
                     <graphic>
-                        <ImageView fx:id="backBtnImgView">
-                            <Image url="/com/example/bombland/images/back-button.png"/>
-                        </ImageView>
+                        <ImageView fx:id="backBtnImgView"/>
                     </graphic>
                 </Button>
             </HBox>
@@ -35,20 +32,14 @@
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <VBox fx:id="rectangleMapSelectorContainer" alignment="CENTER" onMouseClicked="#pickRectangleMap">
-                    <ImageView>
-                        <Image url="/com/example/bombland/images/rectangle.png"/>
-                    </ImageView>
-
+                    <ImageView fx:id="rectangleMapImgView"/>
                     <Label fx:id="rectangleMapSelectorName" styleClass="mapNameLabel" text="Rectangle"/>
                 </VBox>
 
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <VBox fx:id="bombMapSelectorContainer" alignment="CENTER" onMouseClicked="#pickBombMap">
-                    <ImageView>
-                        <Image url="/com/example/bombland/images/bomb.png"/>
-                    </ImageView>
-
+                    <ImageView fx:id="bombMapImgView"/>
                     <Label fx:id="bombMapSelectorName" styleClass="mapNameLabel" text="Bomb"/>
                 </VBox>
 
@@ -59,20 +50,14 @@
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <VBox fx:id="faceMapSelectorContainer" alignment="CENTER" onMouseClicked="#pickFaceMap">
-                    <ImageView fx:id="faceMapImgView">
-                        <Image fx:id="faceMapImg" url="/com/example/bombland/images/happy-face.png"/>
-                    </ImageView>
-
+                    <ImageView fx:id="faceMapImgView"/>
                     <Label fx:id="faceMapSelectorName" styleClass="mapNameLabel" text="Face"/>
                 </VBox>
 
                 <Region HBox.hgrow="ALWAYS"/>
 
                 <VBox fx:id="flowerMapSelectorContainer" alignment="CENTER" onMouseClicked="#pickFlowerMap">
-                    <ImageView>
-                        <Image url="/com/example/bombland/images/flower.png"/>
-                    </ImageView>
-
+                    <ImageView fx:id="flowerMapImgView"/>
                     <Label fx:id="flowerMapSelectorName" styleClass="mapNameLabel" text="Flower"/>
                 </VBox>
 

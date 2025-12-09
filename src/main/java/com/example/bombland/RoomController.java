@@ -2,6 +2,7 @@ package com.example.bombland;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -174,6 +175,9 @@ public class RoomController {
   VBox player1Box;
 
   @FXML
+  ImageView player1IconImgView;
+
+  @FXML
   Label player1NameLabel;
 
   @FXML
@@ -184,6 +188,9 @@ public class RoomController {
 
   @FXML
   VBox player2Box;
+
+  @FXML
+  ImageView player2IconImgView;
 
   @FXML
   Label player2NameLabel;
@@ -229,6 +236,9 @@ public class RoomController {
 
   @FXML
   Label kickOutPlayer2PopupTitle;
+
+  @FXML
+  ImageView kickOutPlayer2PopupImg;
 
   @FXML
   Label kickOutPlayer2PopupErrorMsg;
@@ -298,6 +308,11 @@ public class RoomController {
 
     backBtnImgView.fitWidthProperty().bind(backBtnContainer.widthProperty().multiply(0.45));
     backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.5));
+
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
 
     roomIdContainer.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx;", topPageContainer.widthProperty().multiply(0.3))
@@ -371,6 +386,11 @@ public class RoomController {
             mapContainerInner.widthProperty().multiply(0.01))
     );
 
+    Image rectangleMapImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/rectangle.png"))
+    );
+    mapImgView.setImage(rectangleMapImg);
+
     mapNameLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", mapBox.widthProperty().multiply(0.125))
     );
@@ -391,6 +411,11 @@ public class RoomController {
             difficultyContainerInner.widthProperty().multiply(0.25),
             difficultyContainerInner.widthProperty().multiply(0.01))
     );
+
+    Image difficultyImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/easy-difficulty.png"))
+    );
+    difficultyImgView.setImage(difficultyImg);
 
     difficultyNameLabel.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", difficultyBox.widthProperty().multiply(0.125))
@@ -435,6 +460,11 @@ public class RoomController {
     );
 
     player1Box.getStyleClass().add("active-player1-playerIconBox");
+
+    Image profile1IconImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/profile-picture.png"))
+    );
+    player1IconImgView.setImage(profile1IconImg);
 
     player1NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player1Name").toString());
 
@@ -529,6 +559,11 @@ public class RoomController {
 
     player2Box.getStyleClass().add("active-player2-playerIconBox");
 
+    Image profile2IconImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/profile-picture-2.png"))
+    );
+    player2IconImgView.setImage(profile2IconImg);
+
     player2NameLabel.setText(AppCache.getInstance().getMultiplayerRoom().get("player2Name").toString());
 
     player2NameLabel.styleProperty().bind(
@@ -604,6 +639,11 @@ public class RoomController {
     leaveRoomPopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
     leaveRoomPopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     leaveRoomPopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+    Image exitImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/exit.png"))
+    );
+    leaveRoomPopupImg.setImage(exitImg);
 
     leaveRoomPopupErrorMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
@@ -969,6 +1009,11 @@ public class RoomController {
             kickOutPlayer2Popup.widthProperty().multiply(1))
     );
 
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    kickOutPlayer2PopupImg.setImage(errorImg);
+
     kickOutPlayer2PopupErrorMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",
             kickOutPlayer2Popup.widthProperty().multiply(0.03),
@@ -1032,6 +1077,11 @@ public class RoomController {
     startGamePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
     startGamePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     startGamePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
+
+    Image bombImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/bomb.png"))
+    );
+    startGamePopupImg.setImage(bombImg);
 
     startGamePopupMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",

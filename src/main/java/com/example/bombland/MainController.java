@@ -1,12 +1,14 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.util.Objects;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -83,6 +85,11 @@ public class MainController {
         Bindings.format("-fx-font-size: %.2fpx;",
             logoContainer.widthProperty().multiply(0.045))
     );
+
+    Image bombImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/bomb.png"))
+    );
+    bombImgView.setImage(bombImg);
 
     bombImgView.fitHeightProperty().bind(Bindings.min(
         logoContainer.heightProperty().multiply(0.8),

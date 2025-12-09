@@ -1,6 +1,7 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import javafx.beans.binding.Bindings;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -90,6 +92,9 @@ public class CreateRoomController {
   Label errorPopupTitle;
 
   @FXML
+  ImageView errorImgView;
+
+  @FXML
   Label errorLastSentence;
 
   @FXML
@@ -143,6 +148,11 @@ public class CreateRoomController {
 
     backBtnImgView.fitWidthProperty().bind(createRoomPageContainerTopLeftChild.widthProperty().multiply(0.235));
     backBtnImgView.fitHeightProperty().bind(createRoomPageContainerTopLeftChild.heightProperty().multiply(0.4));
+
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
 
     createRoomPageContainerTopMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.6))
@@ -306,6 +316,10 @@ public class CreateRoomController {
             Main.mainStage.widthProperty().multiply(0.33))
     );
 
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    errorImgView.setImage(errorImg);
 
     // Find all nodes with the "databaseErrorText" style class
     Set<Node> foundNodes = errorPopup.lookupAll(".errorText");

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.TextField?>
@@ -21,9 +20,7 @@
                 <HBox fx:id="backBtnContainer" alignment="CENTER">
                     <Button fx:id="backBtn" onAction="#verifyExitPage">
                         <graphic>
-                            <ImageView fx:id="backBtnImgView">
-                                <Image url="/com/example/bombland/images/back-button.png"/>
-                            </ImageView>
+                            <ImageView fx:id="backBtnImgView"/>
                         </graphic>
                     </Button>
                 </HBox>
@@ -41,9 +38,7 @@
         <VBox fx:id="exitPagePopup" managed="false" visible="false">
             <Label fx:id="exitPagePopupTitle" text="EXIT"/>
             <VBox fx:id="exitPagePopupImgContainer" alignment="CENTER" >
-                <ImageView fx:id="exitPagePopupImg">
-                    <Image url="/com/example/bombland/images/exit.png"/>
-                </ImageView>
+                <ImageView fx:id="exitPagePopupImg"/>
             </VBox>
 
             <Label fx:id="exitPagePopupText" text="Are you sure you want to exit?"/>
@@ -57,9 +52,7 @@
         <VBox fx:id="gameLostPopup" managed="false" visible="false">
             <Label fx:id="gameLostPopupTitle" text="GAME OVER"/>
             <VBox fx:id="gameLostPopupImgContainer" alignment="CENTER" >
-                <ImageView fx:id="gameLostPopupImg">
-                    <Image url="/com/example/bombland/images/timer.png"/>
-                </ImageView>
+                <ImageView fx:id="gameLostPopupImg"/>
             </VBox>
 
             <Label fx:id="gameLostPopupTimeTaken" text="placeholder"/>
@@ -73,9 +66,7 @@
         <VBox fx:id="gameWonPopup" managed="false" visible="false">
             <Label fx:id="gameWonPopupTitle" text="CONGRATS"/>
             <VBox fx:id="gameWonPopupImgContainer" alignment="CENTER" >
-                <ImageView fx:id="gameWonPopupImg">
-                    <Image url="/com/example/bombland/images/timer.png"/>
-                </ImageView>
+                <ImageView fx:id="gameWonPopupImg"/>
             </VBox>
 
             <Label fx:id="gameWonPopupTimeTaken" text="placeholder"/>
@@ -89,9 +80,7 @@
         <VBox fx:id="newRecordPopup" managed="false" visible="false">
             <Label fx:id="newRecordPopupTitle" text="NEW RECORD"/>
             <VBox fx:id="newRecordPopupImgContainer" alignment="CENTER">
-                <ImageView fx:id="newRecordPopupImg">
-                    <Image url="/com/example/bombland/images/trophy.png"/>
-                </ImageView>
+                <ImageView fx:id="newRecordPopupImg"/>
             </VBox>
 
             <Label fx:id="newRecordPopupTimeTaken"/>
@@ -113,9 +102,7 @@
             <Label fx:id="databaseCommunicationErrorPopupTitle" text="AN ERROR HAS OCCURRED"/>
 
             <VBox alignment="CENTER">
-                <ImageView>
-                    <Image url="/com/example/bombland/images/error.png"/>
-                </ImageView>
+                <ImageView fx:id="databaseErrorImgView"/>
             </VBox>
 
             <Label styleClass="databaseErrorText" text="Please try the following to resolve the issue:"/>

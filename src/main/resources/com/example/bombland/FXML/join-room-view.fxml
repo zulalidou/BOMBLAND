@@ -4,7 +4,6 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 
@@ -19,9 +18,7 @@
                 <HBox fx:id="pageContainerTopLeftChild" alignment="CENTER_LEFT">
                     <Button fx:id="backBtn" onAction="#goToMultiplayerSelection">
                         <graphic>
-                            <ImageView fx:id="backBtnImgView">
-                                <Image url="/com/example/bombland/images/back-button.png"/>
-                            </ImageView>
+                            <ImageView fx:id="backBtnImgView"/>
                         </graphic>
                     </Button>
                 </HBox>
@@ -68,9 +65,7 @@
             <Label fx:id="errorPopupTitle1" text="AN ERROR HAS OCCURRED"/>
 
             <VBox alignment="CENTER">
-                <ImageView>
-                    <Image url="/com/example/bombland/images/error.png"/>
-                </ImageView>
+                <ImageView fx:id="error1ImgView"/>
             </VBox>
 
             <Label fx:id="errorLastSentence1" text="No room found. Please try again."/>
@@ -84,9 +79,7 @@
             <Label fx:id="errorPopupTitle2" text="AN ERROR HAS OCCURRED"/>
 
             <VBox alignment="CENTER">
-                <ImageView>
-                    <Image url="/com/example/bombland/images/error.png"/>
-                </ImageView>
+                <ImageView fx:id="error2ImgView"/>
             </VBox>
 
             <Label styleClass="errorText" text="Please try the following to resolve the issue:"/>

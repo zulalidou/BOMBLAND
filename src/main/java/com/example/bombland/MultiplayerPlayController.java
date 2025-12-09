@@ -186,6 +186,9 @@ public class MultiplayerPlayController {
   Label player2DisconnectedPopupTitle;
 
   @FXML
+  ImageView player2DisconnectedPopupImg;
+
+  @FXML
   Label player2DisconnectedPopupErrorMsg;
 
   @FXML
@@ -273,6 +276,11 @@ public class MultiplayerPlayController {
 
     backBtnImgView.fitWidthProperty().bind(backBtnContainer.widthProperty().multiply(0.5));
     backBtnImgView.fitHeightProperty().bind(backBtnContainer.heightProperty().multiply(0.55));
+
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
 
     totalBombsLbl.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-font-size: %.2fpx;",
@@ -406,6 +414,11 @@ public class MultiplayerPlayController {
             Main.mainStage.widthProperty().multiply(0.0015),
             Main.mainStage.widthProperty().multiply(0.01))
     );
+
+    Image timerImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/timer.png"))
+    );
+    gameOverPopupImg.setImage(timerImg);
 
     gameOverPopupRoundContainer.styleProperty().bind(
         Bindings.format("-fx-padding: 0 %.2fpx 0 %.2fpx;",
@@ -604,6 +617,11 @@ public class MultiplayerPlayController {
 
     leaveGamePopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.04) + "px;");
 
+    Image exitImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/exit.png"))
+    );
+    leaveGamePopupImg.setImage(exitImg);
+
     leaveGamePopupImgContainer.setStyle("-fx-pref-height: " + (Main.mainStage.getHeight() * 0.1) + "px;");
     leaveGamePopupImg.setFitWidth(Main.mainStage.getWidth() * 0.1);
     leaveGamePopupImg.setFitHeight(Main.mainStage.getWidth() * 0.1);
@@ -718,6 +736,11 @@ public class MultiplayerPlayController {
 
     kickOutPlayer2PopupTitle.setStyle("-fx-font-size: " + (Main.mainStage.getWidth() * 0.03) + "px;");
 
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    kickOutPlayer2PopupImg.setImage(errorImg);
+
     kickOutPlayer2PopupImgContainer.setStyle("-fx-pref-height: " + (kickOutPlayer2Popup.getHeight() * 0.7) + "px;");
     kickOutPlayer2PopupImg.setFitWidth(kickOutPlayer2PopupImgContainer.getWidth() * 0.7);
     kickOutPlayer2PopupImg.setFitHeight(kickOutPlayer2PopupImgContainer.getWidth() * 0.7);
@@ -769,6 +792,11 @@ public class MultiplayerPlayController {
             player2DisconnectedPopup.widthProperty().multiply(0.07),
             player2DisconnectedPopup.widthProperty().multiply(1))
     );
+
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    player2DisconnectedPopupImg.setImage(errorImg);
 
     player2DisconnectedPopupErrorMsg.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx; -fx-padding: %.2fpx 0 %.2fpx 0;",

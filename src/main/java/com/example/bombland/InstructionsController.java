@@ -1,6 +1,7 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.util.Objects;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -147,6 +149,11 @@ public class InstructionsController {
     backBtnImgView.fitWidthProperty().bind(instructionsContainerLeftChild.widthProperty().multiply(0.075));
     backBtnImgView.fitHeightProperty().bind(instructionsContainerLeftChild.heightProperty().multiply(0.4));
 
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
+
     instructionsContainerMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx; -fx-pref-height: %.2fpx",
             instructionsContainerTop.widthProperty().multiply(0.34),
@@ -199,6 +206,46 @@ public class InstructionsController {
     imgView7.setPreserveRatio(true);
     imgView8.fitWidthProperty().bind(imgContainer8.widthProperty().multiply(0.5));
     imgView8.setPreserveRatio(true);
+
+    Image img1 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img1.png"))
+    );
+    imgView1.setImage(img1);
+
+    Image img2 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img2.png"))
+    );
+    imgView2.setImage(img2);
+
+    Image img3 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img3.png"))
+    );
+    imgView3.setImage(img3);
+
+    Image img4 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img4.png"))
+    );
+    imgView4.setImage(img4);
+
+    Image img5 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img5.png"))
+    );
+    imgView5.setImage(img5);
+
+    Image img6 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img6.png"))
+    );
+    imgView6.setImage(img6);
+
+    Image img7 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img7.png"))
+    );
+    imgView7.setImage(img7);
+
+    Image img8 = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/map-theme-1/img8.png"))
+    );
+    imgView8.setImage(img8);
 
     HBox.setHgrow(space1, Priority.ALWAYS); // Makes the space element expand
     HBox.setHgrow(space2, Priority.ALWAYS);

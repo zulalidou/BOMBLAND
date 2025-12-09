@@ -227,7 +227,7 @@ public class GameMap {
               } else {
                 tileObj.setFlagged(true);
                 tileBtn.setStyle("-fx-background-color: " + tileObj.getBackgroundColor() + "; "
-                    + "-fx-background-image: url(\"/com/example/bombland/images/red-flag.png\"); "
+                    + "-fx-background-image: url(\"/com/example/bombland/Images/red-flag.png\"); "
                     + "-fx-background-size: 40%; -fx-background-position: center; "
                     + "-fx-background-repeat: no-repeat;");
                 flagsSet += 1;
@@ -315,7 +315,7 @@ public class GameMap {
               } else {
                 tileObj.setFlagged(true);
                 tileBtn.setStyle("-fx-background-color: " + tileObj.getBackgroundColor() + "; "
-                    + "-fx-background-image: url(\"/com/example/bombland/images/red-flag.png\"); "
+                    + "-fx-background-image: url(\"/com/example/bombland/Images/red-flag.png\"); "
                     + "-fx-background-size: 40%; -fx-background-position: center; "
                     + "-fx-background-repeat: no-repeat;");
                 flagsSet += 1;
@@ -746,7 +746,7 @@ public class GameMap {
     } else { // bomb tile
       tile.setBackgroundColor(Color.red());
       tileBtn.setStyle("-fx-background-color: " + tile.getBackgroundColor() + "; "
-          + "-fx-background-image: url(\"/com/example/bombland/images/bomb.png\"); "
+          + "-fx-background-image: url(\"/com/example/bombland/Images/bomb.png\"); "
           + "-fx-background-size: 50%; -fx-background-position: center; -fx-background-repeat: no-repeat;");
     }
 
@@ -793,7 +793,7 @@ public class GameMap {
     Button tileBtn = getTileButton(grid, tile.getRow(), tile.getCol());
 
     tileBtn.setStyle("-fx-background-color: " + tile.getBackgroundColor() + "; "
-        + "-fx-background-image: url(\"/com/example/bombland/images/" + numberFile
+        + "-fx-background-image: url(\"/com/example/bombland/Images/" + numberFile
         + "\"); -fx-background-size: 50%; -fx-background-position: center; -fx-background-repeat: no-repeat;");
   }
 

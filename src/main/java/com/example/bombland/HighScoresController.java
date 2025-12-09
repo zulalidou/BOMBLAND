@@ -86,6 +86,9 @@ public class HighScoresController {
   VBox easyHighScoresScoreContainer;
 
   @FXML
+  ImageView ImgView1;
+
+  @FXML
   VBox mediumHighScoresColumn;
 
   @FXML
@@ -93,6 +96,9 @@ public class HighScoresController {
 
   @FXML
   VBox mediumHighScoresScoreContainer;
+
+  @FXML
+  ImageView ImgView2;
 
   @FXML
   VBox hardHighScoresColumn;
@@ -104,10 +110,16 @@ public class HighScoresController {
   VBox hardHighScoresScoreContainer;
 
   @FXML
+  ImageView ImgView3;
+
+  @FXML
   VBox databaseCommunicationErrorPopup;
 
   @FXML
   Label databaseCommunicationErrorPopupTitle;
+
+  @FXML
+  ImageView dbErrorImgView;
 
   @FXML
   Label databaseErrorLastSentence;
@@ -161,6 +173,11 @@ public class HighScoresController {
 
     backBtnImgView.fitWidthProperty().bind(highScoresContainerLeftChild.widthProperty().multiply(0.075));
     backBtnImgView.fitHeightProperty().bind(highScoresContainerLeftChild.heightProperty().multiply(0.4));
+
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
 
     highScoresContainerMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", highScoresContainerTop.widthProperty().multiply(0.34))
@@ -225,6 +242,13 @@ public class HighScoresController {
     VBox.setVgrow(easyHighScoresScoreContainer, Priority.ALWAYS);
     VBox.setVgrow(mediumHighScoresScoreContainer, Priority.ALWAYS);
     VBox.setVgrow(hardHighScoresScoreContainer, Priority.ALWAYS);
+
+    Image smileyFaceImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/smiley-face.png"))
+    );
+    ImgView1.setImage(smileyFaceImg);
+    ImgView2.setImage(smileyFaceImg);
+    ImgView3.setImage(smileyFaceImg);
 
     easyHighScoresScoreContainer.spacingProperty().bind(Main.mainStage.heightProperty().multiply(0.01));
     mediumHighScoresScoreContainer.spacingProperty().bind(Main.mainStage.heightProperty().multiply(0.01));
@@ -600,6 +624,10 @@ public class HighScoresController {
             databaseCommunicationErrorPopup.widthProperty().multiply(1))
     );
 
+    Image errorImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/error.png"))
+    );
+    dbErrorImgView.setImage(errorImg);
 
     // Find all nodes with the "databaseErrorText" style class
     Set<Node> foundNodes = databaseCommunicationErrorPopup.lookupAll(".databaseErrorText");

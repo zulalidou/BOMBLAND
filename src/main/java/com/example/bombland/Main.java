@@ -272,7 +272,7 @@ public class Main extends Application {
    * @param stage The window that displays the GUI for the app.
    */
   private void showMainMenu(Stage stage) {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/main-view.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bombland/FXML/main-view.fxml"));
 
     MainController mainController = MainController.getInstance();
     loader.setController(mainController);
@@ -288,11 +288,5 @@ public class Main extends Application {
       System.out.println(e.getCause());
       System.out.println("====================================================================\n");
     }
-
-    /*
-    System.out.println("\n- width = " + Main.mainStage.widthProperty());
-    System.out.println("- height = " + Main.mainStage.heightProperty());
-    System.out.println("- stage = " + Main.mainStage);
-     */
   }
 }

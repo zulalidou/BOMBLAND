@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.StackPane?>
@@ -21,9 +20,7 @@
                 <HBox fx:id="highScoresContainerLeftChild" alignment="CENTER_LEFT">
                     <Button fx:id="backBtn" onAction="#goToMainMenu">
                         <graphic>
-                            <ImageView fx:id="backBtnImgView">
-                                <Image url="/com/example/bombland/images/back-button.png"/>
-                            </ImageView>
+                            <ImageView fx:id="backBtnImgView"/>
                         </graphic>
                     </Button>
                 </HBox>
@@ -47,10 +44,7 @@
                     <Label fx:id="easyHighScoreTitle" text="Easy"/>
 
                     <VBox fx:id="easyHighScoresScoreContainer">
-                        <ImageView>
-                            <Image url="/com/example/bombland/images/smiley-face.png"/>
-                        </ImageView>
-
+                        <ImageView fx:id="ImgView1"/>
                         <Label styleClass="highScoresActivityLabel" text="No activity yet!"/>
                     </VBox>
                 </VBox>
@@ -59,10 +53,7 @@
                     <Label fx:id="mediumHighScoreTitle" text="Medium"/>
 
                     <VBox fx:id="mediumHighScoresScoreContainer">
-                        <ImageView>
-                            <Image url="/com/example/bombland/images/smiley-face.png"/>
-                        </ImageView>
-
+                        <ImageView fx:id="ImgView2"/>
                         <Label styleClass="highScoresActivityLabel" text="No activity yet!"/>
                     </VBox>
                 </VBox>
@@ -71,10 +62,7 @@
                     <Label fx:id="hardHighScoreTitle" text="Hard"/>
 
                     <VBox fx:id="hardHighScoresScoreContainer">
-                        <ImageView>
-                            <Image url="/com/example/bombland/images/smiley-face.png"/>
-                        </ImageView>
-
+                        <ImageView fx:id="ImgView3"/>
                         <Label styleClass="highScoresActivityLabel" text="No activity yet!"/>
                     </VBox>
                 </VBox>
@@ -85,9 +73,7 @@
             <Label fx:id="databaseCommunicationErrorPopupTitle" text="AN ERROR HAS OCCURRED"/>
 
             <VBox alignment="CENTER">
-                <ImageView>
-                    <Image url="/com/example/bombland/images/error.png"/>
-                </ImageView>
+                <ImageView fx:id="dbErrorImgView"/>
             </VBox>
 
             <Label styleClass="databaseErrorText" text="Please try the following to resolve the issue:"/>

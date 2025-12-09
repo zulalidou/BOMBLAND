@@ -1,12 +1,15 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -97,6 +100,11 @@ public class ModeSelectionController {
 
     backBtnImgView.fitWidthProperty().bind(modeSelectionPageContainerTopLeftChild.widthProperty().multiply(0.1));
     backBtnImgView.fitHeightProperty().bind(modeSelectionPageContainerTopLeftChild.heightProperty().multiply(0.4));
+
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
 
     modeSelectionPageContainerTopMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.34))

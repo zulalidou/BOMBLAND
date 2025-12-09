@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 
 <VBox fx:id="multiplayerSelectionPage" xmlns:fx="http://javafx.com/fxml">
     <stylesheets>
@@ -16,9 +15,7 @@
             <HBox fx:id="multiplayerSelectionPageContainerTopLeftChild" alignment="CENTER_LEFT">
                 <Button fx:id="backBtn" onAction="#goToModeSelection">
                     <graphic>
-                        <ImageView fx:id="backBtnImgView">
-                            <Image url="/com/example/bombland/images/back-button.png"/>
-                        </ImageView>
+                        <ImageView fx:id="backBtnImgView"/>
                     </graphic>
                 </Button>
             </HBox>

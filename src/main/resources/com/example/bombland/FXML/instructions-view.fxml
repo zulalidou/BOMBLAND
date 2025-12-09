@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.Region?>
 
 <VBox fx:id="instructionsPage" xmlns:fx="http://javafx.com/fxml">
@@ -20,9 +19,7 @@
         <HBox fx:id="instructionsContainerLeftChild" alignment="CENTER_LEFT">
             <Button fx:id="backBtn" onAction="#goToMainMenu">
                 <graphic>
-                    <ImageView fx:id="backBtnImgView">
-                        <Image url="/com/example/bombland/images/back-button.png"/>
-                    </ImageView>
+                    <ImageView fx:id="backBtnImgView"/>
                 </graphic>
             </Button>
         </HBox>
@@ -52,80 +49,56 @@
 
                         <HBox fx:id="patternsContainer1">
                             <VBox fx:id="imgContainer1" alignment="CENTER">
-                                <ImageView fx:id="imgView1">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img1.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView1"/>
                                 <Label fx:id="bomb1TextLbl" styleClass="instructions-img-text" text="The 1 that's circled in red touches only one unopened square, so that square must contain a bomb."/>
                             </VBox>
 
                             <Region fx:id="space1"/>
 
                             <VBox fx:id="imgContainer2" alignment="CENTER">
-                                <ImageView fx:id="imgView2">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img2.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView2"/>
                                 <Label fx:id="bomb2TextLbl" styleClass="instructions-img-text" text="The 2 that's circled in red touches two unopened squares, so both squares must each contain a bomb."/>
                             </VBox>
                         </HBox>
 
                         <HBox fx:id="patternsContainer2">
                             <VBox fx:id="imgContainer3" alignment="CENTER">
-                                <ImageView fx:id="imgView3">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img3.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView3"/>
                                 <Label fx:id="bomb3TextLbl" styleClass="instructions-img-text" text="The 3 that's circled in red touches three unopened squares, so those three squares must each contain a bomb."/>
                             </VBox>
 
                             <Region fx:id="space2"/>
 
                             <VBox fx:id="imgContainer4" alignment="CENTER">
-                                <ImageView fx:id="imgView4">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img4.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView4"/>
                                 <Label fx:id="bomb4TextLbl" styleClass="instructions-img-text" text="The 4 that's circled in red touches four unopened squares, so those four squares must each contain a bomb."/>
                             </VBox>
                         </HBox>
 
                         <HBox fx:id="patternsContainer3">
                             <VBox fx:id="imgContainer5" alignment="CENTER">
-                                <ImageView fx:id="imgView5">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img5.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView5"/>
                                 <Label fx:id="bomb5TextLbl" styleClass="instructions-img-text" text="The 5 that's circled in red touches five unopened squares, so those five squares must each contain a bomb."/>
                             </VBox>
 
                             <Region fx:id="space3"/>
 
                             <VBox fx:id="imgContainer6" alignment="CENTER">
-                                <ImageView fx:id="imgView6">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img6.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView6"/>
                                 <Label fx:id="bomb6TextLbl" styleClass="instructions-img-text" text="The 6 that's circled in red touches six unopened squares, so those six squares must each contain a bomb."/>
                             </VBox>
                         </HBox>
 
                         <HBox fx:id="patternsContainer4">
                             <VBox fx:id="imgContainer7" alignment="CENTER">
-                                <ImageView fx:id="imgView7">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img7.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView7"/>
                                 <Label fx:id="bomb7TextLbl" styleClass="instructions-img-text" text="The 7 that's circled in red touches seven unopened squares, so those seven squares must each contain a bomb."/>
                             </VBox>
 
                             <Region fx:id="space4"/>
 
                             <VBox fx:id="imgContainer8" alignment="CENTER">
-                                <ImageView fx:id="imgView8">
-                                    <Image url="/com/example/bombland/images/map-theme-1/img8.png"/>
-                                </ImageView>
-
+                                <ImageView fx:id="imgView8"/>
                                 <Label fx:id="bomb8TextLbl" styleClass="instructions-img-text" text="The 8 that's circled in red touches eight unopened squares, so those eight squares must each contain a bomb."/>
                             </VBox>
                         </HBox>

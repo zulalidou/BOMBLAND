@@ -54,10 +54,16 @@ public class MapSelectionController {
   VBox rectangleMapSelectorContainer;
 
   @FXML
+  ImageView rectangleMapImgView;
+
+  @FXML
   Label rectangleMapSelectorName;
 
   @FXML
   VBox bombMapSelectorContainer;
+
+  @FXML
+  ImageView bombMapImgView;
 
   @FXML
   Label bombMapSelectorName;
@@ -79,6 +85,9 @@ public class MapSelectionController {
 
   @FXML
   VBox flowerMapSelectorContainer;
+
+  @FXML
+  ImageView flowerMapImgView;
 
   @FXML
   Label flowerMapSelectorName;
@@ -126,6 +135,11 @@ public class MapSelectionController {
     backBtnImgView.fitWidthProperty().bind(mapSelectionPageContainerTopLeftChild.widthProperty().multiply(0.1));
     backBtnImgView.fitHeightProperty().bind(mapSelectionPageContainerTopLeftChild.heightProperty().multiply(0.4));
 
+    Image backBtnImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/back-button.png"))
+    );
+    backBtnImgView.setImage(backBtnImg);
+
     mapSelectionPageContainerTopMiddleChild.styleProperty().bind(
         Bindings.format("-fx-pref-width: %.2fpx", Main.mainStage.widthProperty().multiply(0.34))
     );
@@ -151,6 +165,11 @@ public class MapSelectionController {
             Main.mainStage.widthProperty().multiply(0.01))
     );
 
+    Image rectangleMapImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/rectangle.png"))
+    );
+    rectangleMapImgView.setImage(rectangleMapImg);
+
     rectangleMapSelectorName.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
     );
@@ -162,6 +181,11 @@ public class MapSelectionController {
             Main.mainStage.widthProperty().multiply(0.2),
             Main.mainStage.widthProperty().multiply(0.01))
     );
+
+    Image bombMapImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/bomb.png"))
+    );
+    bombMapImgView.setImage(bombMapImg);
 
     bombMapSelectorName.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
@@ -179,17 +203,21 @@ public class MapSelectionController {
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
     );
 
-    if (AppCache.getInstance().getGameDifficulty().equals("Medium")) {
+    if (AppCache.getInstance().getGameDifficulty().equals("Easy")) {
+      faceMapImg = new Image(Objects.requireNonNull(
+          getClass().getResourceAsStream("/com/example/bombland/Images/smiley-face.png"))
+      );
+    } else if (AppCache.getInstance().getGameDifficulty().equals("Medium")) {
       faceMapImg = new Image(Objects.requireNonNull(
           getClass().getResourceAsStream("/com/example/bombland/Images/poker-face.png"))
       );
-      faceMapImgView.setImage(faceMapImg);
-    } else if (AppCache.getInstance().getGameDifficulty().equals("Hard")) {
+    } else {
       faceMapImg = new Image(Objects.requireNonNull(
-          getClass().getResourceAsStream("/com/example/bombland/images/sad-face.png"))
+          getClass().getResourceAsStream("/com/example/bombland/Images/sad-face.png"))
       );
-      faceMapImgView.setImage(faceMapImg);
     }
+
+    faceMapImgView.setImage(faceMapImg);
 
     flowerMapSelectorContainer.styleProperty().bind(
         Bindings.format("-fx-padding: %.2fpx; -fx-pref-width: %.2fpx; "
@@ -198,6 +226,11 @@ public class MapSelectionController {
             Main.mainStage.widthProperty().multiply(0.2),
             Main.mainStage.widthProperty().multiply(0.01))
     );
+
+    Image flowerMapImg = new Image(Objects.requireNonNull(
+        getClass().getResourceAsStream("/com/example/bombland/Images/flower.png"))
+    );
+    flowerMapImgView.setImage(flowerMapImg);
 
     flowerMapSelectorName.styleProperty().bind(
         Bindings.format("-fx-font-size: %.2fpx;", Main.mainStage.widthProperty().multiply(0.02))
