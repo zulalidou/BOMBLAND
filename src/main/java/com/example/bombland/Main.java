@@ -54,15 +54,15 @@ public class Main extends Application {
   }
 
   @Override
-  public void stop() {
-    // Closing the entire app doesn't kill all threads,
-    // so I'm explicitly having the executor service kill all tasks I queued in the background
-
+  public void stop() throws Exception {
     if (taskScheduler != null) {
       taskScheduler.shutdown();
     }
 
     PlayController.getInstance().endTimer();
+
+    super.stop();
+    System.exit(0);
   }
 
   /**
