@@ -1,6 +1,7 @@
 package com.example.bombland;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -227,7 +228,7 @@ public class GameMap {
               } else {
                 tileObj.setFlagged(true);
                 tileBtn.setStyle("-fx-background-color: " + tileObj.getBackgroundColor() + "; "
-                    + "-fx-background-image: url(\"/com/example/bombland/Images/red-flag.png\"); "
+                    + "-fx-background-image: url(\"" + getImage("red-flag.png") + "\"); "
                     + "-fx-background-size: 40%; -fx-background-position: center; "
                     + "-fx-background-repeat: no-repeat;");
                 flagsSet += 1;
@@ -315,7 +316,7 @@ public class GameMap {
               } else {
                 tileObj.setFlagged(true);
                 tileBtn.setStyle("-fx-background-color: " + tileObj.getBackgroundColor() + "; "
-                    + "-fx-background-image: url(\"/com/example/bombland/Images/red-flag.png\"); "
+                    + "-fx-background-image: url(\"" + getImage("red-flag.png") + "\"); "
                     + "-fx-background-size: 40%; -fx-background-position: center; "
                     + "-fx-background-repeat: no-repeat;");
                 flagsSet += 1;
@@ -746,7 +747,7 @@ public class GameMap {
     } else { // bomb tile
       tile.setBackgroundColor(Color.red());
       tileBtn.setStyle("-fx-background-color: " + tile.getBackgroundColor() + "; "
-          + "-fx-background-image: url(\"/com/example/bombland/Images/bomb.png\"); "
+          + "-fx-background-image: url(\"" + getImage("bomb.png") + "\"); "
           + "-fx-background-size: 50%; -fx-background-position: center; -fx-background-repeat: no-repeat;");
     }
 
@@ -793,7 +794,7 @@ public class GameMap {
     Button tileBtn = getTileButton(grid, tile.getRow(), tile.getCol());
 
     tileBtn.setStyle("-fx-background-color: " + tile.getBackgroundColor() + "; "
-        + "-fx-background-image: url(\"/com/example/bombland/Images/" + numberFile
+        + "-fx-background-image: url(\"" + getImage(String.valueOf(numberFile))
         + "\"); -fx-background-size: 50%; -fx-background-position: center; -fx-background-repeat: no-repeat;");
   }
 
@@ -809,5 +810,17 @@ public class GameMap {
    */
   public void clearGrid() {
     grid.getChildren().clear();
+  }
+
+  /**
+   * This function returns the full path of the file. (This function is used because it makes it possible for
+   * the files to be displayed both when using the compiler and when running the exe.)
+   *
+   * @param filename The file name.
+   * @return A string that represents the entire path of the image.
+   */
+  String getImage(String filename) {
+    URL imageUrl = getClass().getResource("/com/example/bombland/Images/" + filename);
+    return imageUrl.toExternalForm();
   }
 }
