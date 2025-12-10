@@ -33,3 +33,6 @@ This project started as a clone of the Minesweeper game, but overtime I decided 
 ![Local Image](src/main/resources/com/example/bombland/Images/app/16.png)
 
 ![Local Image](src/main/resources/com/example/bombland/Images/app/17.png)
+
+## Installation Instructions
+For a pre-built executable, please download the **EXE_FOLDER** zip file from the Release Page, and run the BOMBLAND.exe file.
